@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register | BoostingKing</title>
+  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <div class="auth-header">
+    <a href="index.html" class="logo">BoostingKing</a>
+    <p class="tagline">Your Premier Boosting Service</p>
+  </div>
+
+  <div class="auth-container">
+    <form id="register-form" class="auth-form">
+      <h2>Create Account</h2>
+
+      <div class="input-group">
+        <label for="reg-username">Username (3-20 characters)</label>
+        <input type="text" id="reg-username" required 
+               minlength="3" maxlength="20"
+               pattern="[a-zA-Z0-9_]+" 
+               title="Only letters, numbers and underscores" />
+      </div>
+
+      <div class="input-group">
+        <label for="reg-email">Email (max 50 characters)</label>
+        <input type="email" id="reg-email" required 
+               maxlength="50"
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+               title="Please enter a valid email address" />
+      </div>
+
+      <div class="input-group password-group">
+        <label for="reg-password">Password (8-32 characters)</label>
+        <div class="password-wrapper">
+          <input type="password" id="reg-password" required 
+                 minlength="8" maxlength="32"
+                 pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$"
+                 title="Minimum 8 characters, at least one letter and one number" />
+          <span class="toggle-pass">👁️</span>
+        </div>
+      </div>
+
+      <div class="input-group password-group">
+        <label for="reg-password-confirm">Confirm Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="reg-password-confirm" required 
+                 minlength="8" maxlength="32" />
+          <span class="toggle-pass">👁️</span>
+        </div>
+      </div>
+
+      <button type="submit" class="cta-button">Register</button>
+      <p class="auth-switch">Already have an account? <a href="login.html">Login</a></p>
+      <div id="reg-message" class="auth-message"></div>
+    </form>
+  </div>
+
+  <script>
+    document.querySelectorAll('.toggle-pass').forEach(el => {
+      el.addEventListener('click', () => {
+        const inp = el.previousElementSibling;
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+        el.textContent = inp.type === 'password' ? '👁️' : '🙈';
+      });
+    });
+
+    // Password match validation
+    document.getElementById('reg-password-confirm').addEventListener('input', function() {
+      const password = document.getElementById('reg-password').value;
+      const confirmPassword = this.value;
+      
+      if (password !== confirmPassword) {
+        this.setCustomValidity("Passwords do not match");
+      } else {
+        this.setCustomValidity("");
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2 Premier Boosting | BoostingKing</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="cs2-common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="top-banner">
+        <p>🎉 Limited Offer: 10% OFF on All Boosting Services – Use Code: <strong>KING10</strong> 🎉</p>
+        <a href="cs2.html" class="top-banner-button">Order Now</a>
+    </div>
+    
+    <header>
+        <div class="header-container">
+          <!-- LEFT SECTION -->
+<!-- LEFT SECTION -->
+<div class="header-left">
+  <div class="dropdown">
+    <button class="dropbtn">Select Game</button>
+    <ul class="dropdown-content">
+      <li>
+        <a href="cs2.html">
+          <span class="icon cs-icon">
+            <img src="cs2icon.png" alt="CS2 Icon" class="cs-icon-img">
+          </span>
+          Counter-Strike 2
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+      
+          <!-- CENTER SECTION -->
+          <nav class="header-center">
+            <a href="index.html" class="logo">BoostingKing</a>  
+          </nav>
+      
+          <!-- RIGHT SECTION -->
+          <div class="header-right">
+            <div class="profile-dropdown">
+              <button class="profile-btn">
+                <div class="profile-icon"></div>
+                <svg class="dropdown-arrow" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M7,10L12,15L17,10H7Z" />
+                </svg>
+              </button>
+              <div class="profile-dropdown-content">
+                <div class="dropdown-header">BoostingKing</div>
+                <div class="booster-options" style="display: none;">
+                  <a href="#">Orders</a>
+                  <a href="#">Bankroll</a>
+                </div>
+                <a href="settings.html" class="settings-link">Settings</a>
+                <a href="index.html">Home</a>
+                <a href="jobs.html">Work With Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html" class="logout-btn">Login</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+    <div class="boosting-container">
+        <a href="cs2.html" class="back-to-modes">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 12H4M4 12L10 6M4 12L10 18" stroke="#F8D57E" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            All CS2 Modes
+        </a>
+        
+        <main class="boosting-main">
+            <section class="boosting-header">
+                <h1>CS2 Premier Boosting</h1>
+                <p>Professional boosting service providing fast and secure achievement of your desired Premier rating.</p>
+            </section>
+            
+            <div class="configuration-section premier-level">
+                <div class="configuration-column">
+                    <section class="configuration-block level-section">
+                        <h2>Premier Rating</h2>
+                        <div class="level-selector">
+                            <div class="level-preview-container">
+                                <div class="level-input-group">
+                                    <div class="level-label">CURRENT RATING</div>
+                                    <div class="premier-badge-container">
+                                        <div class="premier-badge" id="current-badge" data-rating="4999">
+                                            <img id="current-rating-img" src="premier1.webp" alt="Current Rating" class="premier-badge-image">
+                                            <div id="current-rating" class="rating-value">4999</div>
+                                        </div>
+                                    </div>
+                                    <div class="level-controls">
+                                        <button class="level-input-btn minus" data-target="current">-</button>
+                                        <input type="number" min="0" max="25000" value="4999" id="current-rating-input" class="level-input" data-type="current">
+                                        <button class="level-input-btn plus" data-target="current">+</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="level-arrow">→</div>
+                                
+                                <div class="level-input-group">
+                                    <div class="level-label">DESIRED RATING</div>
+                                    <div class="premier-badge-container">
+                                        <div class="premier-badge" id="target-badge" data-rating="6000">
+                                            <img id="target-rating-img" src="premier2.webp" alt="Target Rating" class="premier-badge-image">
+                                            <div id="target-rating" class="rating-value">6000</div>
+                                        </div>
+                                    </div>
+                                    <div class="level-controls">
+                                        <button class="level-input-btn minus" data-target="target">-</button>
+                                        <input type="number" min="1000" max="26000" value="6000" id="target-rating-input" class="level-input" data-type="target">
+                                        <button class="level-input-btn plus" data-target="target">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="configuration-block account-section">
+                        <h2>Account Type</h2>
+                        <div class="account-type-options">
+                            <div class="account-type-option">
+                                <input type="radio" name="accType" value="solo" id="solo-type" checked>
+                                <label for="solo-type">
+                                    <span class="radio-selector"></span>
+                                    <span class="account-type-title">Solo (Shared Account)</span>
+                                    <span class="account-type-price">+0%</span>
+                                </label>
+                            </div>
+                            <div class="account-type-option">
+                                <input type="radio" name="accType" value="duo" id="duo-type">
+                                <label for="duo-type">
+                                    <span class="radio-selector"></span>
+                                    <span class="account-type-title">Duo Queue</span>
+                                    <span class="account-type-price">+100%</span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+                <div class="configuration-column">
+                    <section class="configuration-block customize-section">
+                        <h2>Customize</h2>
+                        <div class="customize-options">
+                            <div class="customize-option">
+                                <input type="checkbox" value="0" id="offline" class="custom-opt" checked>
+                                <label for="offline">
+                                    <span class="custom-checkbox"></span>
+                                    <span class="option-title">Play Offline</span>
+                                    <span class="option-price">Free</span>
+                                </label>
+                            </div>
+                            <div class="customize-option">
+                                <input type="checkbox" value="25" id="streaming" class="custom-opt">
+                                <label for="streaming">
+                                    <span class="custom-checkbox"></span>
+                                    <span class="option-title">Streaming</span>
+                                    <span class="option-price">+25%</span>
+                                </label>
+                            </div>
+                            <div class="customize-option">
+                                <input type="checkbox" value="25" id="express" class="custom-opt">
+                                <label for="express">
+                                    <span class="custom-checkbox"></span>
+                                    <span class="option-title">Express Delivery</span>
+                                    <span class="option-price">+25%</span>
+                                </label>
+                            </div>
+                            <div class="customize-option">
+                                <input type="checkbox" value="50" id="solo" class="custom-opt">
+                                <label for="solo">
+                                    <span class="custom-checkbox"></span>
+                                    <span class="option-title">Solo Only</span>
+                                    <span class="option-price">+50%</span>
+                                </label>
+                            </div>
+                            <div class="customize-option">
+                                <input type="checkbox" value="50" id="normalize" class="custom-opt">
+                                <label for="normalize">
+                                    <span class="custom-checkbox"></span>
+                                    <span class="option-title">Normalize Scores</span>
+                                    <span class="option-price">+50%</span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="configuration-block region-section">
+                        <h2 class="required">Select Region</h2>
+                        <div class="region-options">
+                            <div class="region-option">
+                                <input type="radio" name="region" id="region-europe" value="europe">
+                                <label for="region-europe">
+                                    <span class="radio-selector"></span>
+                                    <div class="region-info">
+                                        <span class="region-title">Europe</span>
+                                        <span class="region-flag">🌍</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="region-option">
+                                <input type="radio" name="region" id="region-americas" value="americas">
+                                <label for="region-americas">
+                                    <span class="radio-selector"></span>
+                                    <div class="region-info">
+                                        <span class="region-title">Americas</span>
+                                        <span class="region-flag">🌎</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="region-option">
+                                <input type="radio" name="region" id="region-oceania-asia" value="oceania-asia">
+                                <label for="region-oceania-asia">
+                                    <span class="radio-selector"></span>
+                                    <div class="region-info">
+                                        <span class="region-title">Oceania & Asia</span>
+                                        <span class="region-flag">🌏</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="region-error" style="display: none;">Please select a region</div>
+                    </section>
+                </div>
+            </div>
+        </main>
+        
+        <aside class="checkout-section">
+            <div class="checkout-box">
+                <h2>Checkout</h2>
+                <div class="price-row">
+                    <span>Base Price:</span>
+                    <span id="base-price">$0</span>
+                </div>
+                <div class="price-row">
+                    <span>Extras:</span>
+                    <span id="extra-price">$0</span>
+                </div>
+                <div class="price-row discount-row">
+                    <input type="text" id="discount-code" placeholder="Discount code" />
+                    <button id="apply-discount">Apply</button>
+                  </div>
+                  <div id="discount-message" class="discount-message"></div>
+                <div class="price-row total">
+                    <span>Total:</span>
+                    <span id="total-price">$0</span>
+                </div>
+                <button>Checkout Now</button>
+            </div>
+        </aside>
+    </div>
+    <section class="faq-section">
+        <h2>Premier Boosting - FAQ</h2>
+        <div class="faq">
+            <div class="faq-item">
+                <div class="question">
+                    <span>What is Premier Mode in CS2?</span>
+                </div>
+                <div class="answer">
+                    Premier Mode is CS2's official competitive mode based on a visible ranking system that emphasizes high-skill matchmaking.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="question">
+                    <span>How does Premier boosting work?</span>
+                </div>
+                <div class="answer">
+                    A professional player will help you climb the Premier leaderboard by either playing on your account or assisting you in matches.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="question">
+                    <span>What are the rank divisions in Premier?</span>
+                </div>
+                <div class="answer">
+                    Premier Mode uses a visible ELO system, where your skill is represented by a score rather than traditional ranks.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="question">
+                    <span>Can I keep track of my Premier boosting progress?</span>
+                </div>
+                <div class="answer">
+                    Yes, we provide regular updates, and you can always contact our team for live progress tracking.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="question">
+                    <span>Is Premier boosting risk-free?</span>
+                </div>
+                <div class="answer">
+                    Yes, we operate with maximum security protocols to ensure your account remains safe throughout the boosting process.
+                </div>
+            </div>
+        </div>
+    </section>
+    
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <h3>BoostingKing</h3>
+      <p>&copy; 2025 BoostingKing. All rights reserved.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Useful Links</h4>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="jobs.html">Work With Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="settings.html">Settings</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-social">
+      <h4>Join Our Community</h4>
+      <div class="social-icons">
+        <a href="https://discord.gg/43JBNncGWf" class="social-icon" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-discord"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+    <script src="script.js"></script>
+</body>
+</html>

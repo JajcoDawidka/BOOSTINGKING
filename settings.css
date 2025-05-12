@@ -1,0 +1,336 @@
+/* Główne style dla strony ustawień */
+.settings-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.settings-title {
+    color: #F8D57E;
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 30px;
+}
+
+@media (max-width: 768px) {
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.settings-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.settings-card {
+    background-color: #151515;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.card-title {
+    color: #F8D57E;
+    font-size: 24px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #2a2a3d;
+}
+
+/* Sekcja avataru */
+.avatar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar-preview {
+    width: 256px;
+    height: 256px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #F8D57E;
+    background-color: #1f1f2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.avatar-preview svg {
+    width: 80%;
+    height: 80%;
+}
+
+.avatar-upload {
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+
+.upload-input {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+}
+
+.upload-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #F8D57E;
+    color: #0a0a0a;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.upload-button:hover {
+    background-color: #ffea00;
+    transform: translateY(-2px);
+}
+
+.upload-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.avatar-hint {
+    color: #bbbbbb;
+    font-size: 14px;
+    text-align: center;
+    margin-top: 10px;
+    max-width: 80%;
+    line-height: 1.4;
+}
+
+/* Formularz ustawień */
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group label {
+    color: #F8D57E;
+    font-weight: 500;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.settings-input {
+    width: 100%;
+    padding: 12px 16px 12px 45px;
+    background-color: #1f1f2a;
+    border: 1px solid #2a2a3d;
+    border-radius: 8px;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.settings-input:focus {
+    border-color: #F8D57E;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(248, 213, 126, 0.2);
+}
+
+.disabled-input .settings-input {
+    background-color: #252525;
+    color: #bbbbbb;
+    cursor: not-allowed;
+}
+
+.input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+.lock-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+select.settings-input {
+    appearance: none;
+    padding-right: 40px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F8D57E"><path d="M7,10L12,15L17,10H7Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+}
+
+.settings-input[readonly] {
+    background-color: #252525;
+    cursor: not-allowed;
+    padding-right: 100px;
+}
+
+.change-hint, .email-hint {
+    color: #bbbbbb;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+.change-username-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(248, 213, 126, 0.1);
+    border: 1px solid #F8D57E;
+    color: #F8D57E;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.change-username-btn:hover {
+    background: rgba(248, 213, 126, 0.2);
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* Przyciski akcji */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #2a2a3d;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cancel-button, .save-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.cancel-button {
+    background-color: transparent;
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
+}
+
+.cancel-button:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.save-button {
+    background-color: #F8D57E;
+    border: none;
+    color: #0a0a0a;
+}
+
+.save-button:hover {
+    background-color: #ffea00;
+    transform: translateY(-2px);
+}
+
+.save-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Toast notification */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    z-index: 1000;
+    animation: slideIn 0.5s, fadeOut 0.5s 2.5s forwards;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #0a0a0a;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Gwarantuje poprawne przycięcie do okręgu */
+    border-radius: 50%; /* Zapasowe - mimo overflow: hidden */
+}

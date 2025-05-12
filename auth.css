@@ -1,0 +1,186 @@
+/* auth.css - styles for register.html & login.html */
+
+/* Box-sizing reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  /* Header for auth pages */
+  .auth-header {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .auth-header .logo {
+    font-size: 36px;
+    color: #F8D57E;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .auth-header .tagline {
+    color: #bbbbbb;
+    margin-top: 8px;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Container for form, centered horizontally */
+  .auth-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* Form styling */
+  .auth-form {
+    background-color: #151515;
+    border: 1px solid #252525;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  /* Titles */
+  .auth-form h2 {
+    margin-bottom: 20px;
+    color: #F8D57E;
+    text-align: center;
+    font-size: 28px;
+  }
+  
+  /* Input groups */
+  .input-group {
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #bbbbbb;
+    font-size: 14px;
+  }
+  
+  /* General input styling for all inputs */
+  .input-group input {
+    width: 100%;
+    padding: 12px;
+    padding-right: 40px; /* space for toggle icon if present */
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #1a1a1a;
+    color: #fff;
+    font-size: 16px;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+  }
+  
+  /* Password wrapper and toggle icon */
+  .password-wrapper {
+    position: relative;
+  }
+  
+  .toggle-pass {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    color: #bbbbbb;
+    font-size: 18px;
+  }
+  
+  .toggle-pass:hover {
+    opacity: 0.8;
+  }
+  
+  /* Button */
+  .cta-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+    background-color: #F8D57E;
+    color: #0a0a0a;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .cta-button:hover {
+    background-color: #e6c758;
+  }
+  
+  /* Auth switch link */
+  .auth-switch {
+    text-align: center;
+    margin-top: 15px;
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .auth-switch a {
+    color: #F8D57E;
+    text-decoration: none;
+  }
+  
+  .auth-switch a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Messages */
+  .auth-message {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .auth-message.error {
+    color: #e74c3c;
+  }
+  
+  .auth-message.success {
+    color: #2ecc71;
+  }
+  
+  /* Custom styled checkbox for "Remember me" */
+  .remember-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .remember-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #555;
+    background-color: transparent;
+    accent-color: #F8D57E; /* kolor po kliknieciu */
+    cursor: pointer;
+  }
+  
+  .remember-group label {
+    font-size: 14px;
+    color: #bbbbbb;
+    cursor: pointer;
+  }
+  
+  
+  /* Focus effect on inputs */
+  .input-group input:focus {
+    outline: none;
+    border-color: #F8D57E;
+    box-shadow: 0 0 0 2px rgba(248, 213, 126, 0.3);
+  }
+  

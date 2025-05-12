@@ -1,0 +1,175 @@
+.page-section {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 20px;
+  background-color: #151515;
+  border-radius: 16px;
+  border: 1px solid #252525;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.page-section h2 {
+  font-size: 36px;
+  color: #F8D57E;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.section-description {
+  text-align: center;
+  font-size: 18px;
+  color: #bbbbbb;
+  margin-bottom: 40px;
+}
+
+/* Requirements Box */
+.requirements-box {
+  background-color: #1f1f1f;
+  border-left: 4px solid #F8D57E;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 0 8px 8px 0;
+}
+
+.requirements-box h3 {
+  color: #F8D57E;
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.requirements-box ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.requirements-box li {
+  margin-bottom: 8px;
+  color: #bbbbbb;
+}
+
+.requirements-box li strong {
+  color: #F8D57E;
+}
+
+/* Styled Form */
+.styled-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.form-group label {
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #F8D57E;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background-color: #1f1f2a;
+  border: 1px solid #2a2a3d;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  -webkit-appearance: none;  /* Usuwa domyślne stylowanie systemowe w przeglądarkach */
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* Wyłączenie ręcznego rozciągania textarea */
+.form-group textarea {
+  resize: none; /* Wyłącza możliwość ręcznego rozciągania */
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #F8D57E;
+  box-shadow: 0 0 8px rgba(248, 213, 126, 0.4);
+}
+
+/* Styl dla inputów, selectów, i textarea po wybraniu z listy sugerowanej */
+.form-group input:-webkit-autofill,
+.form-group select:-webkit-autofill,
+.form-group textarea:-webkit-autofill {
+  background-color: #1f1f2a !important; /* Ustawienie tła na to samo */
+  color: #ffffff !important;  /* Ustawienie koloru tekstu na biały */
+  border-color: #2a2a3d !important; /* Zachowanie obramowania */
+}
+
+/* Form validation */
+.form-group input:required:invalid,
+.form-group select:required:invalid,
+.form-group textarea:required:invalid {
+  border-color: #ff4444;
+}
+
+.form-group input:required:valid,
+.form-group select:required:valid,
+.form-group textarea:required:valid {
+  border-color: #4CAF50;
+}
+
+/* Special cases for empty required fields */
+.form-group input[required]:not(:placeholder-shown):invalid,
+.form-group select[required]:invalid:not([value=""]),
+.form-group textarea[required]:invalid:not(:placeholder-shown) {
+  border-color: #ff4444;
+}
+
+/* Style for invalid selects */
+.form-group select:invalid {
+  color: #888;
+}
+
+.form-group select option {
+  color: #fff;
+}
+
+.form-group select option[value=""] {
+  color: #888;
+}
+
+/* Style for number validation */
+.form-group input[type="number"]:out-of-range {
+  border-color: #ff4444;
+}
+
+/* Error message */
+.form-error {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: 5px;
+  display: none;
+}
+
+.submit-btn {
+  background-color: #F8D57E;
+  color: #0a0a0a;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  align-self: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(248, 213, 126, 0.5);
+  width: fit-content;
+}
+
+.submit-btn:hover {
+  background-color: #ffea00;
+  transform: translateY(-2px);
+}
