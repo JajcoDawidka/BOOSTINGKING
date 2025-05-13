@@ -18,6 +18,11 @@
       <h2>Create Account</h2>
 
       <div class="input-group">
+        <label for="reg-username">Username (3–20 characters)</label>
+        <input type="text" id="reg-username" required minlength="3" maxlength="20" />
+      </div>
+
+      <div class="input-group">
         <label for="reg-email">Email (max 50 characters)</label>
         <input type="email" id="reg-email" required 
                maxlength="50"
@@ -52,7 +57,7 @@
   </div>
 
   <script>
-    // Password visibility toggle
+    // Toggle password visibility
     document.querySelectorAll('.toggle-pass').forEach(el => {
       el.addEventListener('click', () => {
         const inp = el.previousElementSibling;
@@ -72,10 +77,11 @@
       }
     });
 
-    // Form submit
+    // Register form submission
     document.getElementById('register-form').addEventListener('submit', async function(e) {
       e.preventDefault();
 
+      const username = document.getElementById('reg-username').value;
       const email = document.getElementById('reg-email').value;
       const password = document.getElementById('reg-password').value;
       const confirm = document.getElementById('reg-password-confirm').value;
@@ -89,7 +95,7 @@
         const res = await fetch('https://boosting-backend.onrender.com/api/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ username, email, password })
         });
 
         const result = await res.json();
@@ -100,7 +106,7 @@
           msgDiv.style.color = 'green';
         } else {
           console.log('Register response:', result);
-          msgDiv.textContent = result.message || result.msg || 'Registration error';
+          msgDiv.textContent = result.message || result.msg || result.error || 'Registration error';
           msgDiv.style.color = 'red';
         }
       } catch (err) {
