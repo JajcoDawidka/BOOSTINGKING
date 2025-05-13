@@ -18,14 +18,6 @@
       <h2>Create Account</h2>
 
       <div class="input-group">
-        <label for="reg-username">Username (3-20 characters)</label>
-        <input type="text" id="reg-username" required 
-               minlength="3" maxlength="20"
-               pattern="[a-zA-Z0-9_]+" 
-               title="Only letters, numbers and underscores" />
-      </div>
-
-      <div class="input-group">
         <label for="reg-email">Email (max 50 characters)</label>
         <input type="email" id="reg-email" required 
                maxlength="50"
@@ -68,15 +60,48 @@
       });
     });
 
-    // Password match validation
     document.getElementById('reg-password-confirm').addEventListener('input', function() {
       const password = document.getElementById('reg-password').value;
       const confirmPassword = this.value;
-      
       if (password !== confirmPassword) {
         this.setCustomValidity("Passwords do not match");
       } else {
         this.setCustomValidity("");
+      }
+    });
+
+    document.getElementById('register-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('reg-email').value;
+      const password = document.getElementById('reg-password').value;
+      const confirm = document.getElementById('reg-password-confirm').value;
+
+      if (password !== confirm) {
+        document.getElementById('reg-message').textContent = "Passwords do not match";
+        return;
+      }
+
+      try {
+        const res = await fetch('https://boosting-backend.onrender.com/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const result = await res.json();
+        const msgDiv = document.getElementById('reg-message');
+
+        if (res.ok) {
+          msgDiv.textContent = 'Account created successfully!';
+          msgDiv.style.color = 'green';
+        } else {
+          msgDiv.textContent = result.msg || 'Registration error';
+          msgDiv.style.color = 'red';
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById('reg-message').textContent = 'Network error';
       }
     });
   </script>
