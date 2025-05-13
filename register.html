@@ -21,7 +21,7 @@
         <label for="reg-email">Email (max 50 characters)</label>
         <input type="email" id="reg-email" required 
                maxlength="50"
-               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+               pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                title="Please enter a valid email address" />
       </div>
 
@@ -52,6 +52,7 @@
   </div>
 
   <script>
+    // Password visibility toggle
     document.querySelectorAll('.toggle-pass').forEach(el => {
       el.addEventListener('click', () => {
         const inp = el.previousElementSibling;
@@ -60,6 +61,7 @@
       });
     });
 
+    // Confirm password validation
     document.getElementById('reg-password-confirm').addEventListener('input', function() {
       const password = document.getElementById('reg-password').value;
       const confirmPassword = this.value;
@@ -70,6 +72,7 @@
       }
     });
 
+    // Form submit
     document.getElementById('register-form').addEventListener('submit', async function(e) {
       e.preventDefault();
 
@@ -97,8 +100,7 @@
           msgDiv.style.color = 'green';
         } else {
           console.log('Register response:', result);
-msgDiv.textContent = result.message || result.msg || 'Registration error';
-
+          msgDiv.textContent = result.message || result.msg || 'Registration error';
           msgDiv.style.color = 'red';
         }
       } catch (err) {
