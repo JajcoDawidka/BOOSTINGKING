@@ -96,7 +96,9 @@
           msgDiv.textContent = 'Account created successfully!';
           msgDiv.style.color = 'green';
         } else {
-          msgDiv.textContent = result.msg || 'Registration error';
+          console.log('Register response:', result);
+msgDiv.textContent = result.message || result.msg || 'Registration error';
+
           msgDiv.style.color = 'red';
         }
       } catch (err) {
