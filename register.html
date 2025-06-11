@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register | BoostingKing</title>
+  <link rel="stylesheet" href="general.css" />
+  <link rel="stylesheet" href="auth.css" />
+</head>
+<body>
+  <div class="auth-header">
+    <a href="index.html" class="logo">BoostingKing</a>
+    <p class="tagline">Your Premier Boosting Service</p>
+  </div>
+
+  <div class="auth-container">
+    <form id="register-form" class="auth-form">
+      <h2>Create Account</h2>
+
+      <div class="input-group">
+        <label for="reg-username">Username (3–20 characters)</label>
+        <input type="text" id="reg-username" required minlength="3" maxlength="20" />
+      </div>
+
+      <div class="input-group">
+        <label for="reg-email">Email (max 50 characters)</label>
+        <input type="email" id="reg-email" required 
+               maxlength="50"
+               pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+               title="Please enter a valid email address" />
+      </div>
+
+      <div class="input-group password-group">
+        <label for="reg-password">Password (8–32 characters)</label>
+        <div class="password-wrapper">
+          <input type="password" id="reg-password" required 
+                 minlength="8" maxlength="32"
+                 pattern="^(?=.*[A-Za-z])(?=.*\d).{8,}$"
+                 title="Minimum 8 characters, at least one letter and one number" />
+          <span class="toggle-pass">👁️</span>
+        </div>
+      </div>
+
+      <div class="input-group password-group">
+        <label for="reg-password-confirm">Confirm Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="reg-password-confirm" required minlength="8" maxlength="32" />
+          <span class="toggle-pass">👁️</span>
+        </div>
+      </div>
+
+      <button type="submit" class="cta-button">Register</button>
+      <p class="auth-switch">Already have an account? <a href="login.html">Login</a></p>
+      <div id="reg-message" class="auth-message">
+        <span id="reg-spinner" class="spinner" style="display:none;"></span>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Toggle password visibility
+    document.querySelectorAll('.toggle-pass').forEach(el => {
+      el.addEventListener('click', () => {
+        const inp = el.previousElementSibling;
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+        el.textContent = inp.type === 'password' ? '👁️' : '🙈';
+      });
+    });
+
+    // Confirm password validation
+    document.getElementById('reg-password-confirm').addEventListener('input', function () {
+      const password = document.getElementById('reg-password').value;
+      const confirmPassword = this.value;
+      this.setCustomValidity(password !== confirmPassword ? "Passwords do not match" : "");
+    });
+
+    document.getElementById('register-form').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById('reg-username').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const confirm = document.getElementById('reg-password-confirm').value;
+      const msgDiv = document.getElementById('reg-message');
+      const spinner = document.getElementById('reg-spinner');
+
+      msgDiv.textContent = "";
+      msgDiv.style.color = '';
+      spinner.style.display = 'none';
+
+      if (!username || !email || !password || !confirm) {
+        msgDiv.textContent = 'Please fill in all fields.';
+        msgDiv.style.color = 'red';
+        return;
+      }
+
+      if (password !== confirm) {
+        msgDiv.textContent = "Passwords do not match";
+        msgDiv.style.color = 'red';
+        return;
+      }
+
+      try {
+        spinner.style.display = 'inline-block';
+
+        const res = await fetch('http://localhost/boostingking/register.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password })
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          msgDiv.style.color = 'green';
+          msgDiv.textContent = 'Account created successfully! Redirecting... ';
+          msgDiv.appendChild(spinner);
+
+          // Spinner widoczny 3 sekundy
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1500);
+        } else {
+          spinner.style.display = 'none';
+          msgDiv.textContent = result.message || result.msg || result.error || 'Registration error';
+          msgDiv.style.color = 'red';
+        }
+      } catch (err) {
+        console.error(err);
+        spinner.style.display = 'none';
+        msgDiv.textContent = 'Network error. Please try again later.';
+        msgDiv.style.color = 'red';
+      }
+    });
+  </script>
+</body>
+</html>

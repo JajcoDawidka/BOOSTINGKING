@@ -1,0 +1,250 @@
+body {
+  background-image: url('rozmytetlo.webp');
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #f1f1f1;
+}
+
+.page-with-background {
+  position: relative;
+  z-index: 0;
+}
+
+body * {
+  position: relative;
+  z-index: 1;
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 120px auto 40px;
+  padding: 40px;
+  background-color: rgba(20, 20, 25, 0.75);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(248, 213, 126, 0.25);
+}
+
+section {
+  margin-bottom: 60px;
+  padding-bottom: 40px;
+  background-color: transparent;
+  border: none;
+  position: relative;
+}
+
+section h2 {
+  color: #F8D57E;
+  margin-top: 0;
+  font-size: 34px;
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+section h2::after {
+  content: '';
+  display: block;
+  width: 110px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #F8D57E, transparent);
+  margin: 15px auto 0;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+}
+
+.cs2-focus {
+    text-align: center;
+}
+
+.cs2-focus h2 {
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+.cs2-focus p {
+    font-size: 18px;
+    color: #e0e0e0;
+    max-width: 800px;
+    margin: 0 auto 20px;
+    line-height: 1.6;
+}
+
+.cs2-focus strong {
+    color: #F8D57E;
+}
+
+.modes-section {
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  padding: 0 20px 40px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.modes-section h1 {
+  font-size: 36px;
+  color: #F8D57E;
+  margin-bottom: 12px;
+  font-weight: 700;
+  text-shadow: 0 0 6px rgba(248, 213, 126, 0.6);
+}
+
+.modes-section p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #d0c98ecc;
+  font-weight: 500;
+}
+
+section h3 {
+  color: #F8D57E;
+  margin-top: 0;
+  font-size: 34px;
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  position: relative;
+}
+
+.modes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+.mode-card {
+  background: linear-gradient(145deg, rgba(20, 20, 25, 0.9), rgba(30, 30, 35, 0.85));
+  border-radius: 20px;
+  border: 1px solid rgba(248, 213, 126, 0.25);
+  box-shadow: 0 8px 30px rgba(248, 213, 126, 0.15);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.mode-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 12px 50px rgba(248, 213, 126, 0.4);
+  border-color: rgba(248, 213, 126, 0.5);
+}
+
+.icon-container {
+  padding: 30px 0 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-container svg {
+  width: 64px;
+  height: 64px;
+  stroke: #F8D57E;
+  transition: transform 0.3s ease, stroke 0.3s ease;
+}
+
+.mode-card:hover .icon-container svg {
+  transform: scale(1.1);
+  stroke: #ffeaaf;
+}
+
+.mode-info {
+  padding: 20px 24px 30px;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.mode-info h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #F8D57E;
+  text-shadow: 0 0 6px rgba(248, 213, 126, 0.6);
+}
+
+.mode-info p {
+  font-size: 16px;
+  color: #d0c98e;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+.icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  margin-bottom: 15px;
+}
+
+.mode-card svg {
+  transition: transform 0.3s ease, stroke 0.3s ease;
+}
+
+.mode-card:hover svg {
+  transform: scale(1.1);
+  stroke: #ffffff;
+}
+
+.faq-section {
+    padding: 0 0 40px;
+}
+
+.faq-section h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #F8D57E;
+}
+
+.faq {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(248, 213, 126, 0.1);
+}
+
+.question {
+    font-weight: 600;
+    font-size: 20px;
+    padding: 15px 0;
+    background-color: transparent;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.question:hover {
+    color: #F8D57E;
+}
+
+.answer {
+    font-size: 17px;
+    color: #d0d0d0;
+    line-height: 1.6;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.5s ease;
+    padding: 0;
+}
+
+.answer.open {
+    max-height: 500px;
+    padding: 15px 0 0;
+}

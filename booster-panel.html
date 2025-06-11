@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booster Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="general.css" />
+  <link rel="stylesheet" href="booster-panel.css" />
+</head>
+<body>
+<header>
+    <div class="header-container">
+        <div class="header-left">
+            <div class="dropdown">
+                <button class="dropbtn">Select Game</button>
+                <ul class="dropdown-content">
+                    <li>
+                        <a href="cs2-modes.html">
+                            <span class="icon cs-icon">
+                                <img src="cs2icon.png" alt="CS2 Icon" class="cs-icon-img">
+                            </span>
+                            Counter-Strike 2
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <nav class="header-center">
+            <a href="index.html" class="logo">BoostingKing</a>  
+        </nav>
+        
+        <div class="header-right">
+            <div class="profile-dropdown">
+                <button class="profile-btn">
+                    <span class="profile-icon"></span>
+                    <svg class="dropdown-arrow" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M7,10L12,15L17,10H7Z" />
+                    </svg>
+                </button>
+                <div class="profile-dropdown-content">
+                    <div class="dropdown-header">BoostingKing</div>
+                    <div class="booster-options" style="display: none;">
+                        <a href="booster-panel.html">Booster Panel</a>
+                    </div>
+                    <a href="settings.html" class="settings-link">Profile</a>
+                    <a href="index.html">Home</a>
+                    <a href="jobs.html">Work With Us</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="login.html" class="logout-btn" id="auth-link">Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="booster-panel">
+  <div class="panel-header">
+    <h1>Booster Dashboard</h1>
+    <div class="rules-button-wrapper">
+      <button class="rules-btn" onclick="toggleRulesModal()">📜 View Booster Rules</button>
+    </div>
+  </div>
+
+  <div class="stats-summary">
+    <div class="stat-card">
+      <span class="stat-value" id="completed-orders-count">0</span>
+      <span class="stat-label">Completed</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value" id="earnings-amount">$0</span>
+      <span class="stat-label">Earnings</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value" id="ranking-position">#-</span>
+      <span class="stat-label">Ranking</span>
+    </div>
+  </div>
+
+<div class="panel-column">
+  <section class="panel-section" id="orders-available">
+    <div class="section-header">
+      <h2>Orders Available</h2>
+      <button class="refresh-btn" onclick="fetchAvailableOrders()">⟳ Refresh</button>
+    </div>
+    <div class="orders-list loading" id="available-orders-list"></div>
+  </section>
+
+  <section class="panel-section" id="active-orders">
+    <div class="section-header">
+      <h2>Active Orders</h2>
+      <button class="refresh-btn" onclick="fetchActiveOrders()">⟳ Refresh</button>
+    </div>
+    <div class="orders-list loading" id="active-orders-list"></div>
+  </section>
+
+  <section class="panel-section" id="completed-orders">
+    <div class="section-header">
+      <h2>Completed Orders</h2>
+      <button class="refresh-btn" onclick="fetchCompletedOrders()">⟳ Refresh</button>
+    </div>
+    <div class="orders-list loading" id="completed-orders-list"></div>
+  </section>
+</div>
+</main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>BoostingKing</h3>
+                <p>&copy; 2025 BoostingKing. All rights reserved.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jobs.html">Work With Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Popular Services</h4>
+                <ul>
+                    <li><a href="faceit.html">Faceit Boost</a></li>
+                    <li><a href="premier.html">Premier Boost</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="legal.html">Legal Info</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Email: support@boostingking.com</li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Join Our Community</h4>
+                <div class="social-icons">
+                    <a href="https://discord.gg/43JBNncGWf" class="social-icon" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Website built with passion for gamers. | <a href="#" id="scrollToTop">Scroll to top ↑</a></p>
+        </div>
+    </footer>
+
+<div id="rules-modal" class="rules-modal">
+  <div class="rules-modal-content">
+    <span class="close-btn" onclick="toggleRulesModal()">&times;</span>
+    <h2>Booster Rules</h2>
+    <ul class="rules-list">
+      <li>✅ Do not use cheats or third-party software</li>
+      <li>✅ Always communicate respectfully with customers</li>
+      <li>✅ Complete orders within the time limit</li>
+      <li>✅ No account sharing without permission</li>
+      <li>✅ Use VPN if required in certain regions</li>
+      <li>❌ Breaking rules may lead to permanent suspension</li>
+    </ul>
+  </div>
+</div>
+
+<script src="general.js"></script>
+<script src="booster.js" defer></script>
+</body>
+</html>
