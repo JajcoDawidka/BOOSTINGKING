@@ -63,56 +63,27 @@
     <main class="settings-container">
         <h1 class="settings-title">Account Settings</h1>
         
-        <div class="settings-grid">
-            <div class="settings-column avatar-column">
-                <div class="settings-card">
-                    <h2 class="card-title">Profile Picture</h2>
-                    <div class="avatar-container">
-                        <div class="avatar-preview" id="avatarPreview">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" id="avatarImage">
-                                <circle cx="128" cy="128" r="128" fill="#1f1f2a"/>
-                                <path fill="#F8D57E" d="M128 64a44 44 0 1 1 0 88 44 44 0 0 1 0-88zm0 112c40 0 72 21.5 72 48v8H56v-8c0-26.5 32-48 72-48z"/>
-                            </svg>
-                        </div>
-                        <div class="avatar-upload">
-                            <input type="file" id="avatarUpload" accept="image/*" class="upload-input">
-                            <label for="avatarUpload" class="upload-button">
-                                <svg viewBox="0 0 24 24" class="upload-icon">
-                                    <path fill="currentColor" d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M8,15V13H16V15H8M8,11V9H13V11H8M8,19V17H16V19H8Z" />
-                                </svg>
-                                Upload Avatar
-                            </label>
-                        </div>
-                        <p class="avatar-hint">Your profile picture will look best with a square image</p>
-                    </div>
-                </div>
-            </div>
-            
+        <div class="settings-grid">         
             <div class="settings-column">
                 <div class="settings-card">
                     <h2 class="card-title">General</h2>
                     
-                    <form class="settings-form">
+                    <form class="settings-form" id="settingsForm">
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <div class="input-container disabled-input">
-                                <input type="text" id="username" value="boostingking" class="settings-input" disabled>
+                            <div class="input-container"> 
+                                <input type="text" id="username" value="" class="settings-input">
                                 <svg viewBox="0 0 24 24" class="input-icon">
                                     <path fill="#bbbbbb" d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z" />
                                 </svg>
-                                <div class="lock-icon">
-                                    <svg viewBox="0 0 24 24">
-                                        <path fill="#bbbbbb" d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
-                                    </svg>
-                                </div>
                             </div>
-                            <small class="email-hint">Contact support to change your username</small>
+                            <small class="email-hint">You can change your username here.</small>
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Email Address</label>
                             <div class="input-container disabled-input">
-                                <input type="email" id="email" value="boostingking@gmail.com" class="settings-input" disabled>
+                                <input type="email" id="email" value="" class="settings-input" disabled>
                                 <svg viewBox="0 0 24 24" class="input-icon">
                                     <path fill="#bbbbbb" d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z" />
                                 </svg>
@@ -124,22 +95,24 @@
                             </div>
                             <small class="email-hint">Contact support to change your email</small>
                         </div>
-                        
+
                         <div class="form-group">
-                            <label for="currency">Currency</label>
+                            <label for="currency">Preferred Currency</label>
                             <div class="input-container">
                                 <select id="currency" class="settings-input">
-                                    <option value="USD" selected>USD - US Dollar</option>
-                                    <option value="EUR">EUR - Euro</option>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="PLN">PLN</option>
                                 </select>
                                 <svg viewBox="0 0 24 24" class="input-icon">
-                                    <path fill="#F8D57E" d="M7,15H9C9,16.08 10.37,17 12,17C13.63,17 15,16.08 15,15C15,13.9 13.96,13.5 11.76,12.97C9.64,12.44 7,11.78 7,9C7,7.21 8.47,5.69 10.5,5.18V3H13.5V5.18C15.53,5.69 17,7.21 17,9H15C15,7.92 13.63,7 12,7C10.37,7 9,7.92 9,9C9,10.1 10.04,10.5 12.24,11.03C14.36,11.56 17,12.22 17,15C17,16.79 15.53,18.31 13.5,18.82V21H10.5V18.82C8.47,18.31 7,16.79 7,15Z" />
+                                    <path fill="#bbbbbb" d="M12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6A6,6 0 0,1 18,12A6,6 0 0,1 12,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
                                 </svg>
                             </div>
+                            <small class="email-hint">Choose your preferred currency.</small>
                         </div>
                         
                         <div class="form-actions">
-                            <button type="button" class="cancel-button">Cancel</button>
+                            <button type="button" class="cancel-button" id="cancelButton">Cancel</button>
                             <button type="submit" class="save-button" disabled id="saveButton">Save Changes</button>
                         </div>
                     </form>
@@ -147,11 +120,11 @@
             </div>
         </div>
         <div class="settings-card orders-card">
-    <h2 class="card-title">Your Orders</h2>
-    <div id="ordersList" class="orders-list">
-        <p class="loading-message">Loading your orders...</p>
-    </div>
-</div>
+            <h2 class="card-title">Your Orders</h2>
+            <div id="ordersList" class="orders-list">
+                <p class="loading-message">Loading your orders...</p>
+            </div>
+        </div>
 
     </main>
 
