@@ -8,11 +8,6 @@ body {
   color: #f1f1f1;
 }
 
-.page-with-background {
-  position: relative;
-  z-index: 0;
-}
-
 body * {
   position: relative;
   z-index: 1;
@@ -130,29 +125,6 @@ body * {
     black 10%, 
     black 90%, 
     transparent 100%);
-}
-
-.reviews-loop {
-  display: flex;
-  flex-direction: column;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  will-change: transform;
-  gap: 30px;
-}
-
-@keyframes seamlessScrollUp {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-}
-
-@keyframes seamlessScrollDown {
-  0% { transform: translateY(-50%); }
-  100% { transform: translateY(0); }
-}
-
-.column.paused .reviews-loop {
-  animation-play-state: paused;
 }
 
 .review {
@@ -456,11 +428,6 @@ section:not(:last-child)::after {
     overflow: hidden;
     transition: max-height 0.5s ease, padding 0.5s ease;
     padding: 0;
-}
-
-.answer.open {
-    max-height: 500px;
-    padding: 15px 0 0;
 }
 
 .badges-section {

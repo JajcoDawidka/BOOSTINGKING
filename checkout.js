@@ -1,16 +1,17 @@
-// checkout.js
-
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('[checkout.js] DOMContentLoaded - Skrypt checkout.js rozpoczyna działanie.');
+    // console.log('[checkout.js] DOMContentLoaded - Skrypt checkout.js rozpoczyna działanie.');
 
     let userData = null;
+    // Czekaj na dostępność getStoredUserData
     while (typeof getStoredUserData === 'undefined') {
         await new Promise(resolve => setTimeout(resolve, 50));
     }
     userData = getStoredUserData();
 
     if (!userData || !userData.id) {
-        console.warn('[checkout.js] Brak danych użytkownika w localStorage po wczytaniu general.js. System autoryzacji powinien przekierować.');
+        console.warn('[checkout.js] Brak danych użytkownika w localStorage. Przekierowanie wymagane.');
+        // Opcjonalnie: Przekieruj na stronę logowania/rejestracji, jeśli brak użytkownika
+        // window.location.href = 'login.html'; 
         return;
     }
 
@@ -19,15 +20,16 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const serviceTypeEl = document.getElementById('service-type');
     const summaryRegionEl = document.getElementById('summary-region');
-    const summaryAccountTypeEl = document.getElementById('summary-account-type');
+    // Poprawiony błąd przypisania: usunięto podwójne '='
+    const summaryAccountTypeEl = document.getElementById('summary-account-type'); 
     const eloRangeRow = document.getElementById('elo-range-row');
     const summaryEloRangeEl = document.getElementById('summary-elo-range');
     const rankRangeRow = document.getElementById('rank-range-row');
     const summaryRankRangeEl = document.getElementById('summary-rank-range');
-    const customizationListEl = document.getElementById('customization-list'); // Lista dla nazw wybranych extras
-    
-    const extrasPriceRow = document.getElementById('extras-price-row'); // <-- NOWOŚĆ: Wiersz dla ceny "Extras"
-    const summaryExtrasPriceEl = document.getElementById('summary-extras-price'); // <-- NOWOŚĆ: Element dla ceny "Extras"
+    const customizationListEl = document.getElementById('customization-list');
+
+    const extrasPriceRow = document.getElementById('extras-price-row');
+    const summaryExtrasPriceEl = document.getElementById('summary-extras-price');
 
     const basePriceEl = document.getElementById('base-price');
     const discountAmountEl = document.getElementById('discount-amount');
@@ -57,31 +59,31 @@ document.addEventListener('DOMContentLoaded', async () => {
                 summaryAccountTypeEl.textContent = orderDetails.accountType;
             }
 
+            // Kontroluj widoczność wierszy ELO/Rank
             if (eloRangeRow) eloRangeRow.style.display = 'none';
             if (rankRangeRow) rankRangeRow.style.display = 'none';
 
             if (orderDetails.serviceType.includes('Faceit') && orderDetails.currentLevel && orderDetails.desiredLevel) {
-                if (eloRangeRow) eloRangeRow.style.display = '';
+                if (eloRangeRow) eloRangeRow.style.display = 'flex';
                 if (summaryEloRangeEl) summaryEloRangeEl.textContent = `${orderDetails.currentLevel} → ${orderDetails.desiredLevel}`;
             } else if (orderDetails.serviceType.includes('Premier') && orderDetails.currentLevel && orderDetails.desiredLevel) {
-                if (rankRangeRow) rankRangeRow.style.display = '';
+                if (rankRangeRow) rankRangeRow.style.display = 'flex';
                 if (summaryRankRangeEl) summaryRankRangeEl.textContent = `${orderDetails.currentLevel} → ${orderDetails.desiredLevel}`;
             }
 
-            // Wyświetl cenę "Extras"
-            const extraPrice = parseFloat(orderDetails.extraPrice) || 0; // <-- NOWOŚĆ: Pobierz cenę "Extras"
+            const extraPrice = parseFloat(orderDetails.extraPrice) || 0;
             if (extrasPriceRow && summaryExtrasPriceEl) {
                 if (extraPrice > 0) {
-                    extrasPriceRow.style.display = ''; // Pokaż wiersz
+                    extrasPriceRow.style.display = 'flex';
                     summaryExtrasPriceEl.textContent = `$${extraPrice.toFixed(2)}`;
                 } else {
-                    extrasPriceRow.style.display = 'none'; // Ukryj wiersz, jeśli 0
+                    extrasPriceRow.style.display = 'none';
                 }
             }
 
-            // Wypełnianie listy "Selected Extras" (nazwy, nie cena)
+            // Wypełnianie listy "Selected Extras"
             if (customizationListEl) {
-                customizationListEl.innerHTML = ''; // Wyczyść listę
+                customizationListEl.innerHTML = '';
                 if (orderDetails.customizations && orderDetails.customizations.length > 0) {
                     orderDetails.customizations.forEach(customization => {
                         const li = document.createElement('li');
@@ -95,10 +97,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             }
 
-
             const basePrice = parseFloat(orderDetails.basePrice) || 0;
             const discount = parseFloat(orderDetails.discount) || 0;
-            const total = parseFloat(orderDetails.totalPrice) || (basePrice + extraPrice - discount); // Upewnij się, że total uwzględnia extras
+            const total = parseFloat(orderDetails.totalPrice) || (basePrice + extraPrice - discount);
 
             if (basePriceEl) basePriceEl.textContent = `$${basePrice.toFixed(2)}`;
             if (discountAmountEl) discountAmountEl.textContent = `-$${discount.toFixed(2)}`;
@@ -106,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (discount > 0 && discountAmountEl) {
                 discountAmountEl.parentElement.classList.add('has-discount');
-                discountAmountEl.parentElement.style.display = '';
+                discountAmountEl.parentElement.style.display = 'flex';
             } else if (discountAmountEl) {
                 discountAmountEl.parentElement.classList.remove('has-discount');
                 discountAmountEl.parentElement.style.display = 'none';
@@ -141,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             try {
                 const formData = new FormData(form);
-                const orderDetails = loadOrderData();
+                const orderDetails = loadOrderData(); // Załaduj orderDetails przed użyciem
 
                 const dataToSend = {
                     firstName: formData.get('firstName')?.trim(),
@@ -151,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     steamPassword: formData.get('steamPassword')?.trim() || null,
                     faceitEmail: formData.get('faceitEmail')?.trim() || null,
                     faceitPassword: formData.get('faceitPassword')?.trim() || null,
-                    ...orderDetails
+                    ...orderDetails // Upewnij się, że orderDetails jest tutaj
                 };
 
                 if (!dataToSend.firstName || !dataToSend.lastName || !dataToSend.email) {
@@ -175,6 +176,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     throw new Error(errorData.message || `Failed to process order. Server status: ${res.status}`);
                 }
 
+                const responseData = await res.json();
+                const orderId = responseData.orderId; // Pobierz orderId z odpowiedzi serwera
+
+                // Usunięcie orderDetails po pomyślnym przetworzeniu, ale ZANIM przekierujemy
+                // DANE SĄ TERAZ PRZEKAZYWANE PRZEZ URL, więc można bezpiecznie usunąć orderDetails
+                localStorage.removeItem('orderDetails'); 
+
                 if (typeof showToast === 'function') {
                     showToast('Order placed successfully! Redirecting...');
                 } else if (typeof toast === 'function') {
@@ -183,10 +191,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     localShowToast('Order placed successfully! Redirecting...');
                 }
 
-                localStorage.removeItem('orderDetails');
-
+                // Przekierowanie na stronę potwierdzenia z parametrami URL
                 setTimeout(() => {
-                    window.location.href = 'order-confirmation.html';
+                    // Upewnij się, że orderDetails.totalPrice jest dostępne
+                    const finalTotal = dataToSend.totalPrice; // Użyj totalPrice z obiektu dataToSend
+                    window.location.href = `order-confirmation.html?orderId=${orderId}&totalPrice=${finalTotal}`;
                 }, 2000);
 
             } catch (err) {

@@ -1,16 +1,14 @@
 // boostingzakup.js
 
-// Helper function to get service type based on the current page
 const getServiceType = () => {
     if (window.location.pathname.includes('faceit.html')) {
         return 'Faceit Boosting';
     } else if (window.location.pathname.includes('premier.html')) {
         return 'Premier Boosting';
     }
-    return 'Unknown Service'; // Fallback
+    return 'Unknown Service';
 };
 
-// --- Inicjalizacja i obsługa kodów rabatowych ---
 const initDiscount = () => {
     const btn = document.getElementById('apply-discount');
     const input = document.getElementById('discount-code');
@@ -18,13 +16,15 @@ const initDiscount = () => {
     if (!btn || !input || !msg) return;
 
     let applied = false;
-    const rate = 0.1; // 10% discount
+    const rate = 0.1;
 
     const applyDiscount = e => {
         e.preventDefault();
         const code = input.value.trim().toUpperCase();
         const totalEl = document.getElementById('total-price');
-        let curr = parseFloat(totalEl.textContent.replace('$', '')) || 0;
+        let currentTotalBeforeDiscount = parseFloat(totalEl.getAttribute('data-base-price-before-discount')) || 
+                                         (parseFloat(document.getElementById('base-price').textContent.replace('$', '')) || 0) + 
+                                         (parseFloat(document.getElementById('extra-price').textContent.replace('$', '')) || 0);
 
         if (applied) {
             msg.textContent = 'Discount code already used!';
@@ -32,16 +32,14 @@ const initDiscount = () => {
         } else if (code === 'KING10') {
             applied = true;
 
-            const discount = curr * rate;
-            const basePrice = curr; // Store current total as base for discount calculation
-            const newPrice = Math.max(0, basePrice - discount);
+            const discount = currentTotalBeforeDiscount * rate;
+            const newPrice = Math.max(0, currentTotalBeforeDiscount - discount);
 
             totalEl.textContent = `$${newPrice.toFixed(2)}`;
-            totalEl.setAttribute('data-base-price-before-discount', basePrice.toFixed(2)); // Store total before discount
-            totalEl.setAttribute('data-applied-discount-value', discount.toFixed(2)); // Store discount value
+            totalEl.setAttribute('data-base-price-before-discount', currentTotalBeforeDiscount.toFixed(2));
+            totalEl.setAttribute('data-applied-discount-value', discount.toFixed(2));
 
-            msg.innerHTML = `✔ 10% discount applied!<br>` +
-                `<span class="discount-details">You saved: <strong>$${discount.toFixed(2)}</strong></span>`;
+            msg.innerHTML = `✔ 10% discount applied!<br><span class="discount-details">You saved: <strong>$${discount.toFixed(2)}</strong></span>`;
             msg.className = 'discount-message success';
         } else {
             msg.textContent = "Invalid code. Use 'KING10' for 10% off.";
@@ -52,7 +50,6 @@ const initDiscount = () => {
     btn.addEventListener('click', applyDiscount);
     input.addEventListener('keyup', e => { if (e.key === 'Enter') applyDiscount(e); });
 
-    // Re-calculate discount if any price-affecting input changes
     const priceSelectors = [
         '#current-elo', '#target-elo', '#current-rating-input', '#target-rating-input',
         '.level-input-btn', '.custom-opt', 'input[name="accType"]', 'input[name="region"]'
@@ -62,17 +59,14 @@ const initDiscount = () => {
         document.querySelectorAll(selector).forEach(el => {
             ['input', 'change', 'click'].forEach(evt => {
                 el.addEventListener(evt, () => {
-                    // This logic assumes that price calculation (base, extra, total)
-                    // is handled elsewhere in boostingzakup.js or general.js
-                    // and updates #total-price accordingly.
-                    // Here, we just re-apply the discount if it was already active.
-
                     const totalEl = document.getElementById('total-price');
                     const msg = document.getElementById('discount-message');
 
                     if (applied) {
-                        // Recalculate based on the *new* total price (before any discount re-application)
-                        const currentTotalBeforeDiscount = parseFloat(totalEl.textContent.replace('$', '')) || 0;
+                        const currentTotalBeforeDiscount = parseFloat(totalEl.getAttribute('data-base-price-before-discount')) ||
+                                                            (parseFloat(document.getElementById('base-price').textContent.replace('$', '')) || 0) +
+                                                            (parseFloat(document.getElementById('extra-price').textContent.replace('$', '')) || 0);
+                        
                         const discount = currentTotalBeforeDiscount * rate;
                         const newPrice = Math.max(0, currentTotalBeforeDiscount - discount);
 
@@ -80,11 +74,9 @@ const initDiscount = () => {
                         totalEl.setAttribute('data-base-price-before-discount', currentTotalBeforeDiscount.toFixed(2));
                         totalEl.setAttribute('data-applied-discount-value', discount.toFixed(2));
 
-                        msg.innerHTML = `✔ 10% discount applied!<br>` +
-                            `<span class="discount-details">You saved: <strong>$${discount.toFixed(2)}</strong></span>`;
+                        msg.innerHTML = `✔ 10% discount applied!<br><span class="discount-details">You saved: <strong>$${discount.toFixed(2)}</strong></span>`;
                         msg.className = 'discount-message success';
                     } else {
-                        // If no discount was applied, ensure message is clear
                         msg.textContent = '';
                         msg.className = 'discount-message';
                     }
@@ -94,7 +86,6 @@ const initDiscount = () => {
     });
 };
 
-// --- Tworzenie pływającego powiadomienia o błędzie ---
 const showFloatingRegionError = () => {
     let existing = document.getElementById('floating-region-error');
     if (existing) {
@@ -126,7 +117,6 @@ const showFloatingRegionError = () => {
     }, 3000);
 };
 
-// --- Konfiguracja przycisku finalizacji zamówienia i zapisywanie danych ---
 const setupCheckoutButton = () => {
     const checkoutBtn = document.getElementById('checkout-btn');
     if (!checkoutBtn) return;
@@ -137,20 +127,17 @@ const setupCheckoutButton = () => {
         const regionSelectedInput = document.querySelector('input[name="region"]:checked');
         if (!regionSelectedInput) {
             showFloatingRegionError();
-            return; // Stop execution if no region is selected
+            return;
         }
 
-        // Gather all necessary data
         const serviceType = getServiceType();
 
-        // Pobierz tekst wyświetlany dla Regionu
         const regionLabel = document.querySelector(`label[for="${regionSelectedInput.id}"] .region-title`);
         const region = regionLabel ? regionLabel.textContent : regionSelectedInput.value;
 
-        // Pobierz tekst wyświetlany dla Account Type
         const accountTypeInput = document.querySelector('input[name="accType"]:checked');
         const accountTypeLabel = document.querySelector(`label[for="${accountTypeInput.id}"] .account-type-title`);
-        const accountType = accountTypeLabel ? accountTypeLabel.textContent : (accountTypeInput?.value || 'Solo (Shared Account)'); // Default to solo if not found
+        const accountType = accountTypeLabel ? accountTypeLabel.textContent : (accountTypeInput?.value || 'Solo (Shared Account)');
 
         let currentLevel = null;
         let desiredLevel = null;
@@ -165,40 +152,36 @@ const setupCheckoutButton = () => {
 
         const customizationOptions = document.querySelectorAll('.custom-opt:checked');
         const customizations = Array.from(customizationOptions).map(option => {
-            // Upewnij się, że pobierasz .option-title, jeśli istnieje, inaczej fallback do id
             const optionTitleEl = document.querySelector(`label[for="${option.id}"] .option-title`);
             return optionTitleEl ? optionTitleEl.textContent : option.id.charAt(0).toUpperCase() + option.id.slice(1);
         });
 
-        // Get prices from the display (assuming these are updated by your price calculation logic)
         const basePriceElement = document.getElementById('base-price');
-        const extraPriceElement = document.getElementById('extra-price'); // <-- POBIERZ EXTRA PRICE
+        const extraPriceElement = document.getElementById('extra-price');
         const totalElement = document.getElementById('total-price');
 
-        const basePrice = parseFloat(basePriceElement?.textContent.replace('$', '')) || 0;
-        const extraPrice = parseFloat(extraPriceElement?.textContent.replace('$', '')) || 0; // <-- SPARSUJ EXTRA PRICE
-        const total = parseFloat(totalElement?.textContent.replace('$', '')) || 0;
+        // Ensure all prices are non-negative when read and stored
+        const basePrice = Math.max(0, parseFloat(basePriceElement?.textContent.replace('$', '')) || 0);
+        const extraPrice = Math.max(0, parseFloat(extraPriceElement?.textContent.replace('$', '')) || 0);
+        const total = Math.max(0, parseFloat(totalElement?.textContent.replace('$', '')) || 0);
 
-        // Calculate discount based on the difference between basePrice and total if a discount was applied
         let discountAmount = 0;
         if (totalElement.hasAttribute('data-applied-discount-value')) {
-            discountAmount = parseFloat(totalElement.getAttribute('data-applied-discount-value')) || 0;
+            discountAmount = Math.max(0, parseFloat(totalElement.getAttribute('data-applied-discount-value')) || 0);
         } else {
-            // If no explicit discount attribute, calculate it as difference from potential base price stored or current base price
-            const originalTotalBeforeDiscount = parseFloat(totalElement.getAttribute('data-base-price-before-discount')) || basePrice;
-            discountAmount = originalTotalBeforeDiscount - total;
+            const originalTotalBeforeDiscount = (parseFloat(totalElement.getAttribute('data-base-price-before-discount')) || basePrice + extraPrice);
+            discountAmount = Math.max(0, originalTotalBeforeDiscount - total);
         }
-
 
         const orderDetails = {
             serviceType: serviceType,
-            region: region, // Teraz zawiera "Europe", "Americas" itd.
-            accountType: accountType, // Teraz zawiera "Solo (Shared Account)" lub "Duo Queue"
-            currentLevel: currentLevel, // Will be ELO or Rating
-            desiredLevel: desiredLevel, // Will be ELO or Rating
-            customizations: customizations, // Lista nazw wybranych dodatków
+            region: region,
+            accountType: accountType,
+            currentLevel: currentLevel,
+            desiredLevel: desiredLevel,
+            customizations: customizations,
             basePrice: basePrice,
-            extraPrice: extraPrice, // <-- DODANE: Cena dodatków
+            extraPrice: extraPrice,
             discount: discountAmount,
             totalPrice: total
         };
@@ -208,16 +191,12 @@ const setupCheckoutButton = () => {
     });
 };
 
-// --- Inicjalizacja całego modułu po załadowaniu DOM ---
 document.addEventListener('DOMContentLoaded', () => {
     initDiscount();
     setupCheckoutButton();
-    // Any other global initializations should go here
-    // calculatePrices(); // Jeśli masz taką funkcję, upewnij się, że jest tutaj wywołana
+    // You MUST have a function here or in general.js that calculates prices
+    // (base, extra, and total) based on user selections and updates the DOM elements:
+    // #base-price, #extra-price, and #total-price (on faceit.html/premier.html).
+    // This function should be called whenever a relevant input changes.
+    // Example: calculateAndDisplayPrices();
 });
-
-// You'll also need to ensure your price calculation logic (which should update
-// #base-price, #extra-price, and #total-price) is also part of this file
-// or general.js and runs on DOMContentLoaded as well.
-// For example, if you have a function like calculatePrices(), call it here:
-// calculatePrices();

@@ -1,7 +1,7 @@
 /*********************
  * KONFIGURACJA
  *********************/
-const API_BASE_URL = 'http://localhost/boostingking'; // Pamiętaj, tylko jedno "http://"
+const API_BASE_URL = 'http://localhost/boostingking'; // PamiÄ™taj, tylko jedno "http://"
 const PAGE_ACCESS = {
     'settings.html': ['user', 'booster'],
     'booster-panel.html': ['booster'],
@@ -9,7 +9,7 @@ const PAGE_ACCESS = {
 };
 
 /*********************
- * TOKEN I DOSTĘP
+ * TOKEN I DOSTÄ˜P
  *********************/
 async function verifyToken() {
     try {
@@ -23,51 +23,51 @@ async function verifyToken() {
 
         if (!response.ok) {
             const errorText = await response.text();
-            console.warn('[verifyToken] Serwer zwrócił błąd weryfikacji tokena:', response.status, errorText);
+            console.warn('[verifyToken] Serwer zwrĂłciĹ‚ bĹ‚Ä…d weryfikacji tokena:', response.status, errorText);
             localStorage.removeItem('userData');
             return null;
         }
 
         const data = await response.json();
-        console.log('[verifyToken] Odpowiedź JSON z verify_token.php:', data);
+        console.log('[verifyToken] OdpowiedĹş JSON z verify_token.php:', data);
 
         if (data.valid && data.user) {
             localStorage.setItem('userData', JSON.stringify(data.user));
-            console.log(`[verifyToken] Użytkownik ${data.user.username} zweryfikowany pomyślnie.`);
+            console.log(`[verifyToken] UĹźytkownik ${data.user.username} zweryfikowany pomyĹ›lnie.`);
             return data.user;
         } else {
-            console.warn('[verifyToken] Token nieważny lub brak danych użytkownika w odpowiedzi PHP. Usuwam dane z localStorage.');
+            console.warn('[verifyToken] Token niewaĹźny lub brak danych uĹźytkownika w odpowiedzi PHP. Usuwam dane z localStorage.');
             localStorage.removeItem('userData');
             return null;
         }
     } catch (error) {
-        console.error('[verifyToken] Błąd połączenia lub przetwarzania w verifyToken:', error);
+        console.error('[verifyToken] BĹ‚Ä…d poĹ‚Ä…czenia lub przetwarzania w verifyToken:', error);
         localStorage.removeItem('userData');
         return null;
     }
 }
 
-// Funkcja odpowiedzialna za ochronę ścieżek
+// Funkcja odpowiedzialna za ochronÄ™ Ĺ›cieĹźek
 async function protectRoute(user) {
     const currentPage = window.location.pathname.split('/').pop();
     const allowedRoles = PAGE_ACCESS[currentPage];
 
-    console.log(`[protectRoute] Sprawdzam dostęp do strony: ${currentPage}`);
+    console.log(`[protectRoute] Sprawdzam dostÄ™p do strony: ${currentPage}`);
     console.log(`[protectRoute] Wymagane role:`, allowedRoles);
-    console.log(`[protectRoute] Rola użytkownika:`, user ? user.role : 'Brak (niezalogowany)');
+    console.log(`[protectRoute] Rola uĹźytkownika:`, user ? user.role : 'Brak (niezalogowany)');
 
     if (!allowedRoles) {
-        console.log(`[protectRoute] Strona ${currentPage} nie wymaga określonej ochrony rolami.`);
+        console.log(`[protectRoute] Strona ${currentPage} nie wymaga okreĹ›lonej ochrony rolami.`);
         return; 
     }
 
     if (!user || !allowedRoles.includes(user.role)) {
-        console.warn(`[protectRoute] Brak dostępu dla użytkownika (${user ? user.username + ', rola: ' + user.role : 'niezalogowany'}) do strony ${currentPage}. Przekierowuję do login.html.`);
+        console.warn(`[protectRoute] Brak dostÄ™pu dla uĹźytkownika (${user ? user.username + ', rola: ' + user.role : 'niezalogowany'}) do strony ${currentPage}. PrzekierowujÄ™ do login.html.`);
         window.location.href = 'login.html';
         throw new Error('Unauthorized access'); 
     }
 
-    console.log(`[protectRoute] Użytkownik (${user.username}, rola: ${user.role}) ma dostęp do strony ${currentPage}.`);
+    console.log(`[protectRoute] UĹźytkownik (${user.username}, rola: ${user.role}) ma dostÄ™p do strony ${currentPage}.`);
 }
 
 
@@ -84,13 +84,13 @@ function logoutUser() {
     })
     .then(response => {
         if (!response.ok) {
-            console.error('[logoutUser] Błąd serwera podczas wylogowania:', response.status, response.statusText);
+            console.error('[logoutUser] BĹ‚Ä…d serwera podczas wylogowania:', response.status, response.statusText);
         }
-        console.log('[logoutUser] Wylogowano pomyślnie. Przekierowuję do login.html.');
+        console.log('[logoutUser] Wylogowano pomyĹ›lnie. PrzekierowujÄ™ do login.html.');
         window.location.href = 'login.html';
     })
     .catch(error => {
-        console.error('[logoutUser] Błąd połączenia sieciowego podczas wylogowania:', error);
+        console.error('[logoutUser] BĹ‚Ä …d poĹ‚Ä …czenia sieciowego podczas wylogowania:', error);
         window.location.href = 'login.html';
     });
 }
@@ -106,7 +106,7 @@ function getStoredUserData() {
             return JSON.parse(userDataString);
         }
     } catch (e) {
-        console.error('Błąd podczas parsowania userData z localStorage:', e);
+        console.error('BĹ‚Ä …d podczas parsowania userData z localStorage:', e);
         localStorage.removeItem('userData');
     }
     return null;
@@ -146,7 +146,7 @@ async function checkAuthStatus(user) {
         authLink.textContent = 'Login';
         authLink.href = 'login.html';
         authLink.onclick = null;
-        console.log('[checkAuthStatus] Użytkownik niezalogowany. Link autoryzacji ustawiony na "Login".');
+        console.log('[checkAuthStatus] UĹźytkownik niezalogowany. Link autoryzacji ustawiony na "Login".');
         return;
     }
 
@@ -157,7 +157,7 @@ async function checkAuthStatus(user) {
         logoutUser();
     };
 
-    console.log(`[checkAuthStatus] Użytkownik ${user.username} zalogowany. Aktualizuję UI.`);
+    console.log(`[checkAuthStatus] UĹźytkownik ${user.username} zalogowany. AktualizujÄ™ UI.`);
     updateBoosterUI(user);
 }
 
@@ -172,18 +172,18 @@ function updateBoosterUI(user) {
         boosterOptions.querySelectorAll('a').forEach(link => {
             link.classList.toggle('active-booster-link', link.getAttribute('href') === currentPage);
         });
-        console.log('[updateBoosterUI] Widoczność opcji boostera dostosowana.');
+        console.log('[updateBoosterUI] WidocznoĹ›Ä‡ opcji boostera dostosowana.');
     }
 
     if (dropdownHeader) {
         dropdownHeader.innerHTML = isBooster
             ? `<div class="booster-header"><span class="booster-badge">BOOSTER</span>${user.username || 'Booster'}</div>`
             : user.username || 'Guest';
-        console.log('[updateBoosterUI] Nagłówek profilu użytkownika dostosowany.');
+        console.log('[updateBoosterUI] NagĹ‚Ăłwek profilu uĹźytkownika dostosowany.');
     }
 }
 
-// Globalna funkcja toast do użycia w innych skryptach
+// Globalna funkcja toast do uĹźycia w innych skryptach
 function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
@@ -195,7 +195,17 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-// Inicjalizacja Dropdownów i Skroll
+// Nowe, globalnie dostępne funkcje do wyświetlania toastów o sukcesie i błędzie
+function showSuccessToast(message) {
+    showToast(message, 'success');
+}
+
+function showErrorToast(message) {
+    showToast(message, 'error');
+}
+
+
+// Inicjalizacja DropdownĂłw i Skroll
 const initProfileDropdown = () => {
     const profileDropdown = document.querySelector('.profile-dropdown');
     const profileBtn = document.querySelector('.profile-btn');
@@ -245,10 +255,10 @@ const initGlobalDropdownClose = () => {
 };
 
 /*********************
- * START (Główne uruchamianie skryptu po załadowaniu DOM)
+ * START (GĹ‚Ăłwne uruchamianie skryptu po zaĹ‚adowaniu DOM)
  *********************/
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('[general.js] DOMContentLoaded - Skrypt general.js rozpoczyna działanie.');
+    console.log('[general.js] DOMContentLoaded - Skrypt general.js rozpoczyna dziaĹ‚anie.');
 
     let user = null;
     let maxRetries = 3;
@@ -257,19 +267,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     for (let i = 0; i < maxRetries; i++) {
         user = await verifyToken();
         if (user) {
-            break; // Token zweryfikowany pomyślnie, wychodzimy z pętli
+            break; // Token zweryfikowany pomyĹ›lnie, wychodzimy z pÄ™tli
         }
-        console.log(`[general.js] Próba weryfikacji tokena nieudana (próba ${i + 1}/${maxRetries}). Ponawiam...`);
+        console.log(`[general.js] PrĂłba weryfikacji tokena nieudana (prĂłba ${i + 1}/${maxRetries}). Ponawiam...`);
         await new Promise(resolve => setTimeout(resolve, retryDelay));
-        retryDelay *= 2; // Zwiększ opóźnienie dla kolejnych prób
+        retryDelay *= 2; // ZwiÄ™ksz opĂłĹşnienie dla kolejnych prĂłb
     }
 
-    // Jeśli po wszystkich próbach user nadal jest null, protectRoute przekieruje
+    // JeĹ›li po wszystkich prĂłbach user nadal jest null, protectRoute przekieruje
     try {
         await protectRoute(user);
     } catch (e) {
         if (e.message === 'Unauthorized access') {
-            console.log('[general.js] Zatrzymuję dalsze inicjalizacje z powodu braku autoryzacji.');
+            console.log('[general.js] ZatrzymujÄ™ dalsze inicjalizacje z powodu braku autoryzacji.');
             return; 
         }
         throw e; 
@@ -281,16 +291,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (currentPage === 'booster-panel.html') {
         if (user && user.role === 'booster') {
             if (typeof initBoosterPanel === 'function') {
-                console.log('[general.js] Strona to booster-panel.html i użytkownik jest boosterem. Wywołuję initBoosterPanel.');
+                console.log('[general.js] Strona to booster-panel.html i uĹźytkownik jest boosterem. WywoĹ‚ujÄ™ initBoosterPanel.');
                 initBoosterPanel(user); 
             } else {
-                console.error('[general.js] Funkcja initBoosterPanel nie została znaleziona. Upewnij się, że booster.js jest poprawnie załadowany i definiuje tę funkcję globalnie.');
+                console.error('[general.js] Funkcja initBoosterPanel nie zostaĹ‚a znaleziona. Upewnij siÄ™, Ĺźe booster.js jest poprawnie zaĹ‚adowany i definiuje tÄ™ funkcjÄ™ globalnie.');
             }
         } else {
-            console.log('[general.js] Na stronie booster-panel.html, ale użytkownik nie jest zalogowany jako booster. Inicjalizacja panelu boostera pominięta.');
+            console.log('[general.js] Na stronie booster-panel.html, ale uĹźytkownik nie jest zalogowany jako booster. Inicjalizacja panelu boostera pominiÄ™ta.');
         }
     } else {
-        console.log(`[general.js] Strona nie jest booster-panel.html (${currentPage}). Pomijam inicjalizację panelu boostera.`);
+        console.log(`[general.js] Strona nie jest booster-panel.html (${currentPage}). Pomijam inicjalizacjÄ™ panelu boostera.`);
     }
 
     initDropdown();
@@ -298,5 +308,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     initScrollToTop();
     initGlobalDropdownClose();
 
-    console.log('[general.js] Wszystkie inicjalizacje DOMContentLoaded zakończone.');
+    console.log('[general.js] Wszystkie inicjalizacje DOMContentLoaded zakoĹ„czone.');
 });
+
+
+// === Ważne: Eksportowanie funkcji globalnie, aby były dostępne dla innych skryptów ===
+// Te funkcje muszą być dostępne dla settings.js, booster.js i chat.html
+// dlatego przypisujemy je do obiektu window.
+window.API_BASE_URL = API_BASE_URL; // Upewnienie się, że API_BASE_URL jest globalne
+window.getAuthHeaders = function() {
+    return {
+        'Content-Type': 'application/json'
+    };
+};
+// getStoredUserData jest już globalna
+// logoutUser jest już globalna
+// showToast jest już globalna
+// showSuccessToast i showErrorToast zostały zdefiniowane jako globalne w tym pliku

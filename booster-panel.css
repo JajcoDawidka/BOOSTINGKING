@@ -1,217 +1,380 @@
 /* Booster Panel Styles – Spójne z settings.css */
 
 body {
-  background-color: #0a0a0a;
-  color: #ffffff;
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
+    background-color: #0a0a0a;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .booster-panel {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 0 20px;
-  box-sizing: border-box;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
 }
 
 .panel-header {
-  text-align: center;
-  margin-bottom: 40px;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 .panel-header h1 {
-  color: #F8D57E;
-  font-size: 32px;
-  margin-bottom: 20px;
+    color: #F8D57E;
+    font-size: 32px;
+    margin-bottom: 20px;
 }
 
 .stats-summary {
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-  flex-wrap: wrap;
-  margin-bottom: 40px; /* odstęp pod statystykami */
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 40px; /* odstęp pod statystykami */
 }
 
 .stat-card {
-  background-color: #151515;
-  border: 1px solid #252525;
-  border-radius: 16px;
-  padding: 20px 30px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  min-width: 150px;
+    background-color: #151515;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 20px 30px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    min-width: 150px;
 }
 
 .stat-value {
-  font-size: 28px;
-  font-weight: bold;
-  color: #F8D57E;
-  display: block;
+    font-size: 28px;
+    font-weight: bold;
+    color: #F8D57E;
+    display: block;
 }
 
 .stat-label {
-  font-size: 14px;
-  color: #bbbbbb;
+    font-size: 14px;
+    color: #bbbbbb;
 }
 
 /* Kolumna sekcji z odstępem u góry i przerwą między sekcjami */
 .panel-column {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* Zwiększony odstęp między sekcjami pionowo */
+    margin-top: 20px;
 }
 
 /* Uniwersalna sekcja */
 .panel-section {
-  background-color: #151515;
-  border: 1px solid #252525;
-  border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    background-color: #151515;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
-/* Opcjonalne kolory sekcji dla lepszej widoczności */
+/* Opcjonalne kolory sekcji dla lepszej widoczności (zachowane z Twojego kodu) */
 #orders-available.panel-section {
-  background-color: #181818;
+    background-color: #181818;
 }
 #active-orders.panel-section {
-  background-color: #151515;
+    background-color: #151515;
 }
 #completed-orders.panel-section {
-  background-color: #121212;
+    background-color: #121212;
 }
 
 /* Nagłówek sekcji: tytuł i przycisk */
 .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px; /* Dodano padding-bottom dla linii */
+    border-bottom: 1px solid #2a2a3d; /* Dodano linię pod nagłówkiem */
 }
 
 .section-header h2 {
-  font-size: 24px;
-  color: #F8D57E;
-  margin: 0;
+    font-size: 24px;
+    color: #F8D57E;
+    margin: 0;
 }
 
 .refresh-btn {
-  background-color: transparent;
-  border: 1px solid #F8D57E;
-  color: #F8D57E;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
+    background-color: transparent;
+    border: 1px solid #F8D57E;
+    color: #F8D57E;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
 .refresh-btn:hover {
-  background-color: rgba(248, 213, 126, 0.1);
-  transform: scale(1.05);
+    background-color: rgba(248, 213, 126, 0.1);
+    transform: scale(1.05);
 }
 
-/* Lista zamówień dla wszystkich sekcji */
+/* --- Nowe style dla kontenera karuzeli i list zamówień (NADPISUJE ISTNIEJĄCE .orders-list) --- */
+/* Te style zapewniają, że listy będą się przewijać horyzontalnie, zawierając karty zamówień */
+
+.orders-carousel-container {
+    overflow-x: auto; /* Włącza poziome przewijanie, jeśli zawartość jest za duża */
+    overflow-y: hidden; /* Ukrywa pionowe przewijanie */
+    padding-bottom: 15px; /* Dodatkowy padding na dole dla paska przewijania, jeśli jest */
+    margin-bottom: -15px; /* Kompensacja paddingu, żeby nie zwiększać nadmiernie wysokości sekcji */
+    -webkit-overflow-scrolling: touch; /* Poprawia przewijanie na iOS */
+    scrollbar-width: thin; /* Styl dla Firefox */
+    scrollbar-color: #F8D57E #2a2a3d; /* Kolory dla Firefox */
+}
+
+/* Styl dla paska przewijania w WebKit (Chrome, Safari) */
+.orders-carousel-container::-webkit-scrollbar {
+    height: 10px; /* Wysokość paska przewijania */
+}
+
+.orders-carousel-container::-webkit-scrollbar-track {
+    background: #2a2a3d; /* Tło paska przewijania */
+    border-radius: 10px;
+}
+
+.orders-carousel-container::-webkit-scrollbar-thumb {
+    background-color: #F8D57E; /* Kolor suwaka przewijania */
+    border-radius: 10px;
+    border: 2px solid #2a2a3d; /* Obramowanie suwaka */
+}
+
 .orders-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  min-height: 100px;
+    display: flex; /* Używa Flexbox do układania kart obok siebie */
+    flex-direction: row; /* Zapewnia układ poziomy */
+    gap: 20px; /* Odstęp między kartami */
+    padding: 5px 0; /* Minimalny padding wewnętrzny */
+    min-height: 220px; /* Minimalna wysokość, aby kontener nie skakał */
+    align-items: stretch; /* Upewnij się, że karty mają tę samą wysokość */
+    /* Ważne: Usunięto flex-direction: column z poprzednich stylów .orders-list */
 }
 
-/* Pojedyncze zamówienie */
-.order-entry {
-  background-color: #1f1f2a;
-  border: 1px solid #2a2a3d;
-  border-radius: 12px;
-  padding: 16px;
-  color: #ffffff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+/* Style dla pojedynczej karty zamówienia (Zastępuje .order-entry) */
+.order-card {
+    flex: 0 0 auto; /* Zapobiega kurczeniu się i rozciąganiu, zachowuje stałą szerokość */
+    width: 250px; /* Standardowa szerokość karty */
+    background-color: #24243e; /* Tło karty */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Rozkłada zawartość w pionie */
+    border: 1px solid rgba(248, 213, 126, 0.2);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-/* Wiadomości stanu listy */
+.order-card:hover {
+    transform: translateY(-5px); /* Lekkie podniesienie przy najechaniu */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(248, 213, 126, 0.1);
+}
+
+.order-id {
+    font-weight: 700;
+    color: #F8D57E;
+    font-size: 1.1em;
+}
+
+.order-status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.order-status.pending { background-color: #d1b54a; color: #3a3a10; } /* Żółty */
+.order-status.in-progress { background-color: #4CAF50; color: #ffffff; } /* Zielony */
+.order-status.completed { background-color: #6a6a9b; color: #ffffff; } /* Szary */
+
+
+.order-body p {
+    margin: 8px 0;
+    font-size: 0.9em;
+    color: #c0c0d9;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.order-body i {
+    color: #F8D57E; /* Ikony w złotym kolorze */
+}
+
+/* Przyciski w kartach */
+.order-card .btn {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin-top: 15px; /* Odstęp od treści karty */
+}
+
+.order-card .btn.success {
+    background-color: #4CAF50;
+    color: #ffffff;
+    border: none;
+}
+
+.order-card .btn.success:hover {
+    background-color: #45a049;
+}
+
+.order-card .btn.secondary {
+    background-color: transparent;
+    border: 1px solid #4a4a6e;
+    color: #c0c0d9;
+}
+
+.order-card .btn.secondary:hover {
+    background-color: rgba(74, 74, 110, 0.2);
+    border-color: #F8D57E;
+    color: #F8D57E;
+}
+
+/* Styl dla spinnera ładowania wewnątrz kontenerów list */
+.loading-spinner-small {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #F8D57E;
+    animation: spin 1s ease-in-out infinite;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+/* Komunikaty o braku zamówień / błędach (zachowane z Twojego kodu) */
 .loading-message,
 .error-message,
-.no-orders-message {
-  color: #aaaaaa;
-  font-style: italic;
-  padding: 0.5rem;
-  text-align: center;
+.no-orders { /* Zmieniono .no-orders-message na .no-orders aby pasowało do JS */
+    color: #aaaaaa;
+    font-style: italic;
+    padding: 0.5rem;
+    text-align: center;
 }
 
-/* Przycisk do zasad */
+.error-message {
+    color: #ff6b6b;
+    font-weight: 500;
+}
+
+/* Przycisk do zasad (zachowany z Twojego kodu) */
 .rules-button-wrapper {
-  text-align: center;
-  margin-bottom: 20px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .rules-btn {
-  background-color: transparent;
-  border: 1px solid #F8D57E;
-  color: #F8D57E;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    background-color: transparent;
+    border: 1px solid #F8D57E;
+    color: #F8D57E;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .rules-btn:hover {
-  background-color: rgba(248, 213, 126, 0.1);
-  transform: scale(1.05);
+    background-color: rgba(248, 213, 126, 0.1);
+    transform: scale(1.05);
 }
 
-/* Modal zasad */
+/* Modal zasad (zachowany z Twojego kodu) */
 .rules-modal {
-  display: none;
-  position: fixed;
-  z-index: 999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(15, 15, 15, 0.85);
-  backdrop-filter: blur(4px);
-  justify-content: center;
-  align-items: center;
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
 }
 
 .rules-modal-content {
-  background-color: #1e1e1e;
-  border: 2px solid #F8D57E;
-  padding: 30px;
-  border-radius: 12px;
-  max-width: 600px;
-  width: 90%;
-  color: #fff;
-  text-align: left;
-  position: relative;
+    background-color: #1e1e1e;
+    border: 2px solid #F8D57E;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    color: #fff;
+    text-align: left;
+    position: relative;
 }
 
 .rules-modal-content h2 {
-  margin-top: 0;
-  color: #F8D57E;
+    margin-top: 0;
+    color: #F8D57E;
 }
 
 .rules-list {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 20px;
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
 }
 
 .rules-list li {
-  margin-bottom: 12px;
-  font-size: 16px;
+    margin-bottom: 12px;
+    font-size: 16px;
 }
 
 .close-btn {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  font-size: 24px;
-  color: #fff;
-  cursor: pointer;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* Responsywność dla małych ekranów - KARUZELA */
+@media (max-width: 768px) {
+    .panel-column {
+        padding: 10px;
+        gap: 20px;
+    }
+
+    .panel-section {
+        padding: 15px;
+    }
+
+    .orders-carousel-container {
+        padding-bottom: 10px; /* Mniejszy padding dla paska przewijania na mobile */
+        margin-bottom: -10px;
+    }
+
+    .orders-list {
+        gap: 15px; /* Mniejszy odstęp między kartami na mobile */
+    }
+
+    .order-card {
+        width: 200px; /* Mniejsza szerokość karty na mobile, aby więcej się zmieściło */
+        padding: 15px;
+    }
 }

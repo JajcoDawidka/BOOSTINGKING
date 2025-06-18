@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - BoostingKing</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="checkout.css">
+    <style>
+        body {
+            background-image: url('rozmytetlo.webp');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .confirmation-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: rgba(20, 20, 25, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(248, 213, 126, 0.25);
+            text-align: center;
+        }
+        .confirmation-container h1 {
+            color: #F8D57E;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .confirmation-container p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #bbb;
+        }
+        .order-details-summary {
+            background-color: rgba(30, 30, 35, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        .order-details-summary strong {
+            color: #F8D57E;
+        }
+        .confirmation-actions a {
+            display: inline-block;
+            background-color: #F8D57E;
+            color: #0a0a0a;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+        .confirmation-actions a:hover {
+            background-color: #ffea00;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-container">
+        <h1>Order Placed Successfully! 🎉</h1>
+        <p>Thank you for your order! Your request has been received and is being processed.</p>
+        
+        <div class="order-details-summary">
+            <p><strong>Order ID:</strong> <span id="display-order-id">#Loading...</span></p>
+            <p><strong>Total Amount:</strong> <span id="display-total-amount">$Loading...</span></p>
+            <p>You will receive an email confirmation shortly with all the details.</p>
+        </div>
+
+        <p>You will be redirected to the payment page in <span id="countdown">5</span> seconds...</p>
+        
+        <div class="confirmation-actions">
+            <a href="settings.html">Go to profile</a>
+            <a href="cs2-modes.html">Explore More Services</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const countdownEl = document.getElementById('countdown');
+            const displayOrderIdEl = document.getElementById('display-order-id');
+            const displayTotalAmountEl = document.getElementById('display-total-amount');
+
+            // Odczytaj orderId i totalPrice z parametrów URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            const totalPrice = urlParams.get('totalPrice');
+
+            if (displayOrderIdEl && orderId) {
+                displayOrderIdEl.textContent = `#${orderId}`;
+            } else {
+                displayOrderIdEl.textContent = `#N/A`; // W przypadku braku ID
+            }
+
+            if (displayTotalAmountEl && totalPrice) {
+                displayTotalAmountEl.textContent = `$${parseFloat(totalPrice).toFixed(2)}`;
+            } else {
+                displayTotalAmountEl.textContent = `$0.00`;
+            }
+
+            let countdown = 5;
+            const interval = setInterval(() => {
+                countdown--;
+                if (countdownEl) countdownEl.textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(interval);
+                    // Tutaj zainicjuj rzeczywiste przekierowanie do bramki płatności
+                    // window.location.href = 'YOUR_PAYMENT_GATEWAY_URL_HERE'; 
+                    alert('Simulating redirect to payment gateway...'); 
+                    window.location.href = 'dashboard.html'; // Tymczasowe przekierowanie po "płatności"
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

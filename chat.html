@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Chat - BoostingKing</title>
+    <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="main-layout-container">
+        <div class="chat-column">
+            <div class="chat-header">
+                <button class="back-btn" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
+                <span>Chat for Order #<span id="order-id-display"></span></span>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <div class="loading-spinner-small"></div> Loading messages...
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Write a message...">
+                <button id="send-button" class="send-button">Send</button>
+            </div>
+        </div>
+
+        <div class="details-column">
+            <div class="details-header">
+                <h2>Order Details</h2>
+                <div class="header-buttons">
+                    <button class="small-header-btn notify-customer-btn"><i class="fas fa-bell"></i> Notify Customer</button>
+                    <button class="small-header-btn deliver-order-btn"><i class="fas fa-truck"></i> Deliver Order <i class="fas fa-chevron-right"></i></button>
+                    <button class="small-header-btn more-options-btn"><i class="fas fa-ellipsis-h"></i></button>
+                </div>
+            </div>
+
+            <div class="order-summary-block" id="order-summary-block">
+                <div class="order-main-info">
+                    <span class="order-id-main">#<span id="detail-id-main">N/A</span></span>
+                    <span class="client-name-main"><i class="fas fa-user"></i> <span id="detail-client-username-main">N/A</span></span>
+                    <span class="order-date-main"><i class="fas fa-clock"></i> <span id="detail-order-date">N/A</span></span>
+                    <div class="order-price-main">
+                        <span id="detail-currency-main"></span><span id="detail-total-price-main"></span>
+                        <span class="order-status-main" id="detail-status-main"></span>
+                    </div>
+                </div>
+                
+                <p><i class="fas fa-hourglass-start"></i> Time Elapsed: <span id="detail-time-elapsed">N/A</span></p>
+
+                <div class="game-info">
+                    <p><i class="fas fa-gamepad"></i> GAME PACK: <span id="detail-service-type">N/A</span></p>
+                    <p><i class="fas fa-globe-americas"></i> REGION: <span id="detail-region">N/A</span></p>
+                </div>
+
+                <div class="level-info">
+                    <p><i class="fas fa-chart-line"></i> Current Division: <span id="detail-current-level">N/A</span></p>
+                    <p><i class="fas fa-arrow-right"></i> Desired Division: <span id="detail-desired-level">N/A</span></p>
+                    </div>
+                
+                <div class="options-info">
+                    <p><i class="fas fa-sliders-h"></i> OPTIONS: <span id="detail-options">None</span></p>
+                    <p><i class="fas fa-users"></i> Account Type: <span id="detail-account-type">N/A</span></p>
+                </div>
+            </div>
+
+            <div class="account-credentials-block" id="account-credentials-block">
+                <h3>Account Credentials</h3>
+                <div class="credential-group">
+                    <p><i class="fas fa-sign-in-alt"></i> <strong>Steam Login:</strong> <span id="detail-steam-login">N/A</span></p>
+                    <p class="sensitive-data">
+                        <i class="fas fa-lock"></i> <strong>Steam Password:</strong> 
+                        <span id="detail-steam-password-hidden">**********</span>
+                        <span id="detail-steam-password-revealed" style="display: none;">N/A</span>
+                        <button class="toggle-visibility" data-target="detail-steam-password">Show</button>
+                    </p>
+                </div>
+                <div class="credential-group">
+                    <p><i class="fas fa-envelope"></i> <strong>Faceit Email:</strong> <span id="detail-faceit-email">N/A</span></p>
+                    <p class="sensitive-data">
+                        <i class="fas fa-key"></i> <strong>Faceit Password:</strong> 
+                        <span id="detail-faceit-password-hidden">**********</span>
+                        <span id="detail-faceit-password-revealed" style="display: none;">N/A</span>
+                        <button class="toggle-visibility" data-target="detail-faceit-password">Show</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="general.js"></script>
+    <script src="chat.js"></script>
+</body>
+</html>

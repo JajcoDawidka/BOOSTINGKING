@@ -152,14 +152,6 @@
     font-size: 14px;
   }
   
-  .auth-message.error {
-    color: #e74c3c;
-  }
-  
-  .auth-message.success {
-    color: #2ecc71;
-  }
-  
   /* Focus effect on inputs */
   .input-group input:focus {
     outline: none;

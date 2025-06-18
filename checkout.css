@@ -52,8 +52,6 @@ body {
     gap: 30px;
     margin-bottom: 30px;
     align-items: start;
-    /* TYMCZASOWY BORDER DO DEBUGOWANIA (pozostaw zakomentowane, chyba że nadal potrzebujesz) */
-    /* border: 2px solid red !important; */
 }
 
 /* Media Query for smaller screens (e.g., tablets and mobile) */
@@ -88,7 +86,7 @@ body {
 .section h2 {
     color: #F8D57E;
     font-size: 24px;
-    margin-bottom: 25px;
+    margin-bottom: 15px; /* Przywrócono 15px, aby nagłówki miały spójny odstęp */
     padding-bottom: 15px;
     border-bottom: 1px solid #2a2a3d;
     display: flex;
@@ -100,15 +98,19 @@ body {
     font-size: 20px;
 }
 
-/* Form elements */
+/* Form elements - BARDZIEJ ZWARTE ODSTĘPY */
 .form-group {
-    margin-bottom: 15px; /* ZMNIEJSZONY odstęp między grupami pól z 20px na 15px */
+    margin-bottom: 10px; /* Zmniejszony odstęp między grupami pól */
+}
+
+.form-group:last-child {
+    margin-bottom: 0; /* Ostatnia grupa pól w sekcji bez dolnego marginesu */
 }
 
 .form-group label {
     color: #F8D57E;
     font-weight: 500;
-    margin-bottom: 8px;
+    margin-bottom: 5px; /* Zmniejszony odstęp między etykietą a inputem */
     display: block;
     text-align: left;
 }
@@ -119,7 +121,7 @@ body {
 
 .settings-input {
     width: 100%;
-    padding: 12px 16px;
+    padding: 10px 14px; /* ZMNIEJSZONY PADDING DLA INPUTÓW */
     background-color: #1f1f2a;
     border: 1px solid #2a2a3d;
     border-radius: 8px;
@@ -139,8 +141,8 @@ body {
 .info-note {
     color: #bbbbbb;
     font-size: 14px;
-    margin-bottom: 15px; /* ZMNIEJSZONY odstęp pod notką informacyjną */
-    margin-top: -10px; /* PRZESUNIĘCIE notki trochę wyżej, żeby zredukować "dziwną przerwę" */
+    margin-bottom: 15px; /* Spójny z form-group */
+    margin-top: -5px; /* Lekkie przesunięcie notki w górę */
     line-height: 1.4;
     padding: 10px;
     background: rgba(40, 40, 50, 0.3);
@@ -148,52 +150,57 @@ body {
     border-left: 3px solid #F8D57E;
 }
 
+
 /* Order summary */
 .summary {
     grid-column: 1 / -1;
     margin-top: 40px;
     margin-bottom: 0;
     padding-bottom: 0;
-    /* TYMCZASOWY BORDER DO DEBUGOWANIA */
-    /* border: 2px solid green !important; */
 }
 
 .summary h2 {
     margin-bottom: 30px;
 }
 
+/* Uproszczone podsumowanie - Flexbox dla spójnego wyrównania etykiet i wartości */
 .simplified-summary {
     background: rgba(30, 30, 35, 0.5);
     padding: 25px 30px;
     border-radius: 12px;
     border: 1px solid rgba(248, 213, 126, 0.1);
     margin-bottom: 40px;
+    display: flex; /* Używamy flexboxa do wyrównania pionowego */
+    flex-direction: column;
 }
 
 .summary-row {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 12px 0;
+    justify-content: space-between; /* Etykieta po lewej, wartość po prawej */
+    align-items: baseline; /* Wyrównanie tekstu */
+    padding: 10px 0; /* Zmniejszony padding wewnętrzny dla wierszy */
     border-bottom: 1px dashed rgba(248, 213, 126, 0.08);
     font-size: 16px;
 }
 
-.summary-row:last-of-type:not(.total) {
+.summary-row:last-of-type { /* Upewnij się, że ostatni wiersz ma usunięty border-bottom */
     border-bottom: none;
 }
 
-.summary-row.discount {
+/* Resetowanie border-bottom dla specjalnych wierszy */
+.summary-row.discount,
+.summary-row.total,
+.summary-row.price-line { /* NOWOŚĆ: price-line też bez border-bottom, bo Base i Extras są obok siebie */
     border-bottom: none;
-    margin-top: 5px;
-    padding-bottom: 0;
 }
+
 
 .summary-label {
     color: #bbbbbb;
     font-weight: 500;
-    flex-shrink: 0;
+    flex-shrink: 0; /* Zapobiega kurczeniu się */
     margin-right: 15px;
+    text-align: left; /* Zapewnij wyrównanie etykiet do lewej */
 }
 
 .summary-value {
@@ -201,6 +208,34 @@ body {
     font-weight: 600;
     text-align: right;
     word-break: break-word;
+    flex-grow: 1; /* Pozwala wartościom zająć pozostałą przestrzeń */
+}
+
+/* Style dla wierszy Base Price i Extras - NOWA KLASA 'price-line' */
+.summary-row.price-line {
+    font-size: 17px; /* Lekko większa czcionka dla cen */
+    padding: 8px 0; /* Mniejszy padding dla tych wierszy */
+}
+
+.summary-row.price-line .summary-label {
+    color: #F8D57E; /* Kolor etykiety jak nagłówek */
+    font-weight: 600; /* Pogrubienie */
+}
+
+.summary-row.price-line .summary-value {
+    color: #F8D57E; /* Kolor wartości jak nagłówek */
+    font-weight: 700; /* Mocniejsze pogrubienie */
+}
+
+
+.summary-row.discount {
+    margin-top: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.summary-row.discount .summary-value {
+    color: #6bd96b;
 }
 
 .summary-row.total {
@@ -208,6 +243,7 @@ body {
     margin-top: 20px;
     padding-top: 20px;
     font-size: 1.3em;
+    padding-bottom: 0;
 }
 
 .summary-row.total .summary-label {
@@ -220,12 +256,8 @@ body {
     font-weight: 700;
 }
 
-.summary-row.discount .summary-value {
-    color: #6bd96b;
-}
-
 /* Styling for the "Selected Extras" header */
-.simplified-summary h3 {
+.extras-header { /* Zmieniono selektor na klasę */
     color: #F8D57E;
     font-size: 19px;
     margin-top: 30px;
@@ -246,7 +278,7 @@ body {
     background-color: rgba(40, 40, 50, 0.3);
     padding: 10px 18px;
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 8px; /* Lekko zmniejszony odstęp między elementami listy */
     color: #e0e0e0;
     font-size: 15px;
     display: flex;
@@ -257,6 +289,7 @@ body {
 .order-details-list li:last-child {
     margin-bottom: 0;
 }
+
 
 /* Buttons */
 .form-actions {

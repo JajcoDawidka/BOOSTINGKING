@@ -1,99 +1,481 @@
-// booster.js – Panel Boostera
+// booster.js – Booster Panel
 
-// WAŻNE: Funkcja initBoosterPanel jest wywoływana przez general.js
-// TYLKO GDY użytkownik jest zalogowany i ma rolę 'booster'.
-// Dlatego w tej funkcji NIE MA DALSZEJ WERYFIKACJI AUTORYZACJI.
+const REFRESH_INTERVAL_AVAILABLE = 15000;
+const REFRESH_INTERVAL_ACTIVE = 30000;
+const REFRESH_INTERVAL_COMPLETED = 60000;
+
+let availableOrdersInterval;
+let activeOrdersInterval;
+let completedOrdersInterval;
 
 async function initBoosterPanel(userData) {
-    console.log('[booster.js] initBoosterPanel - ROZPOCZYNAM. Otrzymane userData:', userData);
+    console.log('[booster.js] initBoosterPanel - STARTING. Received userData:', userData);
+    console.log('[booster.js] initBoosterPanel: Authorization OK. Continuing panel load.');
 
-    // *******************************************************************
-    // PONIŻSZE LINIE SĄ JEDYNYM KODEM INICJALIZACYJNYM W TEJ FUNKCJI.
-    // ŻADNYCH BLOKÓW TRY-CATCH ANI SPRAWDZEŃ AUTORYZACJI TUTAJ NIE MA.
-    // *******************************************************************
-    console.log('[booster.js] initBoosterPanel: Autoryzacja OK (sprawdzona przez general.js). Kontynuuję ładowanie panelu.');
+    try {
+        const authLinkEl = document.getElementById('auth-link');
+        if (authLinkEl) {
+            authLinkEl.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (typeof logoutUser === 'function') {
+                    // Clear all intervals on logout
+                    clearInterval(availableOrdersInterval);
+                    clearInterval(activeOrdersInterval);
+                    clearInterval(completedOrdersInterval);
+                    logoutUser();
+                } else {
+                    console.error('logoutUser function is not available. Clearing localStorage and redirecting.');
+                    localStorage.clear();
+                    window.location.href = 'login.html';
+                }
+            });
+        } else {
+            console.warn('[booster.js] Element with ID "auth-link" not found. This is normal if general.js handles it.');
+        }
 
-    try { // Ten try-catch jest tylko dla BŁĘDÓW WEWNĄTRZ inicjalizacji, NIE autoryzacji.
-        // Upewnij się, że masz element o id 'profile-username' na stronie booster-panel.html
-        document.getElementById('profile-username').textContent = userData.username || 'Booster';
-
-        // Obsługa wylogowania - używamy globalnej funkcji z general.js
-        document.getElementById('auth-link')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Zakładamy, że logoutUser() z general.js jest dostępne globalnie
-            if (typeof logoutUser === 'function') {
-                logoutUser();
-            } else {
-                console.error('Funkcja logoutUser nie jest dostępna.');
-                localStorage.clear(); // Ostateczność, jeśli logoutUser nie działa
-                window.location.href = 'login.html';
-            }
-        });
-
-        // WYWOŁANIA FUNKCJI POBIERAJĄCYCH DANE Z BACKENDU PHP (LOCALHOST)
-        // WAŻNE: Upewnij się, że API_BASE_URL jest dostępne (z general.js)
-        // i że ścieżki do plików PHP są poprawne (np. api/booster/active-orders.php)
         await Promise.all([
+            fetchAvailableOrders(),
             fetchActiveOrders(),
-            fetchOrderHistory(),
-            fetchRanking(),
-            fetchAccountStatus()
+            fetchCompletedOrders(),
         ]);
 
-        document.getElementById('availability-toggle')?.addEventListener('click', toggleAvailability);
-        document.getElementById('support-btn')?.addEventListener('click', () => {
-            window.location.href = 'contact.html?subject=Booster+Support';
-        });
+        availableOrdersInterval = setInterval(fetchAvailableOrders, REFRESH_INTERVAL_AVAILABLE);
+        activeOrdersInterval = setInterval(fetchActiveOrders, REFRESH_INTERVAL_ACTIVE);
+        completedOrdersInterval = setInterval(fetchCompletedOrders, REFRESH_INTERVAL_COMPLETED);
+
+        document.getElementById('orders-available')?.querySelector('.refresh-btn')?.addEventListener('click', fetchAvailableOrders);
+        document.getElementById('active-orders')?.querySelector('.refresh-btn')?.addEventListener('click', fetchActiveOrders);
+        document.getElementById('completed-orders')?.querySelector('.refresh-btn')?.addEventListener('click', fetchCompletedOrders);
+
+        const availabilityToggleBtn = document.getElementById('availability-toggle');
+        if (availabilityToggleBtn) {
+            availabilityToggleBtn.addEventListener('click', toggleAvailability);
+        } else {
+            console.warn('[booster.js] Element with ID "availability-toggle" not found. Make sure it exists in booster-panel.html');
+        }
+
+        const supportBtn = document.getElementById('support-btn');
+        if (supportBtn) {
+            supportBtn.addEventListener('click', () => {
+                window.location.href = 'contact.html?subject=Booster+Support';
+            });
+        } else {
+            console.warn('[booster.js] Element with ID "support-btn" not found. Make sure it exists in booster-panel.html');
+        }
 
     } catch (error) {
-        console.error('[booster.js] Błąd inicjalizacji panelu boostera (poza autoryzacją):', error);
-        showErrorToast('Nie udało się załadować panelu');
+        console.error('[booster.js] Booster panel initialization error:', error);
+        if (typeof showErrorToast === 'function') {
+            showErrorToast('Failed to load booster panel.');
+        }
     }
 }
 
-// Pobranie aktywnych zamówień
-// -----------------------------
-async function fetchActiveOrders() {
-    const container = document.querySelector('.orders-list');
-    container?.classList.add('loading');
+async function fetchAvailableOrders() {
+    const container = document.getElementById('available-orders-list');
+    if (!container) return;
+    container.innerHTML = '<div class="loading-spinner-small"></div> Loading orders...';
+    container.classList.add('loading');
 
     try {
-        // Upewnij się, że API_BASE_URL jest globalnie dostępny z general.js
-        const res = await fetch(`${API_BASE_URL}/api/booster/active-orders.php`, {
+        const res = await fetch(`${API_BASE_URL}/api/booster/available-orders.php`, {
             method: 'GET',
-            credentials: 'include', // Ważne dla wysyłania ciasteczek
-            headers: getAuthHeaders() // Ta funkcja już nie doda Authorization, tylko Content-Type
+            credentials: 'include',
+            headers: getAuthHeaders()
         });
-        if (!res.ok) throw new Error(`Status: ${res.status} ${res.statusText}`);
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Status: ${res.status} ${res.statusText}`);
+        }
 
         const orders = await res.json();
         container.classList.remove('loading');
 
-        if (!orders.length) {
-            container.innerHTML = '<div class="no-orders">Brak aktywnych zamówień</div>';
-            document.getElementById('active-orders-count').textContent = '0';
+        if (!orders || orders.length === 0) {
+            container.innerHTML = '<div class="no-orders">No orders available for acceptance.</div>';
             return;
         }
 
-        container.innerHTML = orders.map(orderCardHTML).join('');
-        document.getElementById('active-orders-count').textContent = orders.length;
+        container.innerHTML = orders.map(order => availableOrderCardHTML(order)).join('');
 
-        document.querySelectorAll('.view-details').forEach(btn => {
+        document.querySelectorAll('#available-orders-list .accept-order-btn').forEach(btn => {
+            btn.addEventListener('click', () => acceptOrder(btn.dataset.id));
+        });
+        document.querySelectorAll('#available-orders-list .view-details').forEach(btn => {
             btn.addEventListener('click', () => {
-                window.location.href = `order-details.html?id=${btn.dataset.id}`;
+                window.location.href = `chat.html?orderId=${btn.dataset.id}`;
             });
         });
+
     } catch (err) {
-        console.error('[booster.js] Error fetching active orders:', err);
-        handleFetchError(container, 'Nie udało się pobrać aktywnych zamówień', fetchActiveOrders);
+        console.error('[booster.js] Error fetching available orders:', err);
+        if (typeof showErrorToast === 'function') {
+            showErrorToast(err.message || 'Failed to load available orders.');
+        }
+        container.innerHTML = `<div class="error-message">Error loading available orders: ${err.message}.</div>`;
+        container.classList.remove('loading');
     }
 }
 
-// Historia zamówień + zarobki
-// -----------------------------
+async function fetchActiveOrders() {
+    const container = document.getElementById('active-orders-list');
+    if (!container) return;
+    container.innerHTML = '<div class="loading-spinner-small"></div> Loading orders...';
+    container.classList.add('loading');
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/booster/active-orders.php`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: getAuthHeaders()
+        });
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Status: ${res.status} ${res.statusText}`);
+        }
+
+        const orders = await res.json();
+        container.classList.remove('loading');
+
+        if (!orders || orders.length === 0) {
+            container.innerHTML = '<div class="no-orders">You currently have no active orders.</div>';
+            return;
+        }
+
+        container.innerHTML = orders.map(order => activeOrderCardHTML(order)).join('');
+
+        // Dodany listener dla przycisku czatu dla boostera
+        document.querySelectorAll('#active-orders-list .chat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.location.href = `chat.html?orderId=${btn.dataset.id}`;
+            });
+        });
+
+        document.querySelectorAll('#active-orders-list .complete-order-btn').forEach(btn => {
+            btn.addEventListener('click', () => completeOrder(btn.dataset.id));
+        });
+        document.querySelectorAll('#active-orders-list .view-details').forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.location.href = `chat.html?orderId=${btn.dataset.id}`;
+            });
+        });
+
+    } catch (err) {
+        console.error('[booster.js] Error fetching active orders:', err);
+        if (typeof showErrorToast === 'function') {
+            showErrorToast(err.message || 'Failed to load active orders.');
+        }
+        container.innerHTML = `<div class="error-message">Error loading active orders: ${err.message}.</div>`;
+        container.classList.remove('loading');
+    }
+}
+
+async function fetchCompletedOrders() {
+    const container = document.getElementById('completed-orders-list');
+    if (!container) return;
+    container.innerHTML = '<div class="loading-spinner-small"></div> Loading orders...';
+    container.classList.add('loading');
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/booster/completed-orders.php`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: getAuthHeaders()
+        });
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Status: ${res.status} ${res.statusText}`);
+        }
+
+        const orders = await res.json();
+        container.classList.remove('loading');
+
+        if (!orders || orders.length === 0) {
+            container.innerHTML = '<div class="no-orders">You have not completed any orders yet.</div>';
+            return;
+        }
+
+        container.innerHTML = orders.map(order => completedOrderCardHTML(order)).join('');
+
+    } catch (err) {
+        console.error('[booster.js] Error fetching completed orders:', err);
+        if (typeof showErrorToast === 'function') {
+            showErrorToast(err.message || 'Failed to load completed orders.');
+        }
+        container.innerHTML = `<div class="error-message">Error loading completed orders: ${err.message}.</div>`;
+        container.classList.remove('loading');
+    }
+}
+
+async function acceptOrder(orderId) {
+    if (!confirm(`Are you sure you want to accept order #${orderId}?`)) return;
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/booster/accept-order.php`, {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            credentials: 'include',
+            body: JSON.stringify({ orderId: orderId })
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Failed to accept order. Status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        if (data.success) {
+            if (typeof showSuccessToast === 'function') {
+                showSuccessToast(data.message || `Order #${orderId} accepted!`);
+            }
+            await Promise.all([fetchAvailableOrders(), fetchActiveOrders()]); // Refresh both lists
+        } else {
+            throw new Error(data.message || 'Failed to accept order.');
+        }
+    } catch (err) {
+        console.error('[booster.js] Error accepting order:', err);
+        if (typeof showErrorToast === 'function') {
+            showErrorToast(err.message || `Failed to accept order #${orderId}.`);
+        }
+    }
+}
+
+async function completeOrder(orderId) {
+    if (!confirm(`Are you sure you want to mark order #${orderId} as completed?`)) return;
+
+    try {
+        const res = await fetch(`${API_BASE_URL}/api/booster/complete-order.php`, {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            credentials: 'include',
+            body: JSON.stringify({ orderId: orderId })
+        });
+
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Failed to complete order. Status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        if (data.success) {
+            if (typeof showSuccessToast === 'function') {
+                showSuccessToast(data.message || `Order #${orderId} marked as completed!`);
+            }
+            await Promise.all([fetchActiveOrders(), fetchCompletedOrders()]); // Refresh active and completed orders
+        } else {
+            throw new Error(data.message || 'Failed to complete order.');
+        }
+    } catch (err) {
+        console.error('[booster.js] Error completing order:', err);
+        if (typeof showErrorToast === 'function') {
+            showErrorToast(err.message || `Failed to complete order #${orderId}.`);
+        }
+    }
+}
+
+// Karta dla zamówień DOSTĘPNYCH (bez przycisku Chat, bo nieaktywne)
+function availableOrderCardHTML(order) {
+    const levelDisplay = order.current_level && order.desired_level
+        ? `${order.current_level} → ${order.desired_level}`
+        : 'N/A';
+    const rewardFormatted = (parseFloat(order.reward) || 0).toFixed(2);
+    const currencySymbol = order.currency || '$';
+
+    // Parse customizations
+    let customizations = [];
+    try {
+        if (order.customizations) {
+            const parsedCustoms = JSON.parse(order.customizations);
+            if (Array.isArray(parsedCustoms)) {
+                customizations = parsedCustoms.map(c => {
+                    switch (c) {
+                        case 'offline': return 'Play Offline';
+                        case 'streaming': return 'Streaming';
+                        case 'express': return 'Express Delivery';
+                        case 'solo': return 'Solo Only';
+                        case 'normalize': return 'Normalize Scores';
+                        default: return c;
+                    }
+                });
+            } else if (typeof parsedCustoms === 'string') { // Handle cases where it might just be a single string
+                customizations.push(parsedCustoms);
+            }
+        }
+    } catch (e) {
+        console.error('Error parsing customizations:', e, order.customizations);
+    }
+    const customizationsDisplay = customizations.length > 0 ? customizations.join(', ') : 'None';
+
+    return `
+        <div class="order-card">
+            <div class="order-header">
+                <span class="order-id">#${order.id}</span>
+                <span class="order-status pending">Available</span>
+            </div>
+            <div class="order-body">
+                <p><i class="fas fa-gamepad"></i> ${order.service_type || 'Unknown Service'}</p>
+                <p><i class="fas fa-chart-line"></i> Level: ${levelDisplay}</p>
+                <p><i class="fas fa-coins"></i> Reward: ${currencySymbol}${rewardFormatted}</p>
+                <p><i class="fas fa-globe-americas"></i> Region: ${order.region || 'N/A'}</p>
+                <p><i class="fas fa-user-friends"></i> Type: ${order.account_type || 'N/A'}</p>
+                <p><i class="fas fa-cogs"></i> Custom: ${customizationsDisplay}</p>
+            </div>
+            <button class="btn success accept-order-btn" data-id="${order.id}">Accept Order</button>
+            <button class="btn secondary view-details" data-id="${order.id}">Details</button>
+        </div>`;
+}
+
+// Karta dla zamówień AKTYWNYCH (z przyciskiem Complete i CHAT)
+function activeOrderCardHTML(order) {
+    const levelDisplay = order.current_level && order.desired_level
+        ? `${order.current_level} → ${order.desired_level}`
+        : 'N/A';
+    const rewardFormatted = (parseFloat(order.reward) || 0).toFixed(2);
+    const currencySymbol = order.currency || '$';
+
+    // Parse customizations
+    let customizations = [];
+    try {
+        if (order.customizations) {
+            const parsedCustoms = JSON.parse(order.customizations);
+            if (Array.isArray(parsedCustoms)) {
+                customizations = parsedCustoms.map(c => {
+                    switch (c) {
+                        case 'offline': return 'Play Offline';
+                        case 'streaming': return 'Streaming';
+                        case 'express': return 'Express Delivery';
+                        case 'solo': return 'Solo Only';
+                        case 'normalize': return 'Normalize Scores';
+                        default: return c;
+                    }
+                });
+            } else if (typeof parsedCustoms === 'string') {
+                customizations.push(parsedCustoms);
+            }
+        }
+    } catch (e) {
+        console.error('Error parsing customizations:', e, order.customizations);
+    }
+    const customizationsDisplay = customizations.length > 0 ? customizations.join(', ') : 'None';
+
+    return `
+        <div class="order-card">
+            <div class="order-header">
+                <span class="order-id">#${order.id}</span>
+                <span class="order-status in-progress">Active</span>
+            </div>
+            <div class="order-body">
+                <p><i class="fas fa-gamepad"></i> ${order.service_type || 'Unknown Service'}</p>
+                <p><i class="fas fa-chart-line"></i> Level: ${levelDisplay}</p>
+                <p><i class="fas fa-coins"></i> Reward: ${currencySymbol}${rewardFormatted}</p>
+                <p><i class="fas fa-globe-americas"></i> Region: ${order.region || 'N/A'}</p>
+                <p><i class="fas fa-user-friends"></i> Type: ${order.account_type || 'N/A'}</p>
+                <p><i class="fas fa-cogs"></i> Custom: ${customizationsDisplay}</p>
+            </div>
+            <button class="btn success complete-order-btn" data-id="${order.id}">Mark as Completed</button>
+            <button class="btn secondary chat-btn" data-id="${order.id}"><i class="fas fa-comment"></i> Chat</button>
+            <button class="btn secondary view-details" data-id="${order.id}">Details</button>
+        </div>`;
+}
+
+// Karta dla zamówień ZAKOŃCZONYCH (bez przycisku Chat, bo zakończone)
+function completedOrderCardHTML(order) {
+    const levelDisplay = order.current_level && order.desired_level
+        ? `${order.current_level} → ${order.desired_level}`
+        : 'N/A';
+    const earningsFormatted = (parseFloat(order.earnings || order.reward) || 0).toFixed(2);
+    const currencySymbol = order.currency || '$';
+    const completionDate = order.completed_date ? new Date(order.completed_date).toLocaleDateString() : 'N/A';
+
+    // Parse customizations
+    let customizations = [];
+    try {
+        if (order.customizations) {
+            const parsedCustoms = JSON.parse(order.customizations);
+            if (Array.isArray(parsedCustoms)) {
+                customizations = parsedCustoms.map(c => {
+                    switch (c) {
+                        case 'offline': return 'Play Offline';
+                        case 'streaming': return 'Streaming';
+                        case 'express': return 'Express Delivery';
+                        case 'solo': return 'Solo Only';
+                        case 'normalize': return 'Normalize Scores';
+                        default: return c;
+                    }
+                });
+            } else if (typeof parsedCustoms === 'string') {
+                customizations.push(parsedCustoms);
+            }
+        }
+    } catch (e) {
+        console.error('Error parsing customizations:', e, order.customizations);
+    }
+    const customizationsDisplay = customizations.length > 0 ? customizations.join(', ') : 'None';
+
+    return `
+        <div class="order-card">
+            <div class="order-header">
+                <span class="order-id">#${order.id}</span>
+                <span class="order-status completed">Completed</span>
+            </div>
+            <div class="order-body">
+                <p><i class="fas fa-gamepad"></i> ${order.service_type || 'Unknown Service'}</p>
+                <p><i class="fas fa-chart-line"></i> Level: ${levelDisplay}</p>
+                <p><i class="fas fa-coins"></i> Earnings: ${currencySymbol}${earningsFormatted}</p>
+                <p><i class="fas fa-calendar-check"></i> On: ${completionDate}</p>
+                <p><i class="fas fa-globe-americas"></i> Region: ${order.region || 'N/A'}</p>
+                <p><i class="fas fa-user-friends"></i> Type: ${order.account_type || 'N/A'}</p>
+                <p><i class="fas fa-cogs"></i> Custom: ${customizationsDisplay}</p>
+            </div>
+            <button class="btn secondary view-details" data-id="${order.id}">Details</button>
+        </div>`;
+}
+
+// Universal functions (assumed to be from general.js or defined globally)
+function getAuthHeaders() {
+    return {
+        'Content-Type': 'application/json'
+    };
+}
+
+function showSuccessToast(message) {
+    if (typeof toast === 'function') {
+        toast(message, 'success');
+    } else {
+        console.warn('Toast function not available. Message:', message);
+    }
+}
+
+function showErrorToast(message) {
+    if (typeof toast === 'function') {
+        toast(message, 'error');
+    } else {
+        console.warn('Toast function not available. Message:', message);
+    }
+}
+
+// Fallback toast function if not globally defined (remove if already in general.js)
+function toast(message, type) {
+    const el = document.createElement('div');
+    el.className = `toast ${type}`;
+    el.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3000);
+}
+
+function handleFetchError(container, message, retryFunction) {
+    container.innerHTML = `<div class="error-message">${message}. <button onclick="${retryFunction.name}()">Try again</button></div>`;
+    container.classList.remove('loading');
+    if (typeof showErrorToast === 'function') {
+        showErrorToast(message);
+    }
+}
+
+// Optional functions (review if still needed or duplicated)
 async function fetchOrderHistory() {
     const container = document.querySelector('.history-list');
-    container?.classList.add('loading');
+    if (!container) return;
+    container.classList.add('loading');
 
     try {
         const res = await fetch(`${API_BASE_URL}/api/booster/order-history.php`, {
@@ -101,34 +483,48 @@ async function fetchOrderHistory() {
             credentials: 'include',
             headers: getAuthHeaders()
         });
-        if (!res.ok) throw new Error(`Status: ${res.status} ${res.statusText}`);
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Status: ${res.status} ${res.statusText}`);
+        }
 
         const orders = await res.json();
         container.classList.remove('loading');
 
-        if (!orders.length) {
-            container.innerHTML = '<div class="no-orders">Brak historii</div>';
-            document.getElementById('completed-orders-count').textContent = '0';
-            document.getElementById('earnings-amount').textContent = '$0.00';
+        if (!orders || orders.length === 0) {
+            container.innerHTML = '<div class="no-orders">No order history available.</div>';
             return;
         }
-
         container.innerHTML = orders.slice(0, 5).map(historyCardHTML).join('');
-        document.getElementById('completed-orders-count').textContent = orders.length;
 
-        const total = orders.reduce((sum, o) => sum + o.earnings, 0);
-        document.getElementById('earnings-amount').textContent = `$${total.toFixed(2)}`;
     } catch (err) {
         console.error('[booster.js] Error fetching order history:', err);
-        handleFetchError(container, 'Nie udało się załadować historii', fetchOrderHistory);
+        handleFetchError(container, 'Failed to load order history.', fetchOrderHistory);
     }
 }
 
-// Leaderboard boosterów
-// ------------------------
+function historyCardHTML(order) {
+    const earningsFormatted = (parseFloat(order.earnings || order.reward) || 0).toFixed(2);
+    const currencySymbol = order.currency || '$';
+    const completionDate = order.completedDate ? new Date(order.completedDate).toLocaleDateString() : 'N/A';
+
+    return `
+        <div class="order-card">
+            <div class="order-header">
+                <span class="order-id">#${order.id}</span>
+                <span class="order-status completed">Completed</span>
+            </div>
+            <div class="order-body">
+                <p><i class="fas fa-check-circle"></i> ${completionDate}</p>
+                <p><i class="fas fa-coins"></i> ${currencySymbol}${earningsFormatted}</p>
+            </div>
+        </div>`;
+}
+
 async function fetchRanking() {
     const container = document.querySelector('.ranking-list');
-    container?.classList.add('loading');
+    if (!container) return;
+    container.classList.add('loading');
 
     try {
         const res = await fetch(`${API_BASE_URL}/api/booster/leaderboard.php`, {
@@ -136,14 +532,16 @@ async function fetchRanking() {
             credentials: 'include',
             headers: getAuthHeaders()
         });
-        if (!res.ok) throw new Error(`Status: ${res.status} ${res.statusText}`);
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Status: ${res.status} ${res.statusText}`);
+        }
 
         const boosters = await res.json();
         container.classList.remove('loading');
 
-        if (!boosters.length) {
-            container.innerHTML = '<div class="no-data">Brak danych</div>';
-            document.getElementById('ranking-position').textContent = '#-';
+        if (!boosters || boosters.length === 0) {
+            container.innerHTML = '<div class="no-data">No ranking data.</div>';
             return;
         }
 
@@ -155,19 +553,16 @@ async function fetchRanking() {
             </li>
         `).join('');
 
-        const current = boosters.find(b => b.isCurrent);
-        if (current) document.getElementById('ranking-position').textContent = `#${current.position}`;
     } catch (err) {
         console.error('[booster.js] Error fetching ranking:', err);
-        handleFetchError(container, 'Błąd ładowania rankingu', fetchRanking);
+        handleFetchError(container, 'Error loading ranking.', fetchRanking);
     }
 }
 
-// Status konta boostera
-// ----------------------
 async function fetchAccountStatus() {
     const container = document.querySelector('.status-info');
-    container?.classList.add('loading');
+    if (!container) return;
+    container.classList.add('loading');
 
     try {
         const res = await fetch(`${API_BASE_URL}/api/booster/status.php`, {
@@ -175,7 +570,10 @@ async function fetchAccountStatus() {
             credentials: 'include',
             headers: getAuthHeaders()
         });
-        if (!res.ok) throw new Error(`Status: ${res.status} ${res.statusText}`);
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Status: ${res.status} ${res.statusText}`);
+        }
 
         const data = await res.json();
         container.classList.remove('loading');
@@ -183,30 +581,28 @@ async function fetchAccountStatus() {
         container.innerHTML = `
             <div class="status-card">
                 <div class="status-item"><span class="label">Status:</span><span class="value badge ${data.status.toLowerCase()}">${data.status}</span></div>
-                <div class="status-item"><span class="label">Ocena:</span><span class="value">${data.rating}/5.0 (${data.reviews} recenzji)</span></div>
-                <div class="status-item"><span class="label">Od:</span><span class="value">${new Date(data.joinDate).toLocaleDateString()}</span></div>
+                <div class="status-item"><span class="label">Rating:</span><span class="value">${data.rating}/5.0 (${data.reviews} reviews)</span></div>
+                <div class="status-item"><span class="label">Member Since:</span><span class="value">${new Date(data.joinDate).toLocaleDateString()}</span></div>
             </div>`;
 
         const btn = document.getElementById('availability-toggle');
         if (btn) {
-            btn.textContent = data.available ? 'Ustaw jako niedostępny' : 'Ustaw jako dostępny';
+            btn.textContent = data.available ? 'Set as Unavailable' : 'Set as Available';
             btn.className = data.available ? 'btn warning' : 'btn success';
         }
     } catch (err) {
         console.error('[booster.js] Error fetching account status:', err);
-        handleFetchError(container, 'Błąd pobierania statusu konta', fetchAccountStatus);
+        handleFetchError(container, 'Failed to retrieve account status.', fetchAccountStatus);
     }
 }
 
-// Przełączanie dostępności
-// -------------------------
 async function toggleAvailability() {
     const btn = document.getElementById('availability-toggle');
     if (!btn) return;
 
     try {
         btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Aktualizacja...';
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
 
         const res = await fetch(`${API_BASE_URL}/api/booster/toggle-availability.php`, {
             method: 'POST',
@@ -214,83 +610,27 @@ async function toggleAvailability() {
             headers: getAuthHeaders()
         });
 
-        if (!res.ok) throw new Error(`Status: ${res.status} ${res.statusText}`);
-        const data = await res.json();
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Status: ${res.status} ${res.statusText}`);
+        }
 
-        btn.innerHTML = data.available ? 'Ustaw jako niedostępny' : 'Ustaw jako dostępny';
+        const data = await res.json();
+        btn.innerHTML = data.available ? 'Set as Unavailable' : 'Set as Available';
         btn.className = data.available ? 'btn warning' : 'btn success';
-        showSuccessToast(`Status: ${data.available ? 'Dostępny' : 'Niedostępny'}`);
+        if (typeof showSuccessToast === 'function') {
+            showSuccessToast(`Status: ${data.available ? 'Available' : 'Unavailable'}`);
+        }
     } catch (err) {
         console.error('[booster.js] toggleAvailability error:', err);
-        showErrorToast('Nie udało się zmienić dostępności');
+        if (typeof showErrorToast === 'function') {
+            showErrorToast(err.message || 'Failed to change availability.');
+        }
     } finally {
         btn.disabled = false;
     }
 }
 
-// Szablony kart (bez zmian)
-// -------------------------
-function orderCardHTML(order) {
-    return `
-        <div class="order-card">
-            <div class="order-header">
-                <span class="order-id">#${order.id}</span>
-                <span class="order-status ${order.status.toLowerCase()}">${order.status}</span>
-            </div>
-            <div class="order-body">
-                <p><i class="fas fa-gamepad"></i> ${order.game}</p>
-                <p><i class="fas fa-calendar"></i> ${new Date(order.createdAt).toLocaleDateString()}</p>
-                <p><i class="fas fa-coins"></i> $${order.reward.toFixed(2)}</p>
-            </div>
-            <button class="btn view-details" data-id="${order.id}">Szczegóły <i class="fas fa-chevron-right"></i></button>
-        </div>`;
-}
-
-function historyCardHTML(order) {
-    return `
-        <div class="order-card">
-            <div class="order-header">
-                <span class="order-id">#${order.id}</span>
-                <span class="order-status completed">Zakończone</span>
-            </div>
-            <div class="order-body">
-                <p><i class="fas fa-check-circle"></i> ${new Date(order.completedDate).toLocaleDateString()}</p>
-                <p><i class="fas fa-coins"></i> $${order.earnings.toFixed(2)}</p>
-            </div>
-        </div>`;
-}
-
-// Uniwersalne funkcje
-// -------------------------
-// KLUCZOWA ZMIANA: Usuwamy nagłówek Authorization, ponieważ token jest w ciasteczku httponly
-// i przeglądarka automatycznie go dołącza do zapytań do tej samej domeny.
-function getAuthHeaders() {
-    return {
-        'Content-Type': 'application/json'
-        // 'Authorization': `Bearer ${localStorage.getItem('token')}`, // USUNIĘTO
-    };
-}
-
-// Te funkcje zakładają, że toast i showErrorToast są zdefiniowane gdzieś globalnie
-// np. w general.js, lub musisz je tutaj zdefiniować.
-function showSuccessToast(message) {
-    toast(message, 'success');
-}
-
-function showErrorToast(message) {
-    toast(message, 'error');
-}
-
-function toast(message, type) {
-    const el = document.createElement('div');
-    el.className = `toast ${type}`;
-    el.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'}"></i> ${message}`;
-    document.body.appendChild(el);
-    setTimeout(() => el.remove(), 3000);
-}
-
-// Modal z regulaminem (bez zmian)
-// -------------------------
 function toggleRulesModal() {
     const modal = document.getElementById('rules-modal');
     modal.style.display = (modal.style.display === 'flex' || modal.style.display === '') ? 'none' : 'flex';

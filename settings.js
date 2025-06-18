@@ -48,11 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Inicjalizacja ładowania zamówień
-    // Sprawdź, czy funkcja loadUserOrders jest dostępna (np. zdefiniowana poniżej w tym pliku lub w general.js)
-    if (typeof loadUserOrders === 'function') { 
-        loadUserOrders();
+    // Wywołaj zaktualizowaną funkcję fetchUserOrders
+    if (typeof fetchUserOrders === 'function') {
+        fetchUserOrders();
     } else {
-        console.warn('[settings.js] Funkcja loadUserOrders nie jest dostępna. Moduł zamówień może nie działać.');
+        console.warn('[settings.js] Funkcja fetchUserOrders nie jest dostępna. Moduł zamówień może nie działać.');
     }
 });
 
@@ -92,7 +92,7 @@ async function loadUserSettings() {
         } else {
             console.warn('[loadUserSettings] Element emailInput (ID "email") nie znaleziony.');
         }
-        
+
         // Ustawienie preferowanej waluty
         if (currencySelect) {
             currencySelect.value = userData.currency || 'PLN'; // Użyj istniejącej waluty lub 'PLN' jako domyślnej
@@ -107,9 +107,9 @@ async function loadUserSettings() {
             const isBooster = userData?.role === 'booster';
             profileUsernameDisplay.innerHTML = isBooster
                 ? `<div class="booster-header">
-                    <span class="booster-badge">BOOSTER</span>
-                    ${userData?.username || 'Guest'}
-                   </div>`
+                        <span class="booster-badge">BOOSTER</span>
+                        ${userData?.username || 'Guest'}
+                       </div>`
                 : userData?.username || 'Guest';
             console.log('[loadUserSettings] Zaktualizowano nazwę użytkownika w nagłówku dropdown.');
         } else {
@@ -259,7 +259,7 @@ function cancelSettingsChanges() {
         currencySelect.value = currencySelect.dataset.originalValue;
         console.log(`[cancelSettingsChanges] Przywrócono currency do: "${currencySelect.value}"`);
     }
-    
+
     // Po anulowaniu, przycisk "Save Changes" powinien być wyłączony
     if (saveButton) {
         saveButton.disabled = true;
@@ -272,71 +272,102 @@ function cancelSettingsChanges() {
 }
 
 /**
- * Funkcja do ładowania zamówień (przykładowa, jeśli posiadasz API).
- * Upewnij się, że masz plik get_orders.php na backendzie.
+ * Funkcja, która pobiera zamówienia użytkownika i renderuje je w panelu.
  */
-async function loadUserOrders() {
-    const ordersList = document.getElementById('ordersList');
-    if (!ordersList) {
+async function fetchUserOrders() {
+    const ordersListContainer = document.getElementById('ordersList');
+    if (!ordersListContainer) {
         console.warn('[settings.js] Element ordersList (ID "ordersList") nie znaleziony. Sekcja zamówień może nie działać.');
         return;
     }
 
-    ordersList.innerHTML = '<p class="loading-message">Loading your orders...</p>';
-    const userData = getStoredUserData(); // Sprawdź, czy masz dane użytkownika
-    
-    if (!userData || !userData.id) {
-        ordersList.innerHTML = '<p class="no-orders-message">Please log in to view your orders.</p>';
-        console.log('[loadUserOrders] Brak danych użytkownika lub ID, nie można załadować zamówień.');
-        return;
-    }
+    ordersListContainer.innerHTML = '<p class="loading-message"><div class="loading-spinner-small"></div> Loading your orders...</p>';
 
     try {
-        // Używamy credentials: 'include' do wysłania ciasteczka autoryzacyjnego
-        const response = await fetch(`${API_BASE_URL}/get_orders.php`, {
-            method: 'GET', // Zazwyczaj GET dla pobierania danych
-            credentials: 'include'
+        const res = await fetch(`${API_BASE_URL}/api/user/get_user_orders.php`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: getAuthHeaders()
         });
 
-        const result = await response.json();
-
-        if (response.ok && Array.isArray(result) && result.length > 0) {
-            ordersList.innerHTML = ''; // Wyczyść "Loading..."
-            result.forEach(order => {
-                const orderItem = document.createElement('div');
-                orderItem.classList.add('order-item');
-                // Pamiętaj, aby nazwy pól (service, status, order_date, price, currency)
-                // zgadzały się z tym, co zwraca Twój backend w get_orders.php
-                orderItem.innerHTML = `
-                    <h3>Order ID: #${order.id || 'N/A'}</h3>
-                    <p>Service: ${order.service || 'N/A'}</p>
-                    <p>Status: <span class="order-status ${order.status ? order.status.toLowerCase() : 'unknown'}">${order.status || 'Unknown'}</span></p>
-                    <p>Date: ${order.order_date ? new Date(order.order_date).toLocaleDateString() : 'N/A'}</p>
-                    <p>Price: ${order.price || '0.00'} ${order.currency || ''}</p>
-                `;
-                ordersList.appendChild(orderItem);
-            });
-            console.log(`[loadUserOrders] Załadowano ${result.length} zamówień.`);
-        } else if (response.ok && Array.isArray(result) && result.length === 0) {
-             ordersList.innerHTML = '<p class="no-orders-message">You have no orders yet.</p>';
-             console.log('[loadUserOrders] Brak zamówień do wyświetlenia.');
-        } else if (response.status === 401) {
-            ordersList.innerHTML = '<p class="no-orders-message">Session expired. Please log in again.</p>';
-            console.error('[loadUserOrders] Sesja wygasła (401).');
-            if (typeof logoutUser === 'function') {
-                logoutUser();
-            }
-        } else {
-            ordersList.innerHTML = `<p class="error-message">Failed to load orders: ${result.message || 'Unknown error.'}</p>`;
-            console.error('Failed to fetch orders:', response.status, result);
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || `Status: ${res.status} ${res.statusText}`);
         }
-    } catch (error) {
-        ordersList.innerHTML = '<p class="error-message">Network error. Could not load orders.</p>';
-        console.error('Error fetching orders:', error);
+
+        const data = await res.json();
+        if (!data.success) {
+            throw new Error(data.message || 'Failed to fetch user orders.');
+        }
+
+        if (!data.orders || data.orders.length === 0) {
+            ordersListContainer.innerHTML = '<p class="no-orders">You have no orders yet.</p>';
+            return;
+        }
+
+        ordersListContainer.innerHTML = data.orders.map(order => userOrderCardHTML(order)).join('');
+
+        // Dodaj listenery dla przycisków czatu
+        document.querySelectorAll('#ordersList .chat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.location.href = `chat.html?orderId=${btn.dataset.id}`;
+            });
+        });
+
+        // Dodaj listenery dla przycisków "Details" (jeśli są)
+        document.querySelectorAll('#ordersList .view-details').forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.location.href = `order-details.html?id=${btn.dataset.id}`;
+            });
+        });
+
+
+    } catch (err) {
+        console.error('Error fetching user orders:', err);
+        if (typeof showErrorToast === 'function') {
+            showErrorToast(err.message || 'Failed to load your orders.');
+        }
+        ordersListContainer.innerHTML = `<p class="error-message">Error loading orders: ${err.message}.</p>`;
     }
 }
 
-// WAŻNE: Funkcje takie jak getStoredUserData(), updateAuthUI(), logoutUser()
+/**
+ * Szablon HTML dla karty zamówienia użytkownika.
+ * @param {Object} order Obiekt zamówienia.
+ * @returns {string} String HTML reprezentujący kartę zamówienia.
+ */
+function userOrderCardHTML(order) {
+    const levelDisplay = order.current_level && order.desired_level
+        ? `${order.current_level} → ${order.desired_level}`
+        : 'N/A';
+    const totalFormatted = (parseFloat(order.total_price) || 0).toFixed(2);
+    const currencySymbol = order.currency || '$';
+
+    // Klient ma zawsze dostęp do czatu, chyba że zamówienie jest anulowane lub zwrócone
+    const canChat = order.status !== 'Cancelled' && order.status !== 'Refunded';
+    const chatButton = canChat
+        ? `<button class="btn secondary chat-btn" data-id="${order.id}"><i class="fas fa-comment"></i> Chat</button>`
+        : `<button class="btn secondary" disabled><i class="fas fa-comment"></i> Chat</button>`;
+
+    return `
+        <div class="order-card">
+            <div class="order-header">
+                <span class="order-id">#${order.id}</span>
+                <span class="order-status ${order.status.toLowerCase().replace(' ', '-')}">${order.status}</span>
+            </div>
+            <div class="order-body">
+                <p><i class="fas fa-gamepad"></i> ${order.service_type || 'Unknown Service'}</p>
+                <p><i class="fas fa-chart-line"></i> Level: ${levelDisplay}</p>
+                <p><i class="fas fa-coins"></i> Price: ${currencySymbol}${totalFormatted}</p>
+            </div>
+            ${chatButton}
+            <button class="btn secondary view-details" data-id="${order.id}">Details</button>
+        </div>`;
+}
+
+
+// WAŻNE: Funkcje takie jak getStoredUserData(), updateAuthUI(), logoutUser(),
+// getAuthHeaders(), showSuccessToast(), showErrorToast(), toast()
 // są oczekiwane jako dostępne globalnie z pliku general.js.
 // Upewnij się, że:
 // 1. general.js jest załadowany w HTML-u PRZED settings.js.
