@@ -1,0 +1,154 @@
+/* Dodane: Globalne ustawienie box-sizing dla spójności */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    background-color: #0a0a0a;
+    color: #bbb;
+    /* Dodane: Zapobiega poziomemu przewijaniu całej strony */
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #151515;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 40px 50px; /* Zwiększony padding poziomy dla odstępu od krawędzi */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, .5);
+    /* box-sizing: content-box - usunięte, ponieważ globalne border-box jest lepsze. */
+    /* Jeśli chcesz zachować content-box dla tego elementu, dodaj `box-sizing: content-box;` tutaj,
+       ale może to prowadzić do niespodziewanych problemów z układem. Zdecydowanie zalecam `border-box`. */
+}
+
+.container h1 {
+    font-size: 36px;
+    color: #f8d57e;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.container h2 {
+    font-size: 28px;
+    color: #f8d57e;
+    margin-top: 32px;
+    margin-bottom: 16px;
+}
+
+.container p,
+.container ul {
+    color: #ccc;
+    font-size: 18px;
+    margin-bottom: 20px;
+    line-height: 1.6; /* Poprawia czytelność tekstu */
+}
+
+.container ul {
+    padding-left: 20px;
+}
+
+.container li {
+    margin-bottom: 10px;
+}
+
+/* --- Media Queries dla Responsywności --- */
+
+/* Media Query dla tabletów (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .container {
+        max-width: 768px; /* Zmniejsz maksymalną szerokość kontenera */
+        margin: 30px auto; /* Zmniejsz margines górny i dolny */
+        padding: 30px 40px; /* Zmniejsz padding, ale zachowaj odstęp poziomy */
+        border-radius: 14px;
+    }
+
+    .container h1 {
+        font-size: 32px; /* Zmniejsz rozmiar nagłówka */
+        margin-bottom: 20px;
+    }
+
+    .container h2 {
+        font-size: 24px; /* Zmniejsz rozmiar podnagłówków */
+        margin-top: 28px;
+        margin-bottom: 14px;
+    }
+
+    .container p,
+    .container ul {
+        font-size: 17px; /* Zmniejsz rozmiar tekstu */
+        margin-bottom: 18px;
+    }
+
+    .container li {
+        margin-bottom: 8px;
+    }
+}
+
+/* Media Query dla smartfonów (max-width: 767px) */
+@media (max-width: 767px) {
+    .container {
+        max-width: 95%; /* Kontener zajmuje prawie całą szerokość ekranu */
+        margin: 20px auto; /* Mniejsze marginesy zewnętrzne */
+        padding: 25px 20px; /* Mniejszy padding */
+        border-radius: 12px;
+    }
+
+    .container h1 {
+        font-size: 28px; /* Dalsze zmniejszenie rozmiaru nagłówka */
+        margin-bottom: 18px;
+    }
+
+    .container h2 {
+        font-size: 22px; /* Dalsze zmniejszenie rozmiaru podnagłówków */
+        margin-top: 24px;
+        margin-bottom: 12px;
+    }
+
+    .container p,
+    .container ul {
+        font-size: 16px; /* Dalsze zmniejszenie rozmiaru tekstu */
+        margin-bottom: 16px;
+    }
+
+    .container ul {
+        padding-left: 15px; /* Zmniejsz padding dla list */
+    }
+
+    .container li {
+        margin-bottom: 6px;
+    }
+}
+
+/* Media Query dla bardzo małych smartfonów (max-width: 480px) */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px 15px; /* Minimalny padding */
+        margin: 15px auto; /* Minimalne marginesy zewnętrzne */
+        border-radius: 10px;
+    }
+
+    .container h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .container h2 {
+        font-size: 20px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .container p,
+    .container ul {
+        font-size: 15px;
+        margin-bottom: 14px;
+    }
+
+    .container ul {
+        padding-left: 10px;
+    }
+}

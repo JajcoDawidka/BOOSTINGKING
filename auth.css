@@ -1,0 +1,167 @@
+.auth-form h2,
+.auth-header {
+  text-align: center;
+  margin-bottom: 20px
+}
+
+.auth-form h2,
+.auth-header,
+.input-group {
+  margin-bottom: 20px
+}
+
+.input-group,
+.password-wrapper {
+  position: relative
+}
+
+*,
+::after,
+::before {
+  box-sizing: border-box
+}
+
+.auth-header {
+  margin-top: 40px
+}
+
+.auth-header .logo {
+  font-size: 36px;
+  color: #f8d57e;
+  text-decoration: none;
+  font-weight: 700
+}
+
+.auth-header .tagline {
+  color: #bbb;
+  margin-top: 8px;
+  font-size: 14px;
+  letter-spacing: .5px
+}
+
+.auth-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px
+}
+
+.auth-form {
+  background-color: #151515;
+  border: 1px solid #252525;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .5);
+  width: 100%;
+  max-width: 400px;
+  transition: border-color .3s, transform .3s, box-shadow .3s
+}
+
+.auth-form:hover {
+  border-color: rgba(248, 213, 126, .3);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(248, 213, 126, .1)
+}
+
+.auth-form h2 {
+  color: #f8d57e;
+  font-size: 28px
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #bbb;
+  font-size: 14px
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background-color: #1a1a1a;
+  color: #fff;
+  font-size: 16px;
+  transition: border-color .2s, background-color .2s
+}
+
+.toggle-pass {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  color: #bbb;
+  font-size: 18px
+}
+
+.toggle-pass:hover {
+  opacity: .8
+}
+
+.cta-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin-top: 10px;
+  background-color: #f8d57e;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .3s
+}
+
+.auth-message,
+.auth-switch {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px
+}
+
+.cta-button:hover {
+  background-color: #e6c758
+}
+
+.auth-switch {
+  color: #888
+}
+
+.auth-switch a {
+  color: #f8d57e;
+  text-decoration: none
+}
+
+.auth-switch a:hover {
+  text-decoration: underline
+}
+
+.input-group input:focus {
+  outline: 0;
+  border-color: #f8d57e;
+  box-shadow: 0 0 0 2px rgba(248, 213, 126, .3)
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(248, 213, 126, .3);
+  border-top-color: #f8d57e;
+  border-radius: 50%;
+  animation: 1s linear infinite spin;
+  vertical-align: middle;
+  margin-left: 10px
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg)
+  }
+}

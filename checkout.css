@@ -1,0 +1,702 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.settings-input,
+body {
+    font-family: Poppins, sans-serif
+}
+
+.checkout-title,
+.input-container {
+    position: relative
+}
+
+.payment-option.disabled-option input[type=radio],
+.toast {
+    pointer-events: none
+}
+
+body {
+    background-image: url('rozmytetlo.webp');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    color: #f1f1f1;
+    overflow-x: hidden;
+    /* Zapobiega przewijaniu w poziomie */
+}
+
+.content-container {
+    max-width: 1200px;
+    margin: 120px auto 40px;
+    padding: 40px;
+    background-color: rgba(20, 20, 25, .75);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, .6);
+    border: 1px solid rgba(248, 213, 126, .25)
+}
+
+.checkout-container {
+    max-width: 1000px;
+    margin: 0 auto
+}
+
+.checkout-title {
+    color: #f8d57e;
+    font-size: 32px;
+    margin-bottom: 40px;
+    text-align: center;
+    letter-spacing: .5px
+}
+
+.checkout-title::after {
+    content: '';
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #f8d57e, transparent);
+    display: block;
+    margin: 12px auto 0
+}
+
+.form-columns {
+    display: grid !important;
+    grid-template-areas: "personal-info boosting-account";
+    grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr) !important;
+    gap: 30px;
+    margin-bottom: 30px;
+    align-items: start
+}
+
+.section {
+    background-color: #151515;
+    border: 1px solid #252525;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .4);
+    margin-bottom: 30px
+}
+
+.form-group:last-child,
+.order-details-list li:last-child,
+form#checkout-form>.section:last-of-type {
+    margin-bottom: 0
+}
+
+.personal-info {
+    grid-area: personal-info
+}
+
+.boosting-account {
+    grid-area: boosting-account
+}
+
+.section h2 {
+    color: #f8d57e;
+    font-size: 24px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #2a2a3d;
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.section h2 .icon {
+    font-size: 20px
+}
+
+.form-group {
+    margin-bottom: 10px
+}
+
+.form-group label {
+    color: #f8d57e;
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left
+}
+
+.settings-input {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: #1f1f2a;
+    border: 1px solid #2a2a3d;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    transition: .3s;
+    box-sizing: border-box
+}
+
+.settings-input:focus {
+    border-color: #f8d57e;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(248, 213, 126, .2)
+}
+
+.info-note {
+    color: #bbb;
+    font-size: 14px;
+    margin-bottom: 15px;
+    margin-top: -5px;
+    line-height: 1.4;
+    padding: 10px;
+    background: rgba(40, 40, 50, .3);
+    border-radius: 6px;
+    border-left: 3px solid #f8d57e
+}
+
+.extras-header,
+.payment-methods,
+.summary {
+    margin-top: 30px
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    background-color: #1f1f2a;
+    border: 1px solid #2a2a3d;
+    border-radius: 8px;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: .2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .2)
+}
+
+.payment-option:hover {
+    border-color: #f8d57e;
+    box-shadow: 0 4px 10px rgba(248, 213, 126, .1)
+}
+
+.payment-option input[type=radio] {
+    margin-right: 15px;
+    min-width: 18px;
+    min-height: 18px;
+    accent-color: #F8D57E
+}
+
+.payment-option .payment-logo {
+    height: 30px;
+    margin-right: 15px;
+    object-fit: contain
+}
+
+.payment-option span {
+    color: #f1f1f1;
+    font-weight: 500;
+    flex-grow: 1
+}
+
+.summary {
+    grid-column: 1/-1;
+    margin-bottom: 0;
+    padding-bottom: 0
+}
+
+.summary h2 {
+    margin-bottom: 30px
+}
+
+.simplified-summary {
+    background: rgba(30, 30, 35, .5);
+    padding: 25px 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(248, 213, 126, .1);
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(248, 213, 126, .08);
+    font-size: 16px
+}
+
+.summary-row.discount,
+.summary-row.price-line,
+.summary-row.total,
+.summary-row:last-of-type {
+    border-bottom: none
+}
+
+.summary-label {
+    color: #bbb;
+    font-weight: 500;
+    flex-shrink: 0;
+    margin-right: 15px;
+    text-align: left
+}
+
+.summary-value {
+    color: #fff;
+    font-weight: 600;
+    text-align: right;
+    word-break: break-word;
+    flex-grow: 1
+}
+
+.summary-row.price-line {
+    font-size: 17px;
+    padding: 8px 0
+}
+
+.summary-row.price-line .summary-label,
+.summary-row.total .summary-label {
+    color: #f8d57e;
+    font-weight: 600
+}
+
+.summary-row.price-line .summary-value,
+.summary-row.total .summary-value {
+    color: #f8d57e;
+    font-weight: 700
+}
+
+.summary-row.discount {
+    margin-top: 5px;
+    padding-top: 0;
+    padding-bottom: 0
+}
+
+.summary-row.discount .summary-value {
+    color: #6bd96b
+}
+
+.summary-row.total {
+    border-top: 1px solid rgba(248, 213, 126, .3);
+    margin-top: 20px;
+    padding-top: 20px;
+    font-size: 1.3em;
+    padding-bottom: 0
+}
+
+.extras-header {
+    color: #f8d57e;
+    font-size: 19px;
+    margin-bottom: 15px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(248, 213, 126, .15);
+    text-align: left
+}
+
+.order-details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 25px
+}
+
+.order-details-list li {
+    background-color: rgba(40, 40, 50, .3);
+    padding: 10px 18px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    color: #e0e0e0;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #2a2a3d
+}
+
+.cancel-button,
+.save-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+    min-width: 160px;
+    text-align: center
+}
+
+.cancel-button {
+    background-color: transparent;
+    color: #bbb;
+    border: 1px solid #555
+}
+
+.cancel-button:hover {
+    background-color: rgba(255, 0, 0, .1);
+    border-color: #ff6b6b;
+    color: #ff6b6b
+}
+
+.save-button {
+    background-color: #f8d57e;
+    color: #0a0a0a;
+    border: none
+}
+
+.save-button:hover {
+    background-color: #ffea00;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(248, 213, 126, .3)
+}
+
+.save-button:active {
+    transform: translateY(0);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, .2)
+}
+
+.pay-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px
+}
+
+.pay-btn::before {
+    content: "🛒";
+    font-size: 18px
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, .3);
+    border-radius: 50%;
+    border-top-color: #0a0a0a;
+    animation: 1s ease-in-out infinite spin;
+    margin-right: 8px;
+    vertical-align: middle
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    border-radius: 4px;
+    color: #fff;
+    z-index: 1000;
+    opacity: 0;
+    animation: .3s forwards fadeIn
+}
+
+.toast.success {
+    background-color: #4caf50
+}
+
+.toast.error {
+    background-color: #f44336
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1
+    }
+}
+
+.payment-option.disabled-option {
+    opacity: .6;
+    cursor: not-allowed;
+    position: relative;
+    overflow: hidden;
+    background-color: #333
+}
+
+.payment-option.disabled-option::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .2);
+    z-index: 10;
+    pointer-events: none
+}
+
+.payment-option .coming-soon {
+    font-weight: 700;
+    color: #ffc107;
+    margin-left: 10px
+}
+
+
+/* Media Query dla tabletów (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .content-container {
+        margin: 80px 20px 40px;
+        /* Zmniejsz margines górny i dodaj poziomy */
+        padding: 30px;
+        /* Zmniejsz padding */
+    }
+
+    .checkout-title {
+        font-size: 28px;
+        /* Zmniejsz rozmiar tytułu */
+        margin-bottom: 30px;
+    }
+
+    .form-columns {
+        /* Upewnij się, że kolumny są stacked na tabletach */
+        grid-template-columns: 1fr !important;
+        grid-template-areas: "personal-info" "boosting-account";
+        gap: 25px;
+        /* Dostosuj odstęp */
+    }
+
+    .section {
+        padding: 25px;
+        /* Zmniejsz padding sekcji */
+        margin-bottom: 25px;
+    }
+
+    .section h2 {
+        font-size: 22px;
+        /* Zmniejsz rozmiar nagłówków sekcji */
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+    }
+
+    .form-group label {
+        font-size: 15px;
+        /* Dostosuj rozmiar etykiet */
+    }
+
+    .settings-input {
+        font-size: 14px;
+        /* Dostosuj rozmiar tekstu w inputach */
+        padding: 10px 12px;
+    }
+
+    .payment-option {
+        padding: 12px 15px;
+        /* Dostosuj padding opcji płatności */
+    }
+
+    .payment-option input[type=radio] {
+        margin-right: 10px;
+    }
+
+    .payment-option .payment-logo {
+        height: 25px;
+        /* Dostosuj rozmiar logo płatności */
+        margin-right: 10px;
+    }
+
+    .payment-option span {
+        font-size: 15px;
+        /* Dostosuj rozmiar tekstu opcji płatności */
+    }
+
+    .simplified-summary {
+        padding: 20px 25px;
+        /* Zmniejsz padding podsumowania */
+        margin-bottom: 30px;
+    }
+
+    .summary-row {
+        font-size: 15px;
+        /* Dostosuj rozmiar tekstu w podsumowaniu */
+        padding: 8px 0;
+    }
+
+    .summary-row.total {
+        font-size: 1.2em;
+        /* Dostosuj rozmiar całkowitej sumy */
+        padding-top: 15px;
+    }
+
+    .extras-header {
+        font-size: 18px;
+        /* Dostosuj rozmiar nagłówka dodatków */
+        padding-top: 15px;
+    }
+
+    .order-details-list li {
+        padding: 8px 15px;
+        /* Dostosuj padding listy dodatków */
+        font-size: 14px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        /* Ułóż przyciski jeden pod drugim */
+        gap: 10px;
+        /* Zmniejsz odstęp */
+    }
+
+    .cancel-button,
+    .save-button {
+        width: 100%;
+        /* Rozciągnij przyciski na całą szerokość */
+        min-width: unset;
+        /* Usuń minimalną szerokość */
+        padding: 14px;
+        /* Zwiększ padding dla łatwiejszego klikania */
+        font-size: 16px;
+    }
+}
+
+/* Media Query dla smartfonów (max-width: 767px) */
+@media (max-width: 767px) {
+    .content-container {
+        margin: 40px 15px 20px;
+        /* Mniejsze marginesy na smartfonach */
+        padding: 20px;
+        /* Mniejszy padding */
+        border-radius: 12px;
+        /* Mniejsze zaokrąglenie */
+    }
+
+    .checkout-title {
+        font-size: 26px;
+        /* Dalsze zmniejszenie rozmiaru tytułu */
+        margin-bottom: 25px;
+    }
+
+    .section {
+        padding: 20px;
+        /* Mniejszy padding sekcji */
+        margin-bottom: 20px;
+    }
+
+    .section h2 {
+        font-size: 20px;
+        /* Dalsze zmniejszenie rozmiaru nagłówków sekcji */
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
+    .info-note {
+        font-size: 13px;
+        /* Mniejsza czcionka dla notatki */
+        padding: 8px;
+    }
+
+    .payment-option {
+        padding: 10px 12px;
+        /* Dalsze zmniejszenie paddingu opcji płatności */
+    }
+
+    .payment-option .payment-logo {
+        height: 20px;
+        /* Mniejszy rozmiar logo płatności */
+    }
+
+    .payment-option span {
+        font-size: 14px;
+        /* Mniejsza czcionka opcji płatności */
+    }
+
+    .simplified-summary {
+        padding: 15px 20px;
+        /* Mniejszy padding podsumowania */
+        margin-bottom: 25px;
+    }
+
+    .summary-row {
+        font-size: 14px;
+        /* Mniejsza czcionka w podsumowaniu */
+        padding: 6px 0;
+    }
+
+    .summary-row.total {
+        font-size: 1.1em;
+        /* Mniejsza czcionka całkowitej sumy */
+        padding-top: 15px;
+    }
+
+    .extras-header {
+        font-size: 17px;
+        /* Mniejszy nagłówek dodatków */
+        padding-top: 15px;
+    }
+
+    .order-details-list li {
+        padding: 6px 12px;
+        /* Mniejszy padding listy dodatków */
+        font-size: 13px;
+    }
+
+    .form-actions {
+        margin-top: 25px;
+        /* Mniejszy margines górny dla przycisków akcji */
+        padding-top: 15px;
+    }
+}
+
+/* Media Query dla bardzo małych smartfonów (max-width: 480px) */
+@media (max-width: 480px) {
+    .content-container {
+        margin: 20px 10px;
+        /* Bardzo małe marginesy boczne */
+        padding: 15px;
+    }
+
+    .checkout-title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .section {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .section h2 {
+        font-size: 18px;
+    }
+
+    .settings-input {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    .info-note {
+        font-size: 12px;
+    }
+
+    .payment-option {
+        flex-wrap: wrap;
+        /* Pozwala elementom zawijać się, jeśli jest ciasno */
+        padding: 8px 10px;
+    }
+
+    .payment-option .payment-logo {
+        height: 18px;
+        margin-right: 8px;
+        margin-bottom: 4px;
+        /* Dodaje odstęp, jeśli tekst się zawija */
+    }
+
+    .payment-option span {
+        font-size: 13px;
+    }
+}

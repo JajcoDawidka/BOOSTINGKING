@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work With Us - BoostingKing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="jobs.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <div class="dropdown">
+                    <button class="dropbtn">Select Game</button>
+                    <ul class="dropdown-content">
+                        <li>
+                            <a href="cs2-modes.html">
+                                <span class="icon cs-icon">
+                                    <img src="cs2icon.png" alt="CS2 Icon" class="cs-icon-img">
+                                </span>
+                                Counter-Strike 2
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="header-center">
+                <a href="index.html" class="logo">BoostingKing</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="profile-dropdown">
+                    <button class="profile-btn">
+                        <span class="profile-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
+                                style="width:32px;height:32px;">
+                                <circle cx="128" cy="128" r="128" fill="#1f1f2a" />
+                                <path fill="#F8D57E"
+                                    d="M128 64a44 44 0 1 1 0 88 44 44 0 0 1 0-88zm0 112c40 0 72 21.5 72 48v8H56v-8c0-26.5 32-48 72-48z" />
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="profile-dropdown-content">
+                        <div class="dropdown-header">BoostingKing</div>
+                        <div class="booster-options" style="display: none;">
+                            <a href="booster-panel.html">Booster Panel</a>
+                        </div>
+                        <a href="settings.html" class="settings-link">Profile</a>
+                        <a href="index.html">Home</a>
+                        <a href="jobs.html">Work With Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a id="auth-link" href="login.html">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <section class="jobs-hero">
+            <div class="jobs-hero-content">
+                <h1>Join the BoostingKing Team</h1>
+                <p>We're looking for elite CS2 players to join our professional boosting team. Earn money doing what you
+                    love while helping others achieve their gaming goals.</p>
+                <a href="#application" class="cta-button">Apply Now</a>
+            </div>
+        </section>
+
+        <section class="benefits-section">
+            <h2>Why Become a Booster?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Competitive Pay</h3>
+                    <p>Earn top rates for your skills with weekly payments via PayPal or crypto</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Flexible Schedule</h3>
+                    <p>Work whenever you want - day or night, weekdays or weekends</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Skill Development</h3>
+                    <p>Improve your gameplay by facing high-level opponents daily</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Join a Community</h3>
+                    <p>Connect with other top players and share strategies</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="requirements-section">
+            <div class="requirements-container">
+                <div class="requirements-text">
+                    <h2>Booster Requirements</h2>
+                    <div class="requirements-list">
+                        <div class="requirement-item">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Minimum <strong>2500 ELO</strong> on Faceit</p>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-check-circle"></i>
+                            <p>At least <strong>16 years old</strong></p>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Good communication skills</p>
+                        </div>
+                        <div class="requirement-item">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Reliable internet connection</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="application" class="application-section">
+            <h2>Application Form</h2>
+            <p class="section-subtitle">Fill out the form below and we'll get back to you within 48 hours</p>
+
+            <form class="application-form" action="send_jobs.php" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="discord">Discord Username *</label>
+                        <input type="text" id="discord" name="discord" placeholder="username#1234" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age *</label>
+                        <input type="number" id="age" name="age" placeholder="18" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="faceit-elo">Current Faceit ELO *</label>
+                        <input type="number" id="faceit-elo" name="faceit_elo" placeholder="2500" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="region">Region *</label>
+                        <select id="region" name="region" required>
+                            <option value="" disabled selected>Select your region</option>
+                            <option value="EU">Europe</option>
+                            <option value="NA">North America</option>
+                            <option value="SA">South America</option>
+                            <option value="ASIA">Asia</option>
+                            <option value="OCE">Oceania</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="profile">Faceit/Steam Profile URL *</label>
+                        <input type="url" id="profile" name="profile" placeholder="https://www.faceit.com/..." required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="experience">Previous Boosting Experience</label>
+                        <textarea id="experience" name="experience" rows="4"
+                            placeholder="Describe your previous boosting experience (if any)"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="availability">Weekly Availability (hours) *</label>
+                        <select id="availability" name="availability" required>
+                            <option value="" disabled selected>Select your availability</option>
+                            <option value="5-10">10-20 hours</option>
+                            <option value="10-20">20-30 hours</option>
+                            <option value="20-30">40-50 hours</option>
+                            <option value="30+">60+ hours</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="why">Why do you want to join our team? *</label>
+                        <textarea id="why" name="why" rows="4" placeholder="Tell us why you'd be a good fit..."
+                            required></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button">Submit Application</button>
+            </form>
+        </section>
+
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq">
+                <div class="faq-item">
+                    <div class="question">
+                        <span>Is there a trial period?</span>
+                    </div>
+                    <div class="answer">
+                        Yes – 5 test orders to verify your speed and reliability.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>How and when do I get paid?</span>
+                    </div>
+                    <div class="answer">
+                        Weekly payouts every Monday. Methods: PayPal or cryptocurrency USDT. Minimum withdrawal: $50.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>What's the application process?</span>
+                    </div>
+                    <div class="answer">
+                        After submitting your application, we'll review your profile and may request a trial game. The
+                        entire process takes 2-3 days.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>What’s your commission rate?</span>
+                    </div>
+                    <div class="answer">
+                        We take 20%–30% (lower for elite boosters). Example: $100 order → You earn $70–$80.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>Do I talk to clients?</span>
+                    </div>
+                    <div class="answer">
+                        Only via our secured chat system (no personal Discord/Skype). Follow scripted responses for
+                        professionalism.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>Do I need to be available full-time?</span>
+                    </div>
+                    <div class="answer">
+                        You're not required to be full-time, but we expect active boosters to take pending orders in a
+                        timely manner. The more active you are, the more you can earn.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>BoostingKing</h3>
+                <p>&copy; 2025 BoostingKing. All rights reserved.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jobs.html">Work With Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="settings.html">Profile</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Popular Services</h4>
+                <ul>
+                    <li><a href="faceit.html">Faceit Boost</a></li>
+                    <li><a href="premier.html">Premier Boost</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="legal.html">Legal Info</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Email: boostingking.help@gmail.com</li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Join Our Community</h4>
+                <div class="social-icons">
+                    <a href="https://discord.gg/pM6X9GmuwF" class="social-icon" target="_blank"
+                        rel="noopener noreferrer">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Website built with passion for gamers. | <a href="#" id="scrollToTop">Scroll to top ↑</a></p>
+        </div>
+    </footer>
+
+    <script src="general.js"></script>
+    <script src="jobs.js"></script>
+    <script src="faq.js"></script>
+</body>
+
+</html>

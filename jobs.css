@@ -1,0 +1,689 @@
+/* Dodane: Globalne ustawienie box-sizing dla spójności */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.jobs-hero,
+.requirements-text h2 {
+    position: relative;
+    text-align: center;
+}
+
+body {
+    background-image: url('rozmytetlo.webp');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    color: #f1f1f1;
+    overflow-x: hidden; /* Zapobiega przewijaniu w poziomie */
+}
+
+.content-container {
+    max-width: 1200px;
+    margin: 120px auto 40px;
+    padding: 40px;
+    background-color: rgba(20, 20, 25, .75);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, .6);
+    border: 1px solid rgba(248, 213, 126, .25);
+}
+
+.application-section,
+.benefits-section,
+.jobs-hero {
+    margin-bottom: 60px;
+}
+
+.jobs-hero {
+    padding: 60px 40px;
+    overflow: hidden;
+}
+
+.jobs-hero h1 {
+    color: #f8d57e;
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.jobs-hero p {
+    color: #e0e0e0;
+    font-size: 18px;
+    max-width: 700px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+}
+
+.cta-button {
+    display: inline-block;
+    background-color: #f8d57e;
+    color: #111;
+    padding: 12px 28px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background .3s;
+}
+
+.benefits-grid,
+.requirements-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.benefit-card,
+.requirement-item {
+    background-color: rgba(30, 30, 35, .5);
+    transition: transform .3s;
+}
+
+.cta-button:hover,
+.submit-button:hover {
+    background-color: #eecb6a;
+}
+
+.benefits-section h2 {
+    text-align: center;
+    font-size: 32px;
+    color: #f8d57e;
+    margin-bottom: 40px;
+}
+
+.benefits-grid {
+    gap: 30px;
+}
+
+.benefit-card {
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(248, 213, 126, .05);
+    text-align: center;
+}
+
+.benefit-card:hover {
+    transform: translateY(-5px);
+}
+
+.benefit-icon {
+    font-size: 36px;
+    color: #f8d57e;
+    margin-bottom: 16px;
+}
+
+.benefit-card h3 {
+    color: #f8f8f8;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.benefit-card p {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.requirements-section {
+    padding: 40px;
+    margin-bottom: 60px;
+}
+
+.requirements-text h2 {
+    font-size: 32px;
+    color: #f8d57e;
+    margin-bottom: 30px;
+}
+
+.requirements-list {
+    gap: 20px;
+}
+
+.requirement-item {
+    border: 1px solid rgba(248, 213, 126, .05);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 3px solid #f8d57e;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.requirement-item:hover {
+    transform: translateX(5px);
+}
+
+.requirement-item i {
+    color: #f8d57e;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.requirement-item p {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.application-section h2 {
+    font-size: 28px;
+    color: #f8d57e;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #ccc;
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+
+.form-group,
+.form-row {
+    display: flex;
+    margin-bottom: 24px;
+}
+
+.application-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-row {
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-group {
+    flex: 1;
+    flex-direction: column;
+}
+
+.form-group.full-width {
+    flex: 0 0 100%;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #f1f1f1;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background-color: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(248, 213, 126, .1);
+    padding: 12px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    outline: 0;
+    transition: border .3s;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+textarea {
+    resize: none;
+    overflow: auto;
+}
+
+textarea::-webkit-resizer {
+    display: none;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #f8d57e;
+}
+
+.submit-button {
+    background-color: #f8d57e;
+    color: #111;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 10px;
+    transition: background .3s;
+}
+
+.application-form select {
+    background-color: rgba(30, 30, 35, .9);
+    color: #f1f1f1;
+    border: 1px solid rgba(248, 213, 126, .25);
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%23f8d57e' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px 16px;
+}
+
+.application-form select:focus {
+    outline: 0;
+    border-color: #f8d57e;
+}
+
+.application-form option {
+    background-color: #1e1e23;
+    color: #fff;
+}
+
+.faq-section {
+    padding: 0 0 40px;
+}
+
+.faq-section h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #f8d57e;
+}
+
+.faq {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(248, 213, 126, .1);
+}
+
+.question {
+    font-weight: 600;
+    font-size: 20px;
+    padding: 15px 0;
+    background-color: transparent;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.question:hover {
+    color: #f8d57e;
+}
+
+.answer {
+    font-size: 17px;
+    color: #d0d0d0;
+    line-height: 1.6;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .5s, padding .5s;
+    padding: 0;
+}
+
+.answer.open {
+    max-height: 500px;
+    padding: 15px 0 0;
+}
+
+@keyframes fadeInError {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-error {
+    color: #d9534f;
+    padding: 8px;
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+    animation: .3s forwards fadeInError;
+    display: none;
+}
+
+/* --- Media Queries dla Responsywności --- */
+
+/* Media Query dla tabletów i mniejszych (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .content-container {
+        margin: 80px 20px 40px; /* Zmniejsz margines górny i dodaj poziomy */
+        padding: 30px; /* Zmniejsz padding */
+        border-radius: 14px;
+    }
+
+    .jobs-hero {
+        padding: 50px 20px; /* Dostosuj padding dla mniejszych ekranów */
+    }
+
+    .jobs-hero h1 {
+        font-size: 38px; /* Zmniejsz rozmiar nagłówka */
+    }
+
+    .jobs-hero p {
+        font-size: 17px; /* Zmniejsz rozmiar tekstu */
+        max-width: 600px;
+    }
+
+    .benefits-section h2,
+    .requirements-text h2,
+    .faq-section h2 {
+        font-size: 28px; /* Zmniejsz rozmiar nagłówków sekcji */
+        margin-bottom: 30px;
+    }
+
+    .benefits-grid,
+    .requirements-list {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Dostosuj minmax dla gridów */
+        gap: 25px; /* Zmniejsz odstępy */
+    }
+
+    .benefit-card {
+        padding: 20px; /* Zmniejsz padding kart korzyści */
+    }
+
+    .benefit-icon {
+        font-size: 32px; /* Zmniejsz rozmiar ikon korzyści */
+    }
+
+    .benefit-card h3 {
+        font-size: 18px; /* Zmniejsz rozmiar nagłówków korzyści */
+    }
+
+    .benefit-card p {
+        font-size: 13px; /* Zmniejsz rozmiar tekstu korzyści */
+    }
+
+    .requirements-section {
+        padding: 30px; /* Zmniejsz padding sekcji wymagań */
+    }
+
+    .requirement-item {
+        padding: 18px; /* Zmniejsz padding elementu wymagań */
+        gap: 12px;
+    }
+
+    .requirement-item i {
+        font-size: 22px; /* Zmniejsz rozmiar ikon wymagań */
+    }
+
+    .requirement-item p {
+        font-size: 15px; /* Zmniejsz rozmiar tekstu wymagań */
+    }
+
+    .application-section h2 {
+        font-size: 26px; /* Zmniejsz rozmiar nagłówka formularza */
+    }
+
+    .section-subtitle {
+        font-size: 15px; /* Zmniejsz rozmiar podtytułu formularza */
+        margin-bottom: 25px;
+    }
+
+    .form-row {
+        gap: 15px; /* Zmniejsz odstępy w wierszach formularza */
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px; /* Zmniejsz padding pól formularza */
+        font-size: 13px;
+    }
+
+    .submit-button {
+        padding: 12px 20px; /* Zmniejsz padding przycisku submit */
+        font-size: 15px;
+    }
+
+    .question {
+        font-size: 18px; /* Zmniejsz rozmiar pytań FAQ */
+        padding: 12px 0;
+    }
+
+    .answer {
+        font-size: 16px; /* Zmniejsz rozmiar odpowiedzi FAQ */
+    }
+}
+
+/* Media Query dla mniejszych tabletów i smartfonów (max-width: 767px) */
+@media (max-width: 767px) {
+    .content-container {
+        margin: 40px 15px 20px; /* Mniejsze marginesy na smartfonach */
+        padding: 25px; /* Mniejszy padding */
+        border-radius: 12px;
+    }
+
+    .jobs-hero {
+        padding: 40px 15px; /* Mniejszy padding hero section */
+    }
+
+    .jobs-hero h1 {
+        font-size: 32px; /* Dalsze zmniejszenie nagłówka hero */
+    }
+
+    .jobs-hero p {
+        font-size: 16px; /* Dalsze zmniejszenie tekstu hero */
+        margin-bottom: 25px;
+    }
+
+    .cta-button {
+        padding: 10px 24px; /* Mniejszy padding CTA button */
+        font-size: 15px;
+    }
+
+    .benefits-section h2,
+    .requirements-text h2,
+    .faq-section h2 {
+        font-size: 26px; /* Dalsze zmniejszenie nagłówków sekcji */
+        margin-bottom: 25px;
+    }
+
+    .benefits-grid {
+        grid-template-columns: 1fr; /* Zmień na jedną kolumnę na smartfonach */
+        gap: 20px; /* Zmniejsz odstępy */
+    }
+
+    .benefit-card {
+        padding: 18px;
+    }
+
+    .benefit-icon {
+        font-size: 28px;
+    }
+
+    .benefit-card h3 {
+        font-size: 17px;
+    }
+
+    .benefit-card p {
+        font-size: 12px;
+    }
+
+    .requirements-section {
+        padding: 25px;
+    }
+
+    .requirements-list {
+        grid-template-columns: 1fr; /* Zmień na jedną kolumnę na smartfonach */
+    }
+
+    .requirement-item {
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .requirement-item i {
+        font-size: 20px;
+    }
+
+    .requirement-item p {
+        font-size: 14px;
+    }
+
+    .application-section h2 {
+        font-size: 24px;
+    }
+
+    .section-subtitle {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .form-row {
+        flex-direction: column; /* Ułóż pola formularza w kolumnach jeden pod drugim */
+        gap: 15px;
+    }
+
+    .form-group {
+        flex: unset; /* Usuń flex, aby form-group zajmował całą szerokość */
+        width: 100%;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px;
+        font-size: 14px;
+    }
+    
+    .application-form select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .submit-button {
+        width: 100%; /* Rozciągnij przycisk submit na całą szerokość */
+        padding: 14px 20px;
+        font-size: 16px;
+    }
+
+    .question {
+        font-size: 17px;
+        padding: 10px 0;
+    }
+
+    .answer {
+        font-size: 15px;
+        padding: 10px 0 0;
+    }
+}
+
+/* Media Query dla bardzo małych smartfonów (max-width: 480px) */
+@media (max-width: 480px) {
+    .content-container {
+        margin: 20px 10px;
+        padding: 20px;
+    }
+
+    .jobs-hero {
+        padding: 30px 10px;
+    }
+
+    .jobs-hero h1 {
+        font-size: 28px;
+    }
+
+    .jobs-hero p {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .benefits-section h2,
+    .requirements-text h2,
+    .faq-section h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .benefit-card {
+        padding: 15px;
+    }
+
+    .benefit-icon {
+        font-size: 24px;
+    }
+
+    .benefit-card h3 {
+        font-size: 16px;
+    }
+
+    .benefit-card p {
+        font-size: 11px; /* Bardzo mała czcionka dla małych ekranów */
+    }
+
+    .requirements-section {
+        padding: 20px;
+    }
+
+    .requirement-item {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .requirement-item i {
+        font-size: 18px;
+    }
+
+    .requirement-item p {
+        font-size: 13px;
+    }
+
+    .application-section h2 {
+        font-size: 22px;
+    }
+
+    .section-subtitle {
+        font-size: 13px;
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .submit-button {
+        padding: 12px 18px;
+        font-size: 15px;
+    }
+
+    .question {
+        font-size: 16px;
+        padding: 8px 0;
+    }
+
+    .answer {
+        font-size: 14px;
+        padding: 8px 0 0;
+    }
+}

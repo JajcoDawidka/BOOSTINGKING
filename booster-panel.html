@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booster Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="general.css" />
+    <link rel="stylesheet" href="booster-panel.css" />
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <div class="dropdown">
+                    <button class="dropbtn">Select Game</button>
+                    <ul class="dropdown-content">
+                        <li>
+                            <a href="cs2-modes.html">
+                                <span class="icon cs-icon">
+                                    <img src="cs2icon.png" alt="CS2 Icon" class="cs-icon-img">
+                                </span>
+                                Counter-Strike 2
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="header-center">
+                <a href="index.html" class="logo">BoostingKing</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="profile-dropdown">
+                    <button class="profile-btn">
+                        <span class="profile-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
+                                style="width:32px;height:32px;">
+                                <circle cx="128" cy="128" r="128" fill="#1f1f2a" />
+                                <path fill="#F8D57E"
+                                    d="M128 64a44 44 0 1 1 0 88 44 44 0 0 1 0-88zm0 112c40 0 72 21.5 72 48v8H56v-8c0-26.5 32-48 72-48z" />
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="profile-dropdown-content">
+                        <div class="dropdown-header">BoostingKing</div>
+                        <div class="booster-options" style="display: none;">
+                            <a href="booster-panel.html">Booster Panel</a>
+                        </div>
+                        <a href="settings.html" class="settings-link">Profile</a>
+                        <a href="index.html">Home</a>
+                        <a href="jobs.html">Work With Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a id="auth-link" href="login.html">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="booster-panel">
+        <div class="panel-header">
+            <h1>Booster Dashboard</h1>
+            <div class="header-actions"> <button class="rules-btn" onclick="toggleRulesModal()">📜 View Booster
+                    Rules</button>
+            </div>
+        </div>
+
+        <div class="stats-summary">
+            <div class="stat-card">
+                <span class="stat-value" id="completed-orders-count">0</span>
+                <span class="stat-label">Completed</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="earnings-amount">$0</span>
+                <span class="stat-label">Earnings</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value" id="ranking-position">#-</span>
+                <span class="stat-label">Ranking</span>
+            </div>
+        </div>
+
+        <div class="panel-column">
+            <section class="panel-section" id="orders-available">
+                <div class="section-header">
+                    <h2>Orders Available</h2>
+                </div>
+                <div class="orders-carousel-container">
+                    <div class="orders-list" id="available-orders-list"></div>
+                </div>
+            </section>
+
+            <section class="panel-section" id="active-orders">
+                <div class="section-header">
+                    <h2>Active Orders</h2>
+                </div>
+                <div class="orders-carousel-container">
+                    <div class="orders-list" id="active-orders-list"></div>
+                </div>
+            </section>
+
+            <section class="panel-section" id="completed-orders">
+                <div class="section-header">
+                    <h2>Completed Orders</h2>
+                </div>
+                <div class="orders-carousel-container">
+                    <div class="orders-list" id="completed-orders-list"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="rules-modal" class="rules-modal">
+        <div class="rules-modal-content">
+            <span class="close-btn" onclick="toggleRulesModal()">&times;</span>
+            <h2>Booster Regulations – Your Role in Our Community!</h2>
+
+            <p>Welcome to our **Booster** team! Thank you for being with us and supporting our community. The following
+                regulations outline the rules for our cooperation to ensure everything runs smoothly and satisfactorily
+                for all parties. Remember, your role is crucial for our growth!</p>
+
+            ---
+
+            <h3>1. General Principles of Cooperation</h3>
+            <ul>
+                <li>**Professionalism and Integrity:** As a Booster, you represent our community. We expect
+                    professionalism, honesty, and diligence in every action you take.</li>
+                <li>**Communication:** We're open to your questions, suggestions, and concerns. Regularly check
+                    communication channels (e.g., Discord, email, booster panel) and actively participate in discussions
+                    when necessary.</li>
+                <li>**Confidentiality:** Treat all information regarding orders, users, and internal processes as
+                    confidential, and do not share them with third parties.</li>
+            </ul>
+
+            ---
+
+            <h3>2. Order Execution and Time Management</h3>
+            <ul>
+                <li>**Order Acceptance:** By accepting an order, you confirm that you have the necessary skills and
+                    **sufficient time** to complete it as expected. Remember, accepting an order means you **must
+                    dedicate a significant amount of time to it**. If you're unable to commit to an order, please do not
+                    accept it.</li>
+                <li>**Quality of Execution:** We are committed to providing the highest quality services. Every order
+                    should be completed carefully and according to the established guidelines.</li>
+                <li>**Order Specific Timelines:**
+                    <ul>
+                        <li>**Duo Orders (Boosting with a Client):** After accepting a duo order, you **must contact the
+                            client** to introduce yourself and jointly agree on convenient times and a schedule for
+                            playing together. Efficient communication in this aspect is crucial.</li>
+                        <li>**Solo Orders (Boosting on a Client's Account):** After accepting a solo order, you have a
+                            **maximum of 1 hour to begin it**. Failure to start the order within this timeframe may
+                            result in consequences.</li>
+                    </ul>
+                </li>
+                <li>**Problems and Dispute Resolution:** If you encounter any problems during the order's execution,
+                    contact us immediately. We will help you find a solution. Please report any disputes with clients to
+                    us so we can mediate.</li>
+            </ul>
+
+            ---
+
+            <h3>3. Payments and Settlements</h3>
+            <ul>
+                <li>**Remuneration:** Details regarding remuneration for individual orders can be found in the booster
+                    panel next to each task.</li>
+                <li>**Payouts:** Payouts are processed according to the agreed schedule, after orders are completed and
+                    verified. Ensure your payout details are correctly configured.</li>
+                <li>**Taxes:** You are responsible for settling your taxes on earned income in accordance with
+                    applicable law.</li>
+            </ul>
+
+            ---
+
+            <h3>4. Community Rules and Penalties</h3>
+            <ul>
+                <li>**Respect Others:** Treat other boosters, clients, and team members with respect. We are one
+                    community.</li>
+                <li>**No Cheating:** Any attempts at cheating, manipulation, or dishonest practices will result in
+                    immediate termination of cooperation.</li>
+                <li>**Account Security:** Protect your booster panel login credentials. Do not share them with anyone.
+                </li>
+                <li>**Consequences for Failure to Fulfill Tasks:** Failure to fulfill your duties, including
+                    **neglecting accepted orders**, not starting solo boosts within the specified time, or inadequate
+                    communication with clients, may result in **penalties**. Depending on the severity and frequency of
+                    the infraction, penalties may include:
+                    <ul>
+                        <li>Loss of access to certain orders.</li>
+                        <li>Lower priority in task assignment.</li>
+                        <li>Imposition of financial penalties.</li>
+                        <li>Ultimately – permanent termination of cooperation.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            ---
+
+            <p>
+            <h3>Thank You for Your Commitment!</h3>
+            </p>
+            <p>We are confident that through our joint efforts, we will continue to grow our community. If you have any
+                questions or concerns, don't hesitate to contact our support team.</p>
+            <p>We wish you many successful boosts!</p>
+
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>BoostingKing</h3>
+                <p>&copy; 2025 BoostingKing. All rights reserved.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jobs.html">Work With Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="settings.html">Profile</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Popular Services</h4>
+                <ul>
+                    <li><a href="faceit.html">Faceit Boost</a></li>
+                    <li><a href="premier.html">Premier Boost</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="legal.html">Legal Info</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Email: boostingking.help@gmail.com</li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Join Our Community</h4>
+                <div class="social-icons">
+                    <a href="https://discord.gg/pM6X9GmuwF" class="social-icon" target="_blank"
+                        rel="noopener noreferrer">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Website built with passion for gamers. | <a href="#" id="scrollToTop">Scroll to top ↑</a></p>
+        </div>
+    </footer>
+
+    <script src="general.js"></script>
+    <script src="booster.js"></script>
+</body>
+
+</html>

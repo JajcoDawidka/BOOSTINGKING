@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Chat - BoostingKing</title>
+    <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <div class="dropdown">
+                    <button class="dropbtn">Select Game</button>
+                    <ul class="dropdown-content">
+                        <li>
+                            <a href="cs2-modes.html">
+                                <span class="icon cs-icon">
+                                    <img src="cs2icon.png" alt="CS2 Icon" class="cs-icon-img">
+                                </span>
+                                Counter-Strike 2
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="header-center">
+                <a href="index.html" class="logo">BoostingKing</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="profile-dropdown">
+                    <button class="profile-btn">
+                        <span class="profile-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
+                                style="width:32px;height:32px;">
+                                <circle cx="128" cy="128" r="128" fill="#1f1f2a" />
+                                <path fill="#F8D57E"
+                                    d="M128 64a44 44 0 1 1 0 88 44 44 0 0 1 0-88zm0 112c40 0 72 21.5 72 48v8H56v-8c0-26.5 32-48 72-48z" />
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="profile-dropdown-content">
+                        <div class="dropdown-header">BoostingKing</div>
+                        <div class="booster-options" style="display: none;">
+                            <a href="booster-panel.html">Booster Panel</a>
+                        </div>
+                        <a href="settings.html" class="settings-link">Profile</a>
+                        <a href="index.html">Home</a>
+                        <a href="jobs.html">Work With Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a id="auth-link" href="login.html">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main-layout-container">
+        <div class="chat-column">
+            <div class="chat-header">
+                <button class="back-btn" onclick="history.back()"><i class="fas fa-arrow-left"></i></button>
+                <span>Chat for Order #<span id="order-id-display"></span></span>
+                <button class="small-header-btn notify-other-party-btn" id="notify-other-party-btn">
+                    <i class="fas fa-bell"></i> Notify
+                </button>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <div class="loading-spinner-small"></div> Loading messages...
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Write a message...">
+                <button id="send-button" class="send-button">Send</button>
+            </div>
+        </div>
+
+        <div class="details-column">
+            <div class="details-header">
+                <h2>Order Details</h2>
+                <div class="header-buttons">
+                    <button class="small-header-btn deliver-order-btn"><i class="fas fa-truck"></i> Deliver Order <i
+                            class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="order-summary-block" id="order-summary-block">
+                <div class="order-main-info">
+                    <span class="order-id-main">#<span id="detail-id-main">N/A</span></span>
+                    <span class="client-name-main"><i class="fas fa-user"></i> <span
+                            id="detail-client-username-main">N/A</span></span>
+                    <span class="order-date-main"><i class="fas fa-clock"></i> <span
+                            id="detail-order-date">N/A</span></span>
+                    <div class="order-price-main">
+                        <span id="detail-currency-main"></span><span id="detail-total-price-main"></span>
+                        <span class="order-status-main" id="detail-status-main"></span>
+                    </div>
+                </div>
+
+                <p><i class="fas fa-hourglass-start"></i> Time Elapsed: <span id="detail-time-elapsed">N/A</span></p>
+
+                <div class="game-info">
+                    <p><i class="fas fa-gamepad"></i> GAME PACK: <span id="detail-service-type">N/A</span></p>
+                    <p><i class="fas fa-globe-americas"></i> REGION: <span id="detail-region">N/A</span></p>
+                </div>
+
+                <div class="level-info">
+                    <p><i class="fas fa-chart-line"></i> Current Division: <span id="detail-current-level">N/A</span>
+                    </p>
+                    <p><i class="fas fa-arrow-right"></i> Desired Division: <span id="detail-desired-level">N/A</span>
+                    </p>
+                </div>
+
+                <div class="options-info">
+                    <p><i class="fas fa-sliders-h"></i> OPTIONS: <span id="detail-options">None</span></p>
+                    <p><i class="fas fa-users"></i> Account Type: <span id="detail-account-type">N/A</span></p>
+                </div>
+            </div>
+
+            <div class="account-credentials-block" id="account-credentials-block">
+                <h3>Account Credentials</h3>
+                <div class="credential-group">
+                    <p><i class="fas fa-sign-in-alt"></i> <strong>Steam Login:</strong> <span
+                            id="detail-steam-login">N/A</span></p>
+                    <p class="sensitive-data">
+                        <i class="fas fa-lock"></i> <strong>Steam Password:</strong>
+                        <span id="detail-steam-password-hidden">**********</span>
+                        <span id="detail-steam-password-revealed" style="display: none;">N/A</span>
+                        <button class="toggle-visibility" data-target="detail-steam-password">Show</button>
+                    </p>
+                </div>
+                <div class="credential-group">
+                    <p><i class="fas fa-envelope"></i> <strong>Faceit Email:</strong> <span
+                            id="detail-faceit-email">N/A</span></p>
+                    <p class="sensitive-data">
+                        <i class="fas fa-key"></i> <strong>Faceit Password:</strong>
+                        <span id="detail-faceit-password-hidden">**********</span>
+                        <span id="detail-faceit-password-revealed" style="display: none;">N/A</span>
+                        <button class="toggle-visibility" data-target="detail-faceit-password">Show</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="deliverOrderModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Deliver Order</h2>
+            <p>Please provide a screenshot link (e.g., from prnt.sc) to confirm completion:</p>
+            <input type="url" id="screenshotLinkInput" class="modal-input"
+                placeholder="https://prnt.sc/your-screenshot-link">
+            <button id="confirmDeliverButton" class="btn success">Confirm Delivery</button>
+            <div id="modalError" class="modal-error"></div>
+        </div>
+    </div>
+
+
+    <script src="general.js"></script>
+    <script src="chat.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,721 @@
+/* Dodane: Globalne ustawienie box-sizing dla spójności */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.form-group,
+.input-container {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box; /* Upewnij się, że to jest tutaj, choć globalny selektor to obejmuje */
+}
+
+.settings-input,
+body {
+    font-family: Poppins, sans-serif;
+}
+
+body {
+    background-color: #0a0a0a;
+    color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+    /* Dodane: Zapobiega przewijaniu w poziomie, jeśli kontener będzie za szeroki */
+    overflow-x: hidden;
+}
+
+.settings-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px; /* Zapewnia padding poziomy dla kontenera głównego */
+}
+
+.settings-title {
+    color: #f8d57e;
+    font-size: 32px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Obecnie już jest 1 kolumna na dużych ekranach, co jest elastyczne */
+    gap: 30px;
+    align-items: start;
+}
+
+.settings-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.settings-card,
+.settings-form {
+    flex-direction: column;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.settings-card {
+    background-color: #151515;
+    border: 1px solid rgba(248, 213, 126, .15);
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .4);
+    backdrop-filter: blur(8px);
+    flex-grow: 1;
+    justify-content: space-between;
+    transition: transform .3s ease-in-out, box-shadow .3s ease-in-out, border-color .3s;
+}
+
+.order-card:hover,
+.settings-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, .6);
+    border-color: rgba(248, 213, 126, .3);
+}
+
+.card-title {
+    color: #f8d57e;
+    font-size: 26px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(248, 213, 126, .2);
+    letter-spacing: .5px;
+}
+
+.settings-form {
+    gap: 20px;
+    flex-grow: 1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: #f8d57e;
+    font-weight: 500;
+}
+
+.settings-input {
+    width: 100%;
+    padding: 12px 16px 12px 45px;
+    background-color: rgba(30, 30, 35, .7);
+    border: 1px solid #2a2a3d;
+    border-radius: 8px;
+    color: #f1f1f1;
+    font-size: 15px;
+    transition: .3s;
+    box-sizing: border-box;
+}
+
+.input-icon,
+.lock-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    fill: #F8D57E; /* Changed to match theme, original was #bbbbbb */
+}
+
+.settings-input:focus {
+    border-color: #f8d57e;
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(248, 213, 126, .2);
+}
+
+.disabled-input .settings-input {
+    background-color: rgba(25, 25, 30, .7);
+    color: #bbb;
+    cursor: not-allowed;
+}
+
+.input-icon {
+    left: 12px;
+}
+
+.lock-icon {
+    right: 12px;
+}
+
+select.settings-input {
+    appearance: none;
+    padding-right: 40px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F8D57E"><path d="M7,10L12,15L17,10H7Z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 20px;
+}
+
+.email-hint {
+    color: #d0d0d0;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(248, 213, 126, .15);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cancel-button,
+.save-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.cancel-button {
+    background-color: transparent;
+    border: 1px solid #4a4a6e;
+    color: #f1f1f1;
+}
+
+.cancel-button:hover {
+    background-color: rgba(74, 74, 110, .2);
+    border-color: #f8d57e;
+    color: #f8d57e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 74, 110, .3);
+}
+
+.save-button {
+    background-color: #f8d57e;
+    color: #1a1a1a;
+    border: none;
+    box-shadow: 0 4px 10px rgba(248, 213, 126, .3);
+}
+
+.save-button:hover {
+    background-color: #ffe28a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(248, 213, 126, .5);
+}
+
+.save-button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+    transform: none;
+    background-color: #4a4a6e;
+    color: #ccc;
+    box-shadow: none;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-spinner-small {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, .3);
+    border-radius: 50%;
+    border-top-color: #f8d57e;
+    animation: 1s ease-in-out infinite spin;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.orders-card {
+    margin-top: 30px;
+    min-height: 280px;
+}
+
+.orders-carousel-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 15px;
+    margin-bottom: -15px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: #F8D57E #2a2a3d;
+}
+
+.orders-carousel-container::-webkit-scrollbar {
+    height: 10px;
+}
+
+.orders-carousel-container::-webkit-scrollbar-track {
+    background: #2a2a3d;
+    border-radius: 10px;
+}
+
+.orders-carousel-container::-webkit-scrollbar-thumb {
+    background-color: #f8d57e;
+    border-radius: 10px;
+    border: 2px solid #2a2a3d;
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    padding: 5px 0;
+    min-height: 250px;
+    align-items: stretch;
+}
+
+.order-card {
+    flex: 0 0 auto;
+    width: 260px;
+    background: linear-gradient(135deg, rgba(40, 40, 45, .85), rgba(30, 30, 35, .85));
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, .4);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid rgba(248, 213, 126, .15);
+    transition: transform .3s ease-in-out, box-shadow .3s ease-in-out, border-color .3s;
+    backdrop-filter: blur(6px);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(248, 213, 126, .1);
+}
+
+.order-id {
+    font-weight: 700;
+    color: #f8d57e;
+    font-size: 1.2em;
+    letter-spacing: .5px;
+}
+
+.order-status {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: .85em;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+}
+
+.order-status.pending,
+.order-status.processing {
+    background-color: #f8d57e;
+    color: #1c1c1c;
+}
+
+.order-status.active,
+.order-status.in-progress {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.order-status.completed {
+    background-color: #6a6a9b;
+    color: #fff;
+}
+
+.order-status.cancelled,
+.order-status.refunded {
+    background-color: #8b0000;
+    color: #fff;
+}
+
+.order-status.on-hold {
+    background-color: orange;
+    color: #333;
+}
+
+.order-body p {
+    margin: 10px 0;
+    font-size: .95em;
+    color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.order-body i {
+    color: #f8d57e;
+    width: 22px;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.order-card .btn {
+    display: block;
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color .3s, border-color .3s, transform .2s, box-shadow .2s;
+    margin-top: 15px;
+}
+
+.order-card .btn.secondary {
+    background-color: rgba(30, 30, 35, .7);
+    border: 1px solid rgba(248, 213, 126, .2);
+    color: #f1f1f1;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+}
+
+.order-card .btn.secondary:hover {
+    background-color: rgba(248, 213, 126, .1);
+    border-color: #f8d57e;
+    color: #f8d57e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(248, 213, 126, .3);
+}
+
+.error-message,
+.loading-message,
+.no-orders {
+    color: #b0b0b0;
+    font-style: italic;
+    padding: 1rem;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1.1em;
+}
+
+.error-message {
+    color: #ff8b8b;
+    font-weight: 500;
+}
+
+/* --- Media Queries dla Responsywności --- */
+
+/* Media Query dla tabletów (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .settings-container {
+        margin: 80px auto 40px; /* Zmniejsz margines górny, dodaj auto dla wyśrodkowania */
+        padding: 0 20px; /* Zapewnij padding poziomy */
+    }
+
+    .settings-title {
+        font-size: 28px; /* Zmniejsz rozmiar tytułu */
+        margin-bottom: 25px;
+    }
+
+    .settings-card {
+        padding: 25px; /* Zmniejsz padding kart */
+        border-radius: 16px;
+    }
+
+    .card-title {
+        font-size: 24px; /* Zmniejsz rozmiar nagłówków kart */
+        margin-bottom: 20px;
+        padding-bottom: 12px;
+    }
+
+    .form-group label {
+        font-size: 14px; /* Dostosuj rozmiar etykiet */
+    }
+
+    .settings-input {
+        padding: 10px 14px 10px 40px; /* Dostosuj padding inputów */
+        font-size: 14px;
+    }
+
+    .input-icon,
+    .lock-icon {
+        width: 18px; /* Zmniejsz rozmiar ikon w inputach */
+        height: 18px;
+        left: 10px; /* Dostosuj pozycję ikon */
+        right: 10px;
+    }
+
+    select.settings-input {
+        padding-right: 35px; /* Dostosuj padding dla strzałki selecta */
+        background-size: 18px 18px;
+    }
+
+    .email-hint {
+        font-size: 12px; /* Zmniejsz rozmiar hintu emaila */
+    }
+
+    .cancel-button,
+    .save-button {
+        padding: 10px 20px; /* Zmniejsz padding przycisków akcji */
+        font-size: 15px;
+    }
+
+    .loading-spinner-small {
+        width: 20px; /* Zmniejsz rozmiar spinnera */
+        height: 20px;
+        border-width: 2px;
+    }
+
+    .orders-carousel-container {
+        padding-bottom: 12px; /* Dostosuj padding karuzeli */
+        margin-bottom: -12px;
+    }
+
+    .orders-list {
+        gap: 20px; /* Zmniejsz odstępy między kartami zamówień */
+    }
+
+    .order-card {
+        width: 240px; /* Zmniejsz szerokość karty zamówienia */
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .order-id {
+        font-size: 1.1em; /* Dostosuj rozmiar ID zamówienia */
+    }
+
+    .order-status {
+        padding: 5px 10px; /* Dostosuj padding statusu zamówienia */
+        font-size: .8em;
+    }
+
+    .order-body p {
+        font-size: .9em; /* Dostosuj rozmiar tekstu w body zamówienia */
+        gap: 8px;
+    }
+
+    .order-body i {
+        width: 20px; /* Dostosuj rozmiar ikon w body zamówienia */
+        font-size: 1em;
+    }
+
+    .order-card .btn {
+        padding: 10px 12px; /* Dostosuj padding przycisków w karcie zamówienia */
+        font-size: .9em;
+    }
+}
+
+/* Media Query dla smartfonów (max-width: 767px) */
+@media (max-width: 767px) {
+    .settings-container {
+        margin: 20px auto; /* Mniejsze marginesy zewnętrzne */
+        padding: 0 15px; /* Mniejszy padding poziomy */
+    }
+
+    .settings-title {
+        font-size: 26px; /* Dalsze zmniejszenie rozmiaru tytułu */
+        margin-bottom: 20px;
+    }
+
+    .settings-card {
+        padding: 20px; /* Dalsze zmniejszenie paddingu kart */
+        border-radius: 14px;
+    }
+
+    .card-title {
+        font-size: 22px; /* Dalsze zmniejszenie nagłówków kart */
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .settings-input {
+        padding: 8px 12px 8px 35px; /* Dalsze zmniejszenie paddingu inputów */
+        font-size: 13px;
+    }
+
+    .input-icon,
+    .lock-icon {
+        width: 16px; /* Dalsze zmniejszenie rozmiaru ikon */
+        height: 16px;
+        left: 8px; /* Dostosuj pozycję ikon */
+        right: 8px;
+    }
+
+    select.settings-input {
+        padding-right: 30px; /* Dostosuj padding dla strzałki selecta */
+        background-size: 16px 16px;
+    }
+
+    .email-hint {
+        font-size: 11px;
+    }
+
+    .form-actions {
+        flex-direction: column; /* Ułóż przyciski akcji w kolumnie */
+        gap: 10px;
+        padding-top: 15px;
+    }
+
+    .cancel-button,
+    .save-button {
+        width: 100%; /* Rozciągnij przyciski na całą szerokość */
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+
+    .loading-spinner-small {
+        width: 18px;
+        height: 18px;
+        border-width: 2px;
+    }
+
+    .orders-card {
+        margin-top: 25px; /* Zmniejsz margines górny dla karty zamówień */
+        min-height: 250px;
+    }
+
+    .orders-carousel-container {
+        padding-bottom: 10px;
+        margin-bottom: -10px;
+    }
+
+    .orders-list {
+        gap: 15px;
+    }
+
+    .order-card {
+        width: 200px; /* Dalsze zmniejszenie szerokości karty zamówienia */
+        padding: 15px;
+        border-radius: 14px;
+    }
+
+    .order-id {
+        font-size: 1em;
+    }
+
+    .order-status {
+        padding: 4px 8px;
+        font-size: .75em;
+    }
+
+    .order-body p {
+        font-size: .85em;
+    }
+
+    .order-body i {
+        width: 18px;
+        font-size: .9em;
+    }
+
+    .order-card .btn {
+        padding: 8px 10px;
+        font-size: .85em;
+    }
+}
+
+/* Media Query dla bardzo małych smartfonów (max-width: 480px) */
+@media (max-width: 480px) {
+    .settings-container {
+        margin: 15px auto;
+        padding: 0 10px;
+    }
+
+    .settings-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .settings-card {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .card-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+    }
+
+    .settings-input {
+        padding: 6px 10px 6px 30px;
+        font-size: 12px;
+    }
+
+    .input-icon,
+    .lock-icon {
+        width: 14px;
+        height: 14px;
+        left: 6px;
+        right: 6px;
+    }
+
+    select.settings-input {
+        padding-right: 25px;
+        background-size: 14px 14px;
+    }
+
+    .email-hint {
+        font-size: 10px;
+    }
+
+    .cancel-button,
+    .save-button {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .loading-spinner-small {
+        width: 16px;
+        height: 16px;
+    }
+
+    .orders-card {
+        margin-top: 20px;
+        min-height: 200px;
+    }
+
+    .orders-list {
+        gap: 10px;
+    }
+
+    .order-card {
+        width: 180px;
+        padding: 12px;
+    }
+
+    .order-id {
+        font-size: .9em;
+    }
+
+    .order-status {
+        padding: 3px 6px;
+        font-size: .7em;
+    }
+
+    .order-body p {
+        font-size: .8em;
+    }
+
+    .order-body i {
+        width: 16px;
+        font-size: .8em;
+    }
+
+    .order-card .btn {
+        padding: 6px 8px;
+        font-size: .8em;
+    }
+}

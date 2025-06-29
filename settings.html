@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Settings | BoostingKing</title>
+    <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <div class="dropdown">
+                    <button class="dropbtn">Select Game</button>
+                    <ul class="dropdown-content">
+                        <li>
+                            <a href="cs2-modes.html">
+                                <span class="icon cs-icon">
+                                    <img src="cs2icon.png" alt="CS2 Icon" class="cs-icon-img">
+                                </span>
+                                Counter-Strike 2
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="header-center">
+                <a href="index.html" class="logo">BoostingKing</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="profile-dropdown">
+                    <button class="profile-btn">
+                        <span class="profile-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
+                                style="width:32px;height:32px;">
+                                <circle cx="128" cy="128" r="128" fill="#1f1f2a" />
+                                <path fill="#F8D57E"
+                                    d="M128 64a44 44 0 1 1 0 88 44 44 0 0 1 0-88zm0 112c40 0 72 21.5 72 48v8H56v-8c0-26.5 32-48 72-48z" />
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="profile-dropdown-content">
+                        <div class="dropdown-header">BoostingKing</div>
+                        <div class="booster-options" style="display: none;">
+                            <a href="booster-panel.html">Booster Panel</a>
+                        </div>
+                        <a href="settings.html" class="settings-link">Profile</a>
+                        <a href="index.html">Home</a>
+                        <a href="jobs.html">Work With Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a id="auth-link" href="login.html">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="settings-container">
+        <h1 class="settings-title">Account Settings</h1>
+
+        <div class="settings-grid">
+            <div class="settings-column">
+                <div class="settings-card">
+                    <h2 class="card-title">General</h2>
+
+                    <form class="settings-form" id="settingsForm">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <div class="input-container">
+                                <input type="text" id="username" value="" class="settings-input">
+                                <svg viewBox="0 0 24 24" class="input-icon">
+                                    <path fill="#bbbbbb"
+                                        d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z" />
+                                </svg>
+                            </div>
+                            <small class="email-hint">You can change your username here.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-container disabled-input">
+                                <input type="email" id="email" value="" class="settings-input" disabled>
+                                <svg viewBox="0 0 24 24" class="input-icon">
+                                    <path fill="#bbbbbb"
+                                        d="M22 6C22 4.9 21.1 4 20 4H4C2.9 4 2 4.9 2 6V18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6M20 6L12 11L4 6H20M20 18H4V8L12 13L20 8V18Z" />
+                                </svg>
+                                <div class="lock-icon">
+                                    <svg viewBox="0 0 24 24">
+                                        <path fill="#bbbbbb"
+                                            d="M12,17A2,2 0 0,0 14,15C14,13.89 13.1,13 12,13A2,2 0 0,0 10,15A2,2 0 0,0 12,17M18,8A2,2 0 0,1 20,10V20A2,2 0 0,1 18,22H6A2,2 0 0,1 4,20V10C4,8.89 4.9,8 6,8H7V6A5,5 0 0,1 12,1A5,5 0 0,1 17,6V8H18M12,3A3,3 0 0,0 9,6V8H15V6A3,3 0 0,0 12,3Z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <small class="email-hint">Contact support to change your email</small>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="cancel-button" id="cancelButton">Cancel</button>
+                            <button type="submit" class="save-button" disabled id="saveButton">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="settings-card orders-card">
+            <h2 class="card-title">Your Orders</h2>
+            <div class="orders-carousel-container">
+                <div id="ordersList" class="orders-list">
+                    <p class="loading-message">Loading your orders...</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>BoostingKing</h3>
+                <p>&copy; 2025 BoostingKing. All rights reserved.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jobs.html">Work With Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="settings.html">Profile</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Popular Services</h4>
+                <ul>
+                    <li><a href="faceit.html">Faceit Boost</a></li>
+                    <li><a href="premier.html">Premier Boost</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="legal.html">Legal Info</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Email: boostingking.help@gmail.com</li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Join Our Community</h4>
+                <div class="social-icons">
+                    <a href="https://discord.gg/pM6X9GmuwF" class="social-icon" target="_blank"
+                        rel="noopener noreferrer">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Website built with passion for gamers. | <a href="#" id="scrollToTop">Scroll to top ↑</a></p>
+        </div>
+    </footer>
+    <script src="general.js"></script>
+    <script src="settings.js"></script>
+</body>
+
+</html>

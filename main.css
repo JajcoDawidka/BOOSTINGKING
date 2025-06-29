@@ -1,0 +1,663 @@
+body {
+    background-image: url('rozmytetlo.webp');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    color: #f1f1f1;
+}
+
+body * {
+    position: relative;
+}
+
+section {
+    position: relative;
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    background-color: transparent;
+    border: none;
+}
+
+section:not(:last-child)::after {
+    content: '';
+    display: block;
+    width: 85%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(248, 213, 126, .3), transparent);
+    margin: 40px auto 0;
+}
+
+section h2 {
+    position: relative;
+    text-align: center;
+    color: var(--color-primary-text);
+    margin-top: 0;
+    font-size: 38px;
+    margin-bottom: 35px;
+    padding-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+section h2::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ffeaaf, transparent);
+    margin: 18px auto 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    animation: 1.5s ease-out forwards expandLine;
+}
+
+/* --- Nagłówki sekcji z domyślnym wyrównaniem do środka --- */
+.faq-section h2,
+.info-section h2,
+.trust-section h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.trust-section h2 {
+    margin-bottom: 40px;
+}
+
+.faq-section h2 {
+    margin-bottom: 30px;
+    color: #f8d57e;
+}
+
+.badges-section h2 {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+/* --- Animacje --- */
+@keyframes expandLine {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 120px;
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        opacity: .9;
+    }
+    to {
+        transform: scale(1.02);
+        opacity: 1;
+    }
+}
+
+@keyframes seamlessScrollUp {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes seamlessScrollDown {
+    0% {
+        transform: translateY(-50%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* --- Kontener główny treści --- */
+.content-container {
+    max-width: 1200px;
+    margin: 120px auto 40px; /* Wyśrodkowuje kontener główny */
+    padding: 40px;
+    background-color: rgba(20, 20, 25, .75);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, .6);
+    border: 1px solid rgba(248, 213, 126, .25);
+}
+
+/* --- Sekcja Stats-Testimonials --- */
+.stats-testimonials {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Wyśrodkowuje elementy flex w poziomie */
+    align-items: flex-start;
+    padding: 80px 40px;
+    background-color: rgba(30, 30, 35, .5);
+    border-radius: 18px;
+    border: 1px solid rgba(248, 213, 126, .15);
+    box-shadow: 0 6px 30px rgba(0, 0, 0, .4);
+    backdrop-filter: blur(10px);
+    gap: 70px;
+    overflow: hidden;
+}
+
+.stats-text {
+    text-align: center;
+    flex: 1;
+    min-width: 280px;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Wyśrodkowuje zawartość tekstową w pionie */
+    margin: 0 auto; /* Wyśrodkowuje ten blok, gdy zajmuje całą szerokość */
+}
+
+.stats-text h2 {
+    position: relative;
+    text-align: center;
+    margin-bottom: 25px;
+    letter-spacing: .5px;
+}
+
+.stats-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 35px;
+    align-items: center; /* Wyśrodkowuje stat-itemy w pionie */
+}
+
+.stat-item strong {
+    font-size: 30px;
+    color: #f8d57e;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.stat-item p {
+    font-size: 17px;
+    color: #dcdcdc;
+}
+
+/* --- Kontener referencji (testimonials) --- */
+.testimonials-container {
+    flex: 2;
+    min-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Wyśrodkowuje zawartość kolumn w pionie */
+    margin: 0 auto; /* Wyśrodkowuje ten blok, gdy zajmuje całą szerokość */
+}
+
+.testimonials-title {
+    position: relative;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.testimonials-columns {
+    display: flex;
+    gap: 40px;
+    height: 390px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    justify-content: center; /* Wyśrodkowuje kolumny w poziomie */
+}
+
+.column {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: auto;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.reviews-loop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* --- Recenzje (review) --- */
+.review {
+    background: linear-gradient(135deg, rgba(40, 40, 45, .85), rgba(30, 30, 35, .85));
+    border-radius: 30px;
+    border: 1px solid rgba(248, 213, 126, .05);
+    padding: 30px 32px;
+    color: #f0f0f0;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    transition: .4s;
+    backdrop-filter: blur(8px);
+    max-width: 95%;
+    margin: 0 auto; /* Wyśrodkowuje każdą recenzję */
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.review:hover {
+    border-color: rgba(248, 213, 126, .3);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(248, 213, 126, .1);
+}
+
+.review-text {
+    font-style: italic;
+    color: #f2f2f2;
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+    text-align: center; /* Wyśrodkowuje tekst recenzji */
+}
+
+.stars {
+    color: #f8d57e;
+    font-size: 22px;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2px #000;
+    text-align: center; /* Wyśrodkowuje gwiazdki */
+}
+
+.review-footer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+    font-size: .95rem;
+    justify-content: center; /* Wyśrodkowuje stopkę recenzji */
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #f8d57e;
+    color: #111;
+    border-radius: 50%;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+}
+
+.review-author {
+    color: #f8d57e;
+    font-weight: 600;
+}
+
+.review-date {
+    color: #ccc;
+    font-size: .85rem;
+    margin-left: 8px;
+}
+
+/* --- Sekcja CS2 Boosting --- */
+.cs2-boosting {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Wyśrodkowuje główne bloki CS2 boosting */
+    gap: 60px;
+    max-width: 900px;
+    margin: 0 auto; /* Wyśrodkowuje całą sekcję CS2 boosting */
+}
+
+.cs2-boosting .cs2-cta,
+.cs2-boosting .cs2-text {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Wyśrodkowuje zawartość w pionie */
+}
+
+.cs2-boosting .cs2-cta h2,
+.cs2-boosting .cs2-text h2 {
+    margin-bottom: 25px;
+    color: #f8d57e;
+}
+
+.cs2-boosting .cs2-text p {
+    font-size: 18px;
+    color: #e0e0e0;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    text-align: center; /* Wyśrodkowuje tekst w akapitach */
+}
+
+.cs2-boosting .cs2-text strong {
+    color: #f8d57e;
+}
+
+.cs2-boosting .highlight-text {
+    font-size: 20px;
+    color: #ffeaaf;
+    font-weight: 700;
+    margin-top: 30px;
+    animation: 1.5s infinite alternate pulse;
+    text-align: center; /* Wyśrodkowuje podświetlony tekst */
+}
+
+.cs2-boosting .cs2-cta .ctabutton {
+    margin-top: 10px;
+    padding: 14px 30px;
+    background-color: #f8d57e;
+    color: #1c1c1c;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: .3s;
+    box-shadow: 0 4px 15px rgba(248, 213, 126, .3);
+    align-self: center;
+    max-width: fit-content;
+}
+
+.cs2-boosting .cs2-cta .ctabutton:hover {
+    background-color: #ffe28a;
+    box-shadow: 0 6px 20px rgba(248, 213, 126, .5);
+    transform: translateY(-3px);
+}
+
+/* --- Sekcja Informacji (info-section) --- */
+.info-slider {
+    font-size: 22px;
+    max-width: 800px;
+    margin: 0 auto; /* Wyśrodkowuje slider */
+    color: #e0e0e0;
+    padding: 25px;
+}
+
+.info-message {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Wyśrodkowuje ikonę i tekst razem */
+}
+
+.info-message .icon-small {
+    margin-right: 12px;
+    color: #f8d57e;
+    font-size: 24px;
+    min-width: 24px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, .4);
+}
+
+/* --- Sekcja Zaufania (trust-section) --- */
+.trust-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto; /* Wyśrodkowuje siatkę kart */
+}
+
+.trust-card {
+    background-color: rgba(30, 30, 35, .5);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid rgba(248, 213, 126, .05);
+    transition: .4s;
+    text-align: center; /* Wyśrodkowuje tekst w karcie */
+}
+
+.trust-card:hover {
+    border-color: rgba(248, 213, 126, .3);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(248, 213, 126, .1);
+}
+
+.trust-card h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #f8d57e;
+}
+
+.trust-card p {
+    font-size: 16px;
+    color: #d0d0d0;
+    line-height: 1.5;
+}
+
+.trust-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+/* --- Sekcja FAQ --- */
+.faq-section {
+    padding: 0 0 40px;
+}
+
+.faq {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(248, 213, 126, .1);
+}
+
+.question {
+    font-weight: 600;
+    font-size: 20px;
+    padding: 15px 0;
+    background-color: transparent;
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.question:hover {
+    color: #f8d57e;
+}
+
+.answer {
+    font-size: 17px;
+    color: #d0d0d0;
+    line-height: 1.6;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .5s, padding .5s;
+    padding: 0;
+}
+
+.answer a {
+    color: #f8d57e;
+    text-decoration: none;
+}
+
+.answer a:hover {
+    text-decoration: underline;
+}
+
+/* --- Sekcja Odznak (badges) --- */
+.badges-section {
+    text-align: center; /* Wyśrodkowuje nagłówek i kontener odznak */
+}
+
+.badges {
+    text-align: center;
+    display: flex;
+    justify-content: center; /* Wyśrodkowuje obrazki odznak */
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.badges img {
+    height: 50px;
+    opacity: .9;
+    transition: .3s;
+    filter: grayscale(20%);
+}
+
+.badges img:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    transform: translateY(-3px);
+}
+
+/* --- Media Queries --- */
+@media (max-width: 768px) {
+    .content-container {
+        padding: 20px;
+        margin-top: 80px;
+    }
+
+    section h2 {
+        font-size: 30px;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+    }
+
+    section h2::after {
+        width: 80px;
+        height: 2px;
+        margin-top: 10px;
+    }
+
+    .badges-section h2,
+    .cs2-boosting .cs2-cta h2,
+    .cs2-boosting .cs2-text h2,
+    .faq-section h2,
+    .info-section h2,
+    .stats-text h2,
+    .testimonials-title,
+    .trust-section h2 {
+        font-size: 28px;
+    }
+
+    .cs2-boosting .highlight-text {
+        font-size: 18px;
+    }
+
+    .trust-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-testimonials {
+        flex-direction: column;
+        padding: 40px 20px;
+        gap: 40px;
+    }
+
+    .stats-text,
+    .testimonials-container {
+        max-width: 100%;
+        min-width: unset;
+    }
+
+    .testimonials-columns {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .column {
+        height: auto;
+        mask-image: none;
+        -webkit-mask-image: none;
+    }
+
+    .column.scroll-down,
+    .column.scroll-up {
+        animation: none !important;
+        transform: translateY(0) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .content-container,
+    .info-slider {
+        padding: 15px;
+    }
+
+    .stat-item strong,
+    section h2 {
+        font-size: 26px;
+    }
+
+    .badges-section h2,
+    .cs2-boosting .cs2-cta h2,
+    .cs2-boosting .cs2-text h2,
+    .faq-section h2,
+    .info-section h2,
+    .stats-text h2,
+    .testimonials-title,
+    .trust-section h2 {
+        font-size: 24px;
+    }
+
+    .cs2-boosting .cs2-text p,
+    .cs2-boosting .highlight-text {
+        font-size: 16px;
+    }
+
+    .cs2-boosting .cs2-cta .ctabutton {
+        font-size: 16px;
+        padding: 12px 25px;
+    }
+
+    .info-slider {
+        font-size: 18px;
+    }
+
+    .info-message .icon-small {
+        font-size: 20px;
+        min-width: 20px;
+    }
+
+    .trust-card {
+        padding: 20px;
+    }
+
+    .stars,
+    .trust-card h3 {
+        font-size: 20px;
+    }
+
+    .trust-card p {
+        font-size: 14px;
+    }
+
+    .trust-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .stat-item p {
+        font-size: 15px;
+    }
+
+    .review {
+        padding: 25px 20px;
+        font-size: 1rem;
+    }
+
+    .review-text {
+        font-size: .95rem;
+    }
+
+    .badges img {
+        height: 40px;
+        /* `gap` jest właściwością dla flexboxa/grid, nie dla `img`.
+           Jest już zdefiniowane w `.badges` powyżej. */
+    }
+}

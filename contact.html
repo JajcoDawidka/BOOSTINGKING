@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Us - BoostingKing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="general.css" />
+    <link rel="stylesheet" href="contact.css" />
+</head>
+
+<body>
+    <header>
+        <div class="header-container">
+            <div class="header-left">
+                <div class="dropdown">
+                    <button class="dropbtn">Select Game</button>
+                    <ul class="dropdown-content">
+                        <li>
+                            <a href="cs2-modes.html">
+                                <span class="icon cs-icon">
+                                    <img src="cs2icon.png" alt="CS2 Icon" class="cs-icon-img">
+                                </span>
+                                Counter-Strike 2
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <nav class="header-center">
+                <a href="index.html" class="logo">BoostingKing</a>
+            </nav>
+
+            <div class="header-right">
+                <div class="profile-dropdown">
+                    <button class="profile-btn">
+                        <span class="profile-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
+                                style="width:32px;height:32px;">
+                                <circle cx="128" cy="128" r="128" fill="#1f1f2a" />
+                                <path fill="#F8D57E"
+                                    d="M128 64a44 44 0 1 1 0 88 44 44 0 0 1 0-88zm0 112c40 0 72 21.5 72 48v8H56v-8c0-26.5 32-48 72-48z" />
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="profile-dropdown-content">
+                        <div class="dropdown-header">BoostingKing</div>
+                        <div class="booster-options" style="display: none;">
+                            <a href="booster-panel.html">Booster Panel</a>
+                        </div>
+                        <a href="settings.html" class="settings-link">Profile</a>
+                        <a href="index.html">Home</a>
+                        <a href="jobs.html">Work With Us</a>
+                        <a href="contact.html">Contact</a>
+                        <a id="auth-link" href="login.html">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <section class="contact-hero">
+            <h2>Contact BoostingKing</h2>
+            <p>Have questions or need support? Our team is here to help you 24/7. Reach out to us through the form below
+                or join our Discord community for faster response.</p>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2>Contact Us</h2>
+            <p class="section-subtitle">Have questions? Fill out the form below and we'll respond as soon as possible
+            </p>
+
+            <form class="contact-form" action="send_contact.php" method="POST">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact-name">Full Name *</label>
+                        <input type="text" id="contact-name" name="name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email Address *</label>
+                        <input type="email" id="contact-email" name="email" placeholder="your.email@example.com"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact-subject">Subject *</label>
+                        <input type="text" id="contact-subject" name="subject" placeholder="What's your question about?"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group full-width">
+                        <label for="contact-message">Your Message *</label>
+                        <textarea id="contact-message" name="message" rows="6" placeholder="Type your message here..."
+                            required></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </section>
+
+        <section class="contact-info-section">
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Us</h3>
+                    <p>boostingking.help@gmail.com</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fab fa-discord"></i>
+                    </div>
+                    <h3>Discord</h3>
+                    <p>Join our server for instant help</p>
+                    <a href="https://discord.gg/pM6X9GmuwF" target="_blank" rel="noopener noreferrer"
+                        class="discord-link">Join Now</a>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Support Hours</h3>
+                    <p>24/7 customer support</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq">
+                <div class="faq-item">
+                    <div class="question">
+                        <span>How can I reach your support team?</span>
+                    </div>
+                    <div class="answer">
+                        You can reach us via:<br>
+                        • 📧 Email – <a href="mailto:boostingking.help@gmail.com">boostingking.help@gmail.com</a><br>
+                        • 📩 Contact Form – <a href="contact.html">Fill out our form</a><br>
+                        • 🎮 Discord – <a href="https://discord.gg/XACnGpyUJr" target="_blank">Join our server</a>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>My booster isn’t responding. What should I do?</span>
+                    </div>
+                    <div class="answer">
+                        If there’s no progress for 24+ hours, contact us with your order ID. We’ll assign a new booster
+                        or compensate for the delay.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>Is my account information secure?</span>
+                    </div>
+                    <div class="answer">
+                        Absolutely. All data is encrypted, and only verified boosters have temporary access to your
+                        account under strict guidelines.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-left">
+                <h3>BoostingKing</h3>
+                <p>&copy; 2025 BoostingKing. All rights reserved.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Useful Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jobs.html">Work With Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="settings.html">Profile</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Popular Services</h4>
+                <ul>
+                    <li><a href="faceit.html">Faceit Boost</a></li>
+                    <li><a href="premier.html">Premier Boost</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                    <li><a href="legal.html">Legal Info</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Contact</h4>
+                <ul>
+                    <li>Email: boostingking.help@gmail.com</li>
+                </ul>
+            </div>
+
+            <div class="footer-social">
+                <h4>Join Our Community</h4>
+                <div class="social-icons">
+                    <a href="https://discord.gg/pM6X9GmuwF" class="social-icon" target="_blank"
+                        rel="noopener noreferrer">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Website built with passion for gamers. | <a href="#" id="scrollToTop">Scroll to top ↑</a></p>
+        </div>
+    </footer>
+
+    <script src="general.js"></script>
+    <script src="contact.js"></script>
+    <script src="faq.js"></script>
+</body>
+
+</html>

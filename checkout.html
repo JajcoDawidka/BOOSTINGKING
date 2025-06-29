@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Checkout - BoostingKing</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="checkout.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+
+<body>
+    <div class="content-container">
+        <div class="checkout-container">
+            <h1 class="checkout-title">Checkout</h1>
+
+            <form id="checkout-form">
+                <div class="form-columns">
+                    <div class="section personal-info">
+                        <h2><span class="icon">👤</span> Personal Info</h2>
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <div class="input-container">
+                                <input type="text" id="firstName" name="firstName" placeholder="John" required
+                                    class="settings-input" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <div class="input-container">
+                                <input type="text" id="lastName" name="lastName" placeholder="Doe" required
+                                    class="settings-input" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <div class="input-container">
+                                <input type="email" id="email" name="email" placeholder="your@email.com" required
+                                    class="settings-input" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section boosting-account">
+                        <h2><span class="icon">🔑</span> Account Details</h2>
+                        <p class="info-note">
+                            Required only for Solo Boosting. Duo players can skip this section.
+                        </p>
+
+                        <div class="form-group">
+                            <label for="steamLogin">Steam Username</label>
+                            <div class="input-container">
+                                <input type="text" id="steamLogin" name="steamLogin" placeholder="Steam username"
+                                    class="settings-input" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="steamPassword">Steam Password</label>
+                            <div class="input-container">
+                                <input type="password" id="steamPassword" name="steamPassword"
+                                    placeholder="Steam password" class="settings-input" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="faceitEmail">Faceit Email</label>
+                            <div class="input-container">
+                                <input type="email" id="faceitEmail" name="faceitEmail" placeholder="Faceit email"
+                                    class="settings-input" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="faceitPassword">Faceit Password</label>
+                            <div class="input-container">
+                                <input type="password" id="faceitPassword" name="faceitPassword"
+                                    placeholder="Faceit password" class="settings-input" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section payment-methods">
+                    <h2><span class="icon">💳</span> Payment Method</h2>
+                    <div class="payment-options">
+                        <label class="payment-option disabled-option">
+                            <input type="radio" name="paymentMethod" value="przelewy24" disabled>
+                            <img src="https://developers.przelewy24.pl/img/P24_logo_light.svg" alt="Przelewy24"
+                                class="payment-logo" style="height: 24px;">
+                            <span>Przelewy24 (BLIK, Przelewy natychmiastowe, karty) <strong
+                                    class="coming-soon">(Soon)</strong></span>
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="paymentMethod" value="stripe" checked>
+                            <img src="platnosci zdjecia/STRIPE.svg"
+                                alt="Stripe" class="payment-logo" style="height: 24px;">
+                            <span>Credit/Debit Card (via Stripe)</span>
+                        </label>
+                        <label class="payment-option disabled-option">
+                            <input type="radio" name="paymentMethod" value="crypto" disabled>
+                            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=025" alt="Crypto"
+                                class="payment-logo" style="height: 24px;">
+                            <span>Cryptocurrencies (Bitcoin, Ethereum, USDT) <strong
+                                    class="coming-soon">(Soon)</strong></span>
+                        </label>
+                    </div>
+                    <div id="payment-errors" class="error-message" style="display: none;"></div>
+                </div>
+
+                <div class="section summary">
+                    <h2><span class="icon">📝</span> Order Summary</h2>
+                    <div class="simplified-summary">
+                        <div class="summary-row">
+                            <span class="summary-label">Service Type:</span>
+                            <span id="service-type" class="summary-value"></span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Region:</span>
+                            <span id="summary-region" class="summary-value"></span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">Account Type:</span>
+                            <span id="summary-account-type" class="summary-value"></span>
+                        </div>
+                        <div class="summary-row" id="elo-range-row" style="display: none;">
+                            <span class="summary-label">ELO Range:</span>
+                            <span id="summary-elo-range" class="summary-value"></span>
+                        </div>
+                        <div class="summary-row" id="rank-range-row" style="display: none;">
+                            <span class="summary-label">Rank Range:</span>
+                            <span id="summary-rank-range" class="summary-value"></span>
+                        </div>
+
+                        <h3 class="extras-header">Selected Extras:</h3>
+                        <ul id="customization-list" class="order-details-list">
+                        </ul>
+
+                        <div class="summary-row price-line"> <span class="summary-label">Base Price:</span>
+                            <span id="base-price" class="summary-value">$0.00</span>
+                        </div>
+                        <div class="summary-row price-line" id="extras-price-row"> <span
+                                class="summary-label">Extras:</span>
+                            <span id="summary-extras-price" class="summary-value">$0.00</span>
+                        </div>
+                        <div class="summary-row discount">
+                            <span class="summary-label">Discount:</span>
+                            <span id="discount-amount" class="summary-value">$0.00</span>
+                        </div>
+                        <div class="summary-row total">
+                            <span class="summary-label">Total:</span>
+                            <span id="total-price" class="summary-value">$0.00</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-button">Cancel</button>
+                    <button type="submit" class="save-button pay-btn">Proceed to Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="general.js"></script>
+    <script src="checkout.js"></script>
+</body>
+
+</html>

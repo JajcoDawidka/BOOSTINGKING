@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - BoostingKing</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="checkout.css">
+    <style>
+       body {
+    background-image: url('rozmytetlo.webp');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Dodane: Zapobiega przewijaniu w poziomie, jeśli kontener będzie za szeroki */
+    overflow-x: hidden;
+    /* Dodane: globalny box-sizing dla spójności */
+    box-sizing: border-box;
+}
+
+/* Wszelkie elementy w projekcie powinny dziedziczyć box-sizing: border-box; */
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+
+.confirmation-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: rgba(20, 20, 25, 0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(248, 213, 126, 0.25);
+    text-align: center;
+}
+
+.confirmation-container h1 {
+    color: #F8D57E;
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: flex; /* Użyj flexbox, aby wyśrodkować ikonę i tekst */
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Odstęp między ikoną a tekstem */
+}
+
+/* Styl dla ikony SVG w nagłówku */
+.confirmation-container h1 svg {
+    min-width: 30px; /* Zapewnia, że SVG ma zawsze minimalną szerokość */
+    height: auto; /* Zachowuje proporcje */
+    vertical-align: middle; /* Wyrównuje ikonę z tekstem */
+}
+
+
+.confirmation-container p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    color: #bbb;
+}
+
+.order-details-summary {
+    background-color: rgba(30, 30, 35, 0.5);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: left; /* Wyśrodkowanie wewnątrz summary */
+}
+
+.order-details-summary p {
+    font-size: 16px; /* Zmniejsz czcionkę dla szczegółów zamówienia */
+    margin-bottom: 10px;
+    color: #e0e0e0;
+}
+
+.order-details-summary p:last-child {
+    margin-bottom: 0;
+}
+
+
+.order-details-summary strong {
+    color: #F8D57E;
+}
+
+.confirmation-actions a {
+    display: inline-block;
+    background-color: #F8D57E;
+    color: #0a0a0a;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Dodano transform dla hovera */
+    margin: 10px;
+}
+
+.confirmation-actions a:hover {
+    background-color: #ffea00;
+    transform: translateY(-2px); /* Delikatny efekt uniesienia */
+}
+
+.confirmation-actions a:active {
+    transform: translateY(0); /* Efekt wciśnięcia */
+}
+
+/* --- Media Queries dla responsywności --- */
+
+/* Media Query dla tabletów (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .confirmation-container {
+        max-width: 700px; /* Zmniejsz maksymalną szerokość kontenera */
+        margin: 30px 20px; /* Dodaj marginesy boczne, zmniejsz górny */
+        padding: 30px; /* Zmniejsz padding */
+        border-radius: 14px; /* Lekko mniejsze zaokrąglenie */
+    }
+
+    .confirmation-container h1 {
+        font-size: 32px; /* Zmniejsz rozmiar nagłówka */
+        margin-bottom: 18px;
+    }
+
+    .confirmation-container h1 svg {
+        width: 35px; /* Dostosuj rozmiar ikony */
+        height: 35px;
+    }
+
+    .confirmation-container p {
+        font-size: 17px; /* Zmniejsz rozmiar tekstu paragrafów */
+        margin-bottom: 20px;
+    }
+
+    .order-details-summary {
+        padding: 18px; /* Zmniejsz padding podsumowania */
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+    .order-details-summary p {
+        font-size: 15px; /* Zmniejsz czcionkę w podsumowaniu */
+    }
+
+    .confirmation-actions a {
+        padding: 10px 20px; /* Zmniejsz padding przycisków */
+        font-size: 15px; /* Zmniejsz czcionkę przycisków */
+        margin: 8px; /* Zmniejsz margines między przyciskami */
+    }
+}
+
+/* Media Query dla smartfonów (max-width: 767px) */
+@media (max-width: 767px) {
+    body {
+        /* Usuń align-items, aby kontener naturalnie flowował po zmniejszeniu wysokości ekranu */
+        align-items: flex-start;
+        padding-top: 20px; /* Dodaj trochę paddingu na górze */
+    }
+
+    .confirmation-container {
+        max-width: 90%; /* Kontener zajmuje 90% szerokości */
+        margin: 20px auto; /* Wyśrodkuj kontener i zmniejsz margines górny */
+        padding: 25px; /* Dalsze zmniejszenie paddingu */
+        border-radius: 12px; /* Mniejsze zaokrąglenie */
+    }
+
+    .confirmation-container h1 {
+        font-size: 28px; /* Dalsze zmniejszenie rozmiaru nagłówka */
+        margin-bottom: 15px;
+        gap: 8px; /* Mniejszy odstęp */
+    }
+
+    .confirmation-container h1 svg {
+        width: 30px; /* Dalsze zmniejszenie rozmiaru ikony */
+        height: 30px;
+    }
+
+    .confirmation-container p {
+        font-size: 16px; /* Dalsze zmniejszenie rozmiaru tekstu */
+        margin-bottom: 18px;
+    }
+
+    .order-details-summary {
+        padding: 15px; /* Dalsze zmniejszenie paddingu podsumowania */
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .order-details-summary p {
+        font-size: 14px; /* Dalsze zmniejszenie czcionki w podsumowaniu */
+        margin-bottom: 8px;
+    }
+
+    .confirmation-actions {
+        display: flex;
+        flex-direction: column; /* Ułóż przyciski jeden pod drugim */
+        gap: 10px; /* Odstęp między przyciskami */
+        margin-top: 20px;
+    }
+
+    .confirmation-actions a {
+        width: 100%; /* Rozciągnij przyciski na całą szerokość */
+        padding: 12px; /* Zwiększ padding dla łatwiejszego dotyku */
+        font-size: 16px;
+        margin: 0; /* Usuń marginesy boczne, są już w gap */
+    }
+}
+
+/* Media Query dla bardzo małych smartfonów (max-width: 480px) */
+@media (max-width: 480px) {
+    .confirmation-container {
+        padding: 15px; /* Minimalny padding */
+        margin: 15px auto; /* Mniejsze marginesy zewnętrzne */
+        border-radius: 10px; /* Mniejsze zaokrąglenie */
+    }
+
+    .confirmation-container h1 {
+        font-size: 24px; /* Bardzo mały nagłówek */
+        gap: 6px;
+    }
+
+    .confirmation-container h1 svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .confirmation-container p {
+        font-size: 14px; /* Bardzo mała czcionka dla paragrafów */
+        margin-bottom: 15px;
+    }
+
+    .order-details-summary {
+        padding: 12px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .order-details-summary p {
+        font-size: 13px;
+    }
+
+    .confirmation-actions a {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+    </style>
+</head>
+
+<body>
+    <div class="main-content-wrapper">
+        <div class="confirmation-container">
+            <h1>
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z" fill="#6ee66e" />
+                </svg>
+                Order Placed Successfully!
+            </h1>
+            <p>Thank you for your order! Your payment was successful, and your request has been received and is being
+                processed.</p>
+
+            <div class="order-details-summary">
+                <p><strong>Order ID:</strong> <span id="display-order-id">#Loading...</span></p>
+                <p><strong>Total Amount:</strong> <span id="display-total-amount">$Loading...</span></p>
+                <p>You will receive an email confirmation shortly with all the details.</p>
+            </div>
+
+            <p>If you have any questions, feel free to <a href="contact.html"
+                    style="color: #F8D57E; text-decoration: none;">contact our support</a>.</p>
+
+            <div class="confirmation-actions">
+                <a href="settings.html">Go to profile</a>
+                <a href="index.html">Explore More Services</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const countdownEl = document.getElementById('countdown');
+            const displayOrderIdEl = document.getElementById('display-order-id');
+            const displayTotalAmountEl = document.getElementById('display-total-amount');
+
+            // Odczytaj orderId i totalPrice z parametrów URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('orderId');
+            const totalPrice = urlParams.get('totalPrice');
+
+            if (displayOrderIdEl && orderId) {
+                displayOrderIdEl.textContent = `#${orderId}`;
+            } else {
+                displayOrderIdEl.textContent = `#N/A`; // W przypadku braku ID
+            }
+
+            if (displayTotalAmountEl && totalPrice) {
+                displayTotalAmountEl.textContent = `$${parseFloat(totalPrice).toFixed(2)}`;
+            } else {
+                displayTotalAmountEl.textContent = `$0.00`;
+            }
+        });
+    </script>
+</body>
+
+</html>
